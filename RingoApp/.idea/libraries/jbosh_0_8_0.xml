@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jbosh-0.8.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.jbosh/jbosh/0.8.0/a99cba02dc7aba256001e5d74c15d73bcc87fc14/jbosh-0.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.igniterealtime.jbosh/jbosh/0.8.0/c44c95031c01ea489a66ca284d886bbb1bdad07c/jbosh-0.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+Ringo server configuration:
+    - Install ejabberd
+    - Create virtualhost "RingoXMPPServer"
+    - Create admin user "ringo"
+    - Create multiuser chat "Ringo" and make it persistent
+    - Generate self-signed certificate for the vhost
+
+    - Create Avahi server with ejabberd configuration
+        - Service type: "_xmpp-server._tcp"
+        - Port: 5222
+        - Service name: RingoXMPPServer
+
+    - Make ejabberd run at boot
