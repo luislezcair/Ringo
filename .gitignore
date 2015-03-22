@@ -85,3 +85,6 @@ proguard/
 
 # Log Files
 *.log
+
+# Ignore ringo database file
+Ringo/ringo.sqlite3

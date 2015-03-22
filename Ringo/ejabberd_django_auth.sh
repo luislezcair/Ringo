@@ -1,2 +1,2 @@
 #!/bin/bash
-python ~/Proyectos/Ringo/Ringo/manage.py ejabberd_auth $@
+python2 $RINGO_PROJECT_PATH/Ringo/manage.py ejabberd_auth $@
