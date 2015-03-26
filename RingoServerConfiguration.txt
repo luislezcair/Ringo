@@ -10,4 +10,10 @@ Ringo server configuration:
         - Port: 5222
         - Service name: RingoXMPPServer
 
+        - Service type: "_http._tcp"
+        - Port: 8000
+        - Service name: RingoHTTPMediaServer
+
     - Make ejabberd run at boot
+    - Set enviroment vars: RINGO_PROJECT_PATH and PYTHONPATH, this last one
+      pointing to the former.

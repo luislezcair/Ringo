@@ -1,6 +1,7 @@
 import dbus
 import avahi
 import gobject
+import re
 from dbus.mainloop.glib import DBusGMainLoop
 
 
@@ -13,7 +14,7 @@ class ServiceDiscoverer:
         self.stype = stype
         self.loop = gobject.MainLoop()
 
-    def discover(self, resolve_handler, error_handler):
+    def discover(self, resolve_handler=None, error_handler=None):
         self.resolve_hanlder = resolve_handler
         self.error_handler = error_handler
 
@@ -40,16 +41,29 @@ class ServiceDiscoverer:
     def onServiceResolved(self, *args):
         self.loop.quit()
 
-        txt_record = ''.join([chr(byte) for byte in args[9][0]])
-        service_info = {'protocol': int(args[1]),
-                        'service_name': str(args[2]),
-                        'address': str(args[7]),
-                        'port': int(args[8]),
-                        'txt': txt_record}
+        txt_record = self.parse_txt(args[9])
 
-        self.resolve_hanlder(service_info)
+        self.service_info = {'protocol': int(args[1]),
+                             'service_name': str(args[2]),
+                             'address': str(args[7]),
+                             'port': int(args[8]),
+                             'txt': txt_record}
+
+        if self.resolve_hanlder:
+            self.resolve_hanlder(self.service_info)
 
     def onServiceResolveError(self, args):
         self.loop.quit()
-        self.error_handler(args)
+        if self.error_handler:
+            self.error_handler(args)
 
+    def parse_txt(self, txt_record):
+        kvpair = re.compile("(?P<key>.*)=(?P<value>.*)")
+        txt_dict = {}
+
+        for txt in txt_record:
+            record = ''.join([chr(byte) for byte in txt])
+            r = kvpair.match(record)
+            txt_dict[r.group('key')] = r.group('value')
+
+        return txt_dict

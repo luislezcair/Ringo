@@ -1,25 +1,7 @@
-from threading import Thread
+import logging
 from django.conf import settings
 from XmppClient import XmppClient
-from ServiceDiscoverer import ServiceDiscoverer
-import logging
-
-
-class XmppConnector:
-    def __init__(self):
-        sname = settings.RINGO['XMPP_SERVICE_NAME']
-        stype = settings.RINGO['XMPP_SERVICE_TYPE']
-
-        self.avahi = ServiceDiscoverer(sname, stype)
-
-    def discover(self):
-        self.avahi.discover(self.service_resolved, self.resolve_error)
-
-    def service_resolved(self, service_info):
-        self.address = (service_info['address'], service_info['port'])
-
-    def resolve_error(self, error):
-        print(error)
+from Common.ServiceDiscoverer import ServiceDiscoverer
 
 
 # Setup logging.
@@ -38,13 +20,16 @@ room = "%s@%s.%s" % (settings.RINGO['XMPP_MUC_NAME'],
                      settings.RINGO['XMPP_SERVICE_NAME'])
 
 # Discover service address and port
-connector = XmppConnector()
-connector.discover()
+service = ServiceDiscoverer(settings.RINGO['XMPP_SERVICE_NAME'],
+                            settings.RINGO['XMPP_SERVICE_TYPE'])
+service.discover()
 
-logging.log(logging.INFO, connector.address)
+address = (service.service_info['address'],
+           service.service_info['port'])
+
+logging.log(logging.INFO, address)
 
 # Create xmpp client and connect to the server
 xmpp = XmppClient(jid, password, room, nick)
-xmpp.connect(connector.address)
+xmpp.connect(address)
 xmpp.process(block=False)
-
