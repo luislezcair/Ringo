@@ -9,27 +9,25 @@ logging.basicConfig(level=logging.DEBUG,
                     format='%(levelname)-8s %(message)s')
 
 # Read settings
-jid = "%s@%s" % (settings.RINGO['XMPP_USERNAME'],
-                 settings.RINGO['XMPP_SERVICE_NAME'])
+service_name = settings.RINGO['XMPP_SERVICE_NAME']
+
+jid = "%s@%s" % (settings.RINGO['XMPP_USERNAME'], service_name)
 
 password = settings.RINGO['XMPP_PASSWORD']
-nick = settings.RINGO['XMPP_MUC_NICKNAME']
 
-room = "%s@%s.%s" % (settings.RINGO['XMPP_MUC_NAME'],
-                     settings.RINGO['XMPP_MUC_HOST'],
-                     settings.RINGO['XMPP_SERVICE_NAME'])
-
-# Discover service address and port
-service = ServiceDiscoverer(settings.RINGO['XMPP_SERVICE_NAME'],
-                            settings.RINGO['XMPP_SERVICE_TYPE'])
+service = ServiceDiscoverer(service_name, settings.RINGO['XMPP_SERVICE_TYPE'])
 service.discover()
 
-address = (service.service_info['address'],
-           service.service_info['port'])
+address = (service.service_info['address'], service.service_info['port'])
 
+room = "%s@%s.%s" % (service.service_info['txt']['muc_name'],
+                     service.service_info['txt']['muc_host'],
+                     service_name)
+
+# Discover service address and port
 logging.log(logging.INFO, address)
 
 # Create xmpp client and connect to the server
-xmpp = XmppClient(jid, password, room, nick)
+xmpp = XmppClient(jid, password, room, nick='RingoServer')
 xmpp.connect(address)
 xmpp.process(block=False)
