@@ -6,7 +6,8 @@ from Common.ServiceDiscoverer import ServiceDiscoverer
 
 # Setup logging.
 logging.basicConfig(level=logging.DEBUG,
-                    format='%(levelname)-8s %(message)s')
+                    format='%(levelname)-8s %(message)s',
+		    filename='/home/ringo/debug.log')
 
 # Read settings
 service_name = settings.RINGO['XMPP_SERVICE_NAME']
