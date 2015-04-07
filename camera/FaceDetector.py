@@ -4,7 +4,7 @@ import struct
 from FaceSender import FaceSender
 
 
-cascade_dir = '/usr/share/OpenCV/haarcascades/'
+cascade_dir = '/usr/share/opencv/haarcascades/'
 
 cascade_files = ['haarcascade_frontalface_alt_tree.xml',
                  'haarcascade_frontalface_alt.xml',
@@ -49,8 +49,11 @@ while True:
         print("Cannot read frame from capture device")
         break
 
-    key = cv2.waitKey(10)
-    if key == 13:
+    cv2.imshow('Ringo Capture', frame)
+
+    key = 0xFF & cv2.waitKey(10)
+
+    if key == 10: # Enter
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = detect_face(gray_frame)
 
@@ -67,7 +70,5 @@ while True:
 
             cv2.imshow('Face', frame)
 
-    elif key == 27:
+    elif key == 27: # Escape
         break
-
-    cv2.imshow('Ringo Capture', frame)

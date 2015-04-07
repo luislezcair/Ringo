@@ -1,6 +1,7 @@
+import sys
 import requests
 import json
-from Common.ServiceDiscoverer import ServiceDiscoverer
+from Common.ServiceDiscoverer import ServiceDiscoverer, ServiceNotFoundError
 
 class FaceSender:
     def __init__(self):
@@ -8,7 +9,7 @@ class FaceSender:
 
     def get_service_info(self, name):
         sd = ServiceDiscoverer(name, "_http._tcp")
-        sd.discover()
+        sd.discover(error_handler=self.on_error)
 
         url = 'http://%s:%s%s' %  (sd.service_info['address'],
                                    sd.service_info['port'],
@@ -39,3 +40,6 @@ class FaceSender:
     def close(self):
         self.session.close()
 
+    def on_error(self, args):
+        print("Error: %s" % args)
+        sys.exit(1)

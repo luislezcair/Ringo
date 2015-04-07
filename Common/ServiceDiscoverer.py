@@ -21,13 +21,20 @@ class ServiceDiscoverer:
         self.name = name
         self.stype = stype
         self.timeout = timeout
+        self.timeout_handler = None
 
     def set_timeout(self, timeout):
         self.timeout = timeout
 
     def onTimeout(self):
         self.loop.quit()
-        raise ServiceNotFoundError('DNS service discovery timed out.')
+
+        if self.error_handler:
+            e = ServiceNotFoundError("DNS service discovery timed out. "
+                                     "Service %s not found" % self.name)
+            self.error_handler(e)
+
+        return False
 
     def discover(self, resolve_handler=None, error_handler=None):
         self.resolve_hanlder = resolve_handler
@@ -46,7 +53,9 @@ class ServiceDiscoverer:
 
         browser.connect_to_signal('ItemNew', self.onServiceFound)
 
-        gobject.timeout_add(self.timeout, self.onTimeout)
+        self.timeout_handler = gobject.timeout_add(self.timeout,
+                                                   self.onTimeout)
+
         self.loop.run()
 
     def onServiceFound(self, iface, proto, name, stype, domain, flags):
@@ -72,10 +81,14 @@ class ServiceDiscoverer:
         if self.resolve_hanlder:
             self.resolve_hanlder(self.service_info)
 
+        gobject.source_remove(self.timeout_handler)
+
     def onServiceResolveError(self, args):
         self.loop.quit()
         if self.error_handler:
             self.error_handler(args)
+
+        gobject.source_remove(self.timeout_handler)
 
     def parse_txt(self, txt_record):
         kvpair = re.compile("(?P<key>.*)=(?P<value>.*)")
