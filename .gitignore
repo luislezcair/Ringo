@@ -89,3 +89,6 @@ proguard/
 
 # Ignore ringo database file
 Ringo/ringo.sqlite3
+
+Util/photos/
+Util/*.csv

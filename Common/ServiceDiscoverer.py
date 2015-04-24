@@ -21,7 +21,7 @@ class ServiceDiscoverer:
         self.name = name
         self.stype = stype
         self.timeout = timeout
-        self.timeout_handler = None
+        self.timeout_id = None
 
     def set_timeout(self, timeout):
         self.timeout = timeout
@@ -53,9 +53,7 @@ class ServiceDiscoverer:
 
         browser.connect_to_signal('ItemNew', self.onServiceFound)
 
-        self.timeout_handler = gobject.timeout_add(self.timeout,
-                                                   self.onTimeout)
-
+        self.timeout_id = gobject.timeout_add(self.timeout, self.onTimeout)
         self.loop.run()
 
     def onServiceFound(self, iface, proto, name, stype, domain, flags):
@@ -68,6 +66,7 @@ class ServiceDiscoverer:
                 error_handler=self.onServiceResolveError)
 
     def onServiceResolved(self, *args):
+        gobject.source_remove(self.timeout_id)
         self.loop.quit()
 
         txt_record = self.parse_txt(args[9])
@@ -81,14 +80,12 @@ class ServiceDiscoverer:
         if self.resolve_hanlder:
             self.resolve_hanlder(self.service_info)
 
-        gobject.source_remove(self.timeout_handler)
-
     def onServiceResolveError(self, args):
+        gobject.source_remove(self.timeout_id)
         self.loop.quit()
+
         if self.error_handler:
             self.error_handler(args)
-
-        gobject.source_remove(self.timeout_handler)
 
     def parse_txt(self, txt_record):
         kvpair = re.compile("(?P<key>.*)=(?P<value>.*)")
