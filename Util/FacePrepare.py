@@ -3,6 +3,7 @@ import cv2
 import numpy
 import argparse
 import CropFaces as cf
+import EyesFSM
 from PIL import Image
 
 
@@ -27,6 +28,19 @@ eyes_cascade_files = ['haarcascade_eye.xml',
 eyes_cascades = [cv2.CascadeClassifier(os.path.join(cascade_dir, c))
                     for c in eyes_cascade_files]
 
+# Silly cv2
+CV_GUI_NORMAL = 0x10
+CV_WINDOW_AUTOSIZE = 0x01
+
+# Colors (in BGR system):
+BLUE = (255, 0, 0)
+GREEN = (0, 255, 0)
+RED = (0, 0, 255)
+
+# Window names
+MAIN_WINDOW = "Webcam"
+FACE_WINDOW = "Face"
+
 
 def detect_feature(frame, cascade_list):
     """Try each cascade in cascade_list until it detects the object it is
@@ -39,44 +53,33 @@ def detect_feature(frame, cascade_list):
     return numpy.empty(0)
 
 
-def detect_many_and_show(frame, cascade_list):
-    """Show a window for every feature detected using every cascade in
-    cascade_list"""
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    i = 0
-    for c in cascade_list:
-        features = c.detectMultiScale(gray, minSize=(30,30))
-        frame_copy = frame.copy()
-        for (x, y, w, h) in features:
-            cv2.rectangle(frame_copy, (x, y), (x+w, y+h), (0, 0, 255), 1)
-        i += 1
-        cv2.imshow("Cascade %s" % i, frame_copy)
+def on_mouse_event(event, x, y, flags, (fsm, face)):
+    """Process mouse events"""
+    if event != cv2.EVENT_LBUTTONDOWN or fsm is None:
+        return
+
+    # Set the current eye to the mouse coordinates and advance the FSM to the
+    # next state (i.e. the next eye)
+    fsm.set_current_eye_pos((x, y))
+    fsm.next()
+    fsm.update_window(FACE_WINDOW, face)
 
 
 def main_loop(subject_name, directory):
     image_index = 0
     image = numpy.empty(0)
 
-    # Silly cv2
-    CV_GUI_NORMAL = 0x10
-    CV_WINDOW_AUTOSIZE = 0x01
-
-    # Colors (in BGR system):
-    BLUE = (255, 0, 0)
-    GREEN = (0, 255, 0)
-    RED = (0, 0, 255)
-
     # Open the default webcam
     capture = cv2.VideoCapture(-1)
 
     while True:
+        # Read a frame from the capture device and show it
         _, frame = capture.read()
-
-        cv2.imshow('Ringo Capture', frame)
+        cv2.imshow(MAIN_WINDOW, frame)
 
         key = 0xFF & cv2.waitKey(10)
 
-        if key == 13 or key == 10: # Enter
+        if key == 13 or key == 10:  # Enter
             faces = detect_feature(frame, face_cascades)
 
             # We want just one face, because we're training the detector
@@ -86,35 +89,29 @@ def main_loop(subject_name, directory):
 
                     eyes = detect_feature(face_roi, eyes_cascades)
 
+                    # Create a window with custom attributes
+                    cv2.namedWindow(FACE_WINDOW, CV_WINDOW_AUTOSIZE | CV_GUI_NORMAL)
+
+                    # Initialize our state machine for the eyes
+                    eyes_fsm = EyesFSM.EyesFSM(face_roi.shape)
+
+                    # Setup a callback function for mouse events
+                    cv2.setMouseCallback(FACE_WINDOW, on_mouse_event, (eyes_fsm, face_roi))
+
+                    # Make a copy of the image to save it later
+                    image = face_roi.copy()
+
                     # We only care about people with two eyes.
                     if eyes.size == 8:
-                        # Make a copy of the image to save it later
-                        image = face_roi.copy()
+                        # Populate the state machine with the eyes just found
+                        for e in eyes:
+                            eyes_fsm.set_current_eye_pos(e)
+                            eyes_fsm.next()
 
-                        x1,  y1,  w1,  h1 = eyes[0]
-                        x2,  y2,  w2,  h2 = eyes[1]
+                    # Update the window to show the eyes
+                    eyes_fsm.update_window(FACE_WINDOW, face_roi)
 
-                        # The first element might not be the left eye, so make 
-                        # sure the left eye is to the left and get the center
-                        if x1 < x2:
-                            eye_left = (x1 + w1/2, y1 + h1/2)
-                            eye_right = (x2 + w2/2, y2 + h2/2)
-                        else:
-                            eye_left = (x2 + w2/2, y2 + h2/2)
-                            eye_right = (x1 + w1/2, y1 + h1/2)
-
-                        # Draw a rectangle around each eye
-                        cv2.rectangle(face_roi, (x1, y1), (x1 + w1, y1 + w1), BLUE, 1)
-                        cv2.rectangle(face_roi, (x2, y2), (x2 + w2, y2 + w2), BLUE, 1)
-
-                        # Draw a circle in the center of the rectangle (the eye itself)
-                        cv2.circle(face_roi, eye_left, 3, GREEN)
-                        cv2.circle(face_roi, eye_right, 3, RED)
-
-                        cv2.namedWindow('Face', CV_WINDOW_AUTOSIZE | CV_GUI_NORMAL)
-                        cv2.imshow('Face', face_roi)
-
-        elif key == ord('s') and image.size > 0:
+        elif key == ord('s') and image.size > 0 and eyes_fsm and eyes_fsm.is_valid():
             # Find a non-existing filename for the new image
             while True:
                 filename = os.path.join(directory,
@@ -128,14 +125,17 @@ def main_loop(subject_name, directory):
             rgb_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             pil_img = Image.fromarray(rgb_img)
 
+            # Sort the eyes
+            eyes_fsm.sort_eyes()
+
             print("Saving image to %s." % filename)
             cf.CropFace(pil_img,
-                        eye_left=eye_left,
-                        eye_right=eye_right,
+                        eye_left=eyes_fsm.eyes[0],
+                        eye_right=eyes_fsm.eyes[1],
                         offset_pct=(0.25, 0.25),
                         dest_sz=(200, 200)).save(filename)
 
-            cv2.destroyWindow('Face')
+            cv2.destroyWindow(FACE_WINDOW)
             image_index += 1
             image = numpy.empty(0)
 
