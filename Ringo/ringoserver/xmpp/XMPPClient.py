@@ -1,11 +1,8 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import logging
 from sleekxmpp import ClientXMPP
 from collections import deque
 
-class XmppClient(ClientXMPP):
+class XMPPClient(ClientXMPP):
     def __init__(self, jid, password, room, nick):
         ClientXMPP.__init__(self, jid, password)
 
@@ -20,7 +17,7 @@ class XmppClient(ClientXMPP):
                                self.muc_online)
 
         self.add_event_handler("socket_error", self.on_socket_error)
-        
+
         self.register_plugin('xep_0045')
 
         self.msg_queue = deque()

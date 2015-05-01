@@ -1,13 +1,13 @@
 import logging
 from django.conf import settings
-from XmppClient import XmppClient
+from XMPPClient import XMPPClient
 from Common.ServiceDiscoverer import ServiceDiscoverer
 
 
 # Setup logging.
 logging.basicConfig(level=logging.DEBUG,
                     format='%(levelname)-8s %(message)s',
-		    filename='/home/ringo/debug.log')
+                    filename='/home/ringo/debug.log')
 
 # Read settings
 service_name = settings.RINGO['XMPP_SERVICE_NAME']
@@ -29,6 +29,6 @@ room = "%s@%s.%s" % (service.service_info['txt']['muc_name'],
 logging.log(logging.INFO, address)
 
 # Create xmpp client and connect to the server
-xmpp = XmppClient(jid, password, room, nick='RingoServer')
+xmpp = XMPPClient(jid, password, room, nick='RingoServer')
 xmpp.connect(address)
 xmpp.process(block=False)
