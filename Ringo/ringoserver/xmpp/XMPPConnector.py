@@ -1,6 +1,6 @@
 import logging
+import XMPPClient
 from django.conf import settings
-from XMPPClient import XMPPClient
 from Common.ServiceDiscoverer import ServiceDiscoverer
 
 
@@ -29,6 +29,6 @@ room = "%s@%s.%s" % (service.service_info['txt']['muc_name'],
 logging.log(logging.INFO, address)
 
 # Create xmpp client and connect to the server
-xmpp = XMPPClient(jid, password, room, nick='RingoServer')
-xmpp.connect(address)
-xmpp.process(block=False)
+connector = XMPPClient(jid, password, room, nick='RingoServer')
+connector.connect(address)
+connector.process(block=False)

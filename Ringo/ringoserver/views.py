@@ -30,7 +30,7 @@ class RectViewSet(viewsets.ModelViewSet):
             picture_json = json.dumps(picture_dict)
 
             # Send the data to the xmpp server where the devices are listening
-            xmpp = XMPPConnector.xmpp
+            xmpp = XMPPConnector.connector
             xmpp.send_muc_message(picture_json)
 
         # Return an empty response since we don't need to inform anything

@@ -2,6 +2,7 @@ import logging
 from sleekxmpp import ClientXMPP
 from collections import deque
 
+
 class XMPPClient(ClientXMPP):
     def __init__(self, jid, password, room, nick):
         ClientXMPP.__init__(self, jid, password)
