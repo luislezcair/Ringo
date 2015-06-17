@@ -23,6 +23,7 @@ class XMPPClient(ClientXMPP):
 
         self.msg_queue = deque()
         self.ready_to_send = False
+        self.disconnect_after_send = False
 
     def on_socket_error(self, args):
         print("socket error %s" % args)
@@ -33,7 +34,8 @@ class XMPPClient(ClientXMPP):
         self.send_presence()
         self.plugin['xep_0045'].joinMUC(self.room, self.nick, wait=True)
 
-    def muc_message(self, msg):
+    @staticmethod
+    def muc_message(msg):
         logging.debug("MUC MESSAGE RECEIVED! FROM %s" % msg['from'].bare)
 
     def muc_online(self, presence):
@@ -45,15 +47,25 @@ class XMPPClient(ClientXMPP):
             if self.msg_queue:
                 logging.debug("Sending queued messages...")
                 for m in self.msg_queue:
-                    self.send_message(mto=self.room,
-                                      mbody=m,
-                                      mtype='groupchat')
+                    self._send_msg_to_muc(m)
+                    if self.disconnect_after_send:
+                        self.disconnect(wait=True)
+
+                    # self.send_message(mto=self.room,
+                    #                   mbody=m,
+                    #                   mtype='groupchat')
 
                 self.msg_queue.clear()
 
     def send_muc_message(self, msg):
         if self.ready_to_send:
-            self.send_message(mto=self.room, mbody=msg, mtype='groupchat')
+            # self.send_message(mto=self.room, mbody=msg, mtype='groupchat')
+            self._send_msg_to_muc(msg)
+            if self.disconnect_after_send:
+                self.disconnect(wait=True)
         else:
             logging.debug("Message added to the queue")
             self.msg_queue.append(msg)
+
+    def _send_msg_to_muc(self, msg):
+        self.send_message(mto=self.room, mbody=msg, mtype='groupchat')

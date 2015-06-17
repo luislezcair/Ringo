@@ -1,8 +1,9 @@
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from ringoserver.models import Picture, Rect
-from ringoserver.serializers import PictureSerializer, RectSerializer
+from models import Picture, Rect
+from serializers import PictureSerializer, RectSerializer
 from xmpp import XMPPConnector
+from xmpp.XMPPClient import XMPPClient
 import json
 
 
@@ -10,7 +11,7 @@ class RectViewSet(viewsets.ModelViewSet):
     queryset = Rect.objects.all()
     serializer_class = RectSerializer
 
-    def create(self, request):
+    def create(self, request, **kwargs):
         serializer = RectSerializer(data=request.data, many=True)
         if serializer.is_valid():
             # We can remove this later... We don't really need to save this
@@ -30,8 +31,17 @@ class RectViewSet(viewsets.ModelViewSet):
             picture_json = json.dumps(picture_dict)
 
             # Send the data to the xmpp server where the devices are listening
-            xmpp = XMPPConnector.connector
-            xmpp.send_muc_message(picture_json)
+            connector = XMPPClient(XMPPConnector.jid, XMPPConnector.password, XMPPConnector.room, nick='RingoServer')
+            connector.connect(XMPPConnector.address)
+            connector.process(block=False)
+
+            connector.disconnect_after_send = True
+
+            connector.send_muc_message(picture_json)
+
+            # connector.disconnect(wait=True)
+            # xmpp = XMPPConnector.connector
+            # xmpp.send_muc_message(picture_json)
 
         # Return an empty response since we don't need to inform anything
         return Response()
