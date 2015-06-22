@@ -1,4 +1,4 @@
-from ringoserver.models import Picture, Rect
+from models import Picture, Rect
 from rest_framework import serializers
 
 

@@ -1,7 +1,7 @@
 import sys
 import requests
 import json
-from Common.ServiceDiscoverer import ServiceDiscoverer
+from ServiceDiscoverer import ServiceDiscoverer
 
 
 class FaceSender:
@@ -36,11 +36,16 @@ class FaceSender:
         response = self.session.post(self.rect_endpoint,
                                      data=json.dumps(rects),
                                      headers=headers)
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            with open("debug.html", "w") as f:
+                f.write(e.response.text)
 
     def close(self):
         self.session.close()
 
-    def on_error(self, args):
+    @staticmethod
+    def on_error(args):
         print("Error: %s" % args)
         sys.exit(1)

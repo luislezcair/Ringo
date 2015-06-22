@@ -13,3 +13,13 @@ class Rect(models.Model):
     width = models.IntegerField()
 
     picture = models.ForeignKey(Picture)
+
+
+class Visitor(models.Model):
+    name = models.CharField(max_length=255)
+
+
+class VisitorFaceSample(models.Model):
+    picture = models.ImageField(upload_to='visitor_faces')
+    visitor = models.ForeignKey(Visitor)
+

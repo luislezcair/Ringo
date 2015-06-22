@@ -4,6 +4,10 @@ import argparse
 import numpy
 
 
+# Define some colors (in BGR)
+BLUE = (255, 0, 0)
+GREEN = (0, 255, 0)
+
 def parse_csv(filename):
     images_gray = []
     labels = []
@@ -48,42 +52,41 @@ def main_loop(csv_file, use_ff=False):
     # Open the default capture device (webcam)
     capture = cv2.VideoCapture(-1)
 
-    # Define some colors (in BGR)
-    BLUE = (255, 0, 0)
-    GREEN = (0, 255, 0)
-
     while True:
         _, frame = capture.read()
-
-        # Convert the captured frame to grayscale
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        # Try to detect faces
-        faces = lbp_cascade.detectMultiScale(gray, minSize=(30, 30))
-
-        for (x, y, w, h) in faces:
-            # Crop to the face Region of Interest
-            face_roi = gray[y:y + h, x:x + w]
-
-            # Only for fisher faces and eigen faces resize the face
-            if use_ff:
-                face_resized = cv2.resize(face_roi, (200, 200), 1, 1, cv2.INTER_CUBIC)
-                prediction, confidence = model.predict(face_resized)
-            else:
-                prediction, confidence = model.predict(face_roi)
-
-            # Draw the predicted name and confidence above the face
-            text = "Prediction = %s Confidence = %s" % (names[prediction], confidence)
-            cv2.putText(frame, text, (x - 15, y - 15), cv2.FONT_HERSHEY_PLAIN, 1.0, BLUE, 2)
-
-            # Draw a rectangle around the face
-            cv2.rectangle(frame, (x, y), (x + w, y + h), GREEN, 1)
-
-        cv2.imshow('LBPTest', frame)
 
         key = 0xFF & cv2.waitKey(10)
         if key == 27:
             break
+
+        elif key == 13 or key == 10:
+            # Convert the captured frame to grayscale
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            # Try to detect faces
+            faces = lbp_cascade.detectMultiScale(gray, minSize=(30, 30))
+
+            for (x, y, w, h) in faces:
+                # Crop to the face Region of Interest
+                face_roi = gray[y:y + h, x:x + w]
+
+                # Only for fisher faces and eigen faces resize the face
+                if use_ff:
+                    face_resized = cv2.resize(face_roi, (92, 112), 1, 1, cv2.INTER_CUBIC)
+                    prediction, confidence = model.predict(face_resized)
+                else:
+                    prediction, confidence = model.predict(face_roi)
+
+                # Draw the predicted name and confidence above the face
+                text = "Prediction = %s Confidence = %s" % (names[prediction], confidence)
+                cv2.putText(frame, text, (x - 15, y - 15), cv2.FONT_HERSHEY_PLAIN, 1.0, BLUE, 2)
+
+                # Draw a rectangle around the face
+                cv2.rectangle(frame, (x, y), (x + w, y + h), GREEN, 1)
+
+            cv2.imshow('Face', frame)
+
+        cv2.imshow('LBPTest', frame)
 
 
 if __name__ == '__main__':

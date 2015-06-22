@@ -46,4 +46,4 @@ if __name__ == "__main__":
                     continue
                 abs_path = "%s/%s" % (subject_path, filename)
                 print("%s%s%d%s%s" % (abs_path, SEPARATOR, label, SEPARATOR, full_name))
-            label = label + 1
+            label += 1

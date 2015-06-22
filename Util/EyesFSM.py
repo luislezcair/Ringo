@@ -56,7 +56,8 @@ class EyesFSM():
         self.show(window, frame)
         self.new_frame()
 
-    def get_rect_center(self, rect):
+    @staticmethod
+    def get_rect_center(rect):
         """Returns the coordinates for the center of a rectangle"""
         x, y, w, h = rect
-        return (x + w/2, y + h/2)
+        return x + w/2, y + h/2

@@ -1,0 +1,177 @@
+[
+  {
+    "model": "ringoserver.visitor",
+    "pk": 1,
+    "fields": {
+      "name": "Luis"
+    }
+  },
+
+  {
+    "model": "ringoserver.visitor",
+    "pk": 2,
+    "fields": {
+      "name": "Juli"
+    }
+  },
+
+  {
+    "model": "ringoserver.visitor",
+    "pk": 3,
+    "fields": {
+      "name": "Lucas"
+    }
+  },
+
+  {
+    "model": "ringoserver.visitor",
+    "pk": 4,
+    "fields": {
+      "name": "Euge"
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 1,
+    "fields": {
+      "picture": "visitor_faces/luis/luis_0.png",
+      "visitor": 1
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 2,
+    "fields": {
+      "picture": "visitor_faces/luis/luis_1.png",
+      "visitor": 1
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 3,
+    "fields": {
+      "picture": "visitor_faces/luis/luis_2.png",
+      "visitor": 1
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 4,
+    "fields": {
+      "picture": "visitor_faces/luis/luis_3.png",
+      "visitor": 1
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 5,
+    "fields": {
+      "picture": "visitor_faces/juli/juli_0.png",
+      "visitor": 2
+    }
+  },
+
+    {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 6,
+    "fields": {
+      "picture": "visitor_faces/juli/juli_1.png",
+      "visitor": 2
+    }
+  },
+
+    {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 7,
+    "fields": {
+      "picture": "visitor_faces/juli/juli_2.png",
+      "visitor": 2
+    }
+  },
+
+    {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 8,
+    "fields": {
+      "picture": "visitor_faces/juli/juli_3.png",
+      "visitor": 2
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 9,
+    "fields": {
+      "picture": "visitor_faces/lucas/lucas_0.png",
+      "visitor": 3
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 10,
+    "fields": {
+      "picture": "visitor_faces/lucas/lucas_1.png",
+      "visitor": 3
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 11,
+    "fields": {
+      "picture": "visitor_faces/lucas/lucas_2.png",
+      "visitor": 3
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 12,
+    "fields": {
+      "picture": "visitor_faces/lucas/lucas_3.png",
+      "visitor": 3
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 13,
+    "fields": {
+      "picture": "visitor_faces/euge/euge_0.png",
+      "visitor": 4
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 14,
+    "fields": {
+      "picture": "visitor_faces/euge/euge_1.png",
+      "visitor": 4
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 15,
+    "fields": {
+      "picture": "visitor_faces/euge/euge_2.png",
+      "visitor": 4
+    }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 16,
+    "fields": {
+      "picture": "visitor_faces/euge/euge_3.png",
+      "visitor": 4
+    }
+  }
+]

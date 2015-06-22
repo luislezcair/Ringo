@@ -25,6 +25,8 @@ class XMPPClient(ClientXMPP):
         self.ready_to_send = False
         self.disconnect_after_send = False
 
+        self.ca_certs = 'ringoserver/xmpp/xmpp_cert.pem'
+
     def on_socket_error(self, args):
         print("socket error %s" % args)
         self.stop.set()
@@ -51,15 +53,10 @@ class XMPPClient(ClientXMPP):
                     if self.disconnect_after_send:
                         self.disconnect(wait=True)
 
-                    # self.send_message(mto=self.room,
-                    #                   mbody=m,
-                    #                   mtype='groupchat')
-
                 self.msg_queue.clear()
 
     def send_muc_message(self, msg):
         if self.ready_to_send:
-            # self.send_message(mto=self.room, mbody=msg, mtype='groupchat')
             self._send_msg_to_muc(msg)
             if self.disconnect_after_send:
                 self.disconnect(wait=True)

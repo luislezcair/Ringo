@@ -1,10 +1,12 @@
-from rest_framework import generics, viewsets
+import json
+
+from rest_framework import viewsets
 from rest_framework.response import Response
-from models import Picture, Rect
+from models import Picture, Rect, VisitorFaceSample, Visitor
 from serializers import PictureSerializer, RectSerializer
 from xmpp import XMPPConnector
 from xmpp.XMPPClient import XMPPClient
-import json
+from recognition.visitor_recognizer import VisitorRecognizer
 
 
 class RectViewSet(viewsets.ModelViewSet):
@@ -21,27 +23,38 @@ class RectViewSet(viewsets.ModelViewSet):
             # take the picture from the first Rect.
             picture = serializer.validated_data[0]['picture'].picture
 
-            # TODO: run recognition here and obtain visitor data (name, etc)
+            # Create the Recognizer and pass all available faces
+            recognizer = VisitorRecognizer(VisitorFaceSample.objects.all())
+            recognizer.train_model()
+
+            # Try to recognize people in the incoming picture
+            visitors = recognizer.recognize_visitor(picture)
 
             # Build an URL where the clients can download the image
             picture_url = request.build_absolute_uri(picture.url)
+            response_dict = {"visitors": [], "picture_url": picture_url}
+
+            for visitor_id, confidence in visitors:
+                visitor = Visitor.objects.get(pk=visitor_id)
+
+                visitor_dict = {"name": visitor.name}
+                response_dict["visitors"].append(visitor_dict)
 
             # Pack the data (url and visitor data) in json
-            picture_dict = {'picture_url': picture_url}
-            picture_json = json.dumps(picture_dict)
+            json_response = json.dumps(response_dict)
 
             # Send the data to the xmpp server where the devices are listening
-            connector = XMPPClient(XMPPConnector.jid, XMPPConnector.password, XMPPConnector.room, nick='RingoServer')
-            connector.connect(XMPPConnector.address)
+            info = XMPPConnector.connection_info
+            connector = XMPPClient(jid=info['jid'],
+                                   password=info['password'],
+                                   room=info['room'],
+                                   nick='RingoServer')
+            connector.connect(address=info['address'])
             connector.process(block=False)
 
             connector.disconnect_after_send = True
 
-            connector.send_muc_message(picture_json)
-
-            # connector.disconnect(wait=True)
-            # xmpp = XMPPConnector.connector
-            # xmpp.send_muc_message(picture_json)
+            connector.send_muc_message(json_response)
 
         # Return an empty response since we don't need to inform anything
         return Response()

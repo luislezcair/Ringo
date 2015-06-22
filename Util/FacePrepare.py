@@ -6,7 +6,6 @@ import CropFaces as cf
 import EyesFSM
 from PIL import Image
 
-
 cascade_dir = '/usr/share/opencv/haarcascades'
 
 face_cascade_files = ['haarcascade_frontalface_alt_tree.xml',
@@ -16,7 +15,7 @@ face_cascade_files = ['haarcascade_frontalface_alt_tree.xml',
                       'haarcascade_profileface.xml']
 
 face_cascades = [cv2.CascadeClassifier(os.path.join(cascade_dir, c))
-                    for c in face_cascade_files]
+                 for c in face_cascade_files]
 
 eyes_cascade_files = ['haarcascade_eye.xml',
                       'haarcascade_eye_tree_eyeglasses.xml',
@@ -26,7 +25,7 @@ eyes_cascade_files = ['haarcascade_eye.xml',
                       'haarcascade_mcs_righteye.xml']
 
 eyes_cascades = [cv2.CascadeClassifier(os.path.join(cascade_dir, c))
-                    for c in eyes_cascade_files]
+                 for c in eyes_cascade_files]
 
 # Silly cv2
 CV_GUI_NORMAL = 0x10
@@ -47,7 +46,7 @@ def detect_feature(frame, cascade_list):
     looking for"""
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     for c in cascade_list:
-        features = c.detectMultiScale(gray, minSize=(30, 30))
+        features = c.detectMultiScale(gray, minSize=(60, 60))
         if len(features) > 0:
             return features
     return numpy.empty(0)
@@ -115,7 +114,7 @@ def main_loop(subject_name, directory):
             # Find a non-existing filename for the new image
             while True:
                 filename = os.path.join(directory,
-                            '%s_%s.png' % (subject_name, image_index))
+                                        '%s_%s.png' % (subject_name, image_index))
 
                 if not os.path.exists(filename):
                     break
@@ -132,14 +131,15 @@ def main_loop(subject_name, directory):
             cf.CropFace(pil_img,
                         eye_left=eyes_fsm.eyes[0],
                         eye_right=eyes_fsm.eyes[1],
-                        offset_pct=(0.25, 0.25),
-                        dest_sz=(200, 200)).save(filename)
+                        offset_pct=(0.3, 0.3),
+                        dest_sz=(92, 112)).save(filename)
+            # .save(filename)
 
             cv2.destroyWindow(FACE_WINDOW)
             image_index += 1
             image = numpy.empty(0)
 
-        elif key == 27: # Escape
+        elif key == 27:  # Escape
             break
 
 

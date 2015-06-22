@@ -4,7 +4,6 @@ import gobject
 import re
 from dbus.mainloop.glib import DBusGMainLoop
 
-
 DBusGMainLoop(set_as_default=True)
 
 
@@ -26,7 +25,7 @@ class ServiceDiscoverer:
     def set_timeout(self, timeout):
         self.timeout = timeout
 
-    def onTimeout(self):
+    def on_timeout(self):
         self.loop.quit()
 
         if self.error_handler:
@@ -47,25 +46,25 @@ class ServiceDiscoverer:
                                      'org.freedesktop.Avahi.Server')
 
         browser = dbus.Interface(bus.get_object(avahi.DBUS_NAME,
-            self.server.ServiceBrowserNew(avahi.IF_UNSPEC, avahi.PROTO_INET,
-                self.stype, 'local', dbus.Int32(0))),
-            avahi.DBUS_INTERFACE_SERVICE_BROWSER)
+                                                self.server.ServiceBrowserNew(avahi.IF_UNSPEC, avahi.PROTO_INET,
+                                                                              self.stype, 'local', dbus.Int32(0))),
+                                 avahi.DBUS_INTERFACE_SERVICE_BROWSER)
 
-        browser.connect_to_signal('ItemNew', self.onServiceFound)
+        browser.connect_to_signal('ItemNew', self.on_service_found)
 
-        self.timeout_id = gobject.timeout_add(self.timeout, self.onTimeout)
+        self.timeout_id = gobject.timeout_add(self.timeout, self.on_timeout)
         self.loop.run()
 
-    def onServiceFound(self, iface, proto, name, stype, domain, flags):
+    def on_service_found(self, iface, proto, name, stype, domain, flags):
         if self.name not in name:
             return
 
         self.server.ResolveService(iface, proto, name, stype, domain,
-                avahi.PROTO_UNSPEC, dbus.UInt32(0),
-                reply_handler=self.onServiceResolved,
-                error_handler=self.onServiceResolveError)
+                                   avahi.PROTO_INET, dbus.UInt32(0),
+                                   reply_handler=self.on_service_resolved,
+                                   error_handler=self.on_service_resolve_error)
 
-    def onServiceResolved(self, *args):
+    def on_service_resolved(self, *args):
         gobject.source_remove(self.timeout_id)
         self.loop.quit()
 
@@ -80,14 +79,15 @@ class ServiceDiscoverer:
         if self.resolve_hanlder:
             self.resolve_hanlder(self.service_info)
 
-    def onServiceResolveError(self, args):
+    def on_service_resolve_error(self, args):
         gobject.source_remove(self.timeout_id)
         self.loop.quit()
 
         if self.error_handler:
             self.error_handler(args)
 
-    def parse_txt(self, txt_record):
+    @staticmethod
+    def parse_txt(txt_record):
         kvpair = re.compile("(?P<key>.*)=(?P<value>.*)")
         key_only = re.compile("(?P<key>.*)")
         txt_dict = {}
