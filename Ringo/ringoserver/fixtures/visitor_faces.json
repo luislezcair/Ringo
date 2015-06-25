@@ -3,7 +3,7 @@
     "model": "ringoserver.visitor",
     "pk": 1,
     "fields": {
-      "name": "Luis"
+      "name": "Luis Lezcano Airaldi"
     }
   },
 
@@ -11,7 +11,7 @@
     "model": "ringoserver.visitor",
     "pk": 2,
     "fields": {
-      "name": "Juli"
+      "name": "Juliana Torre"
     }
   },
 
@@ -19,7 +19,7 @@
     "model": "ringoserver.visitor",
     "pk": 3,
     "fields": {
-      "name": "Lucas"
+      "name": "Lucas Hamann"
     }
   },
 
@@ -27,7 +27,7 @@
     "model": "ringoserver.visitor",
     "pk": 4,
     "fields": {
-      "name": "Euge"
+      "name": "Eugenia Baez"
     }
   },
 

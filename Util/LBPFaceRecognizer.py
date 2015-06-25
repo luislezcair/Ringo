@@ -8,6 +8,8 @@ import numpy
 BLUE = (255, 0, 0)
 GREEN = (0, 255, 0)
 
+LBP_RECOGNITION_THRESHOLD = 110.0
+
 def parse_csv(filename):
     images_gray = []
     labels = []
@@ -44,7 +46,7 @@ def main_loop(csv_file, use_ff=False):
     if use_ff:
         model = cv2.createFisherFaceRecognizer()
     else:
-        model = cv2.createLBPHFaceRecognizer()
+        model = cv2.createLBPHFaceRecognizer(threshold=LBP_RECOGNITION_THRESHOLD)
 
     # Train the model with the gray-scale images and the labels
     model.train(images_gray, labels)
@@ -77,8 +79,10 @@ def main_loop(csv_file, use_ff=False):
                 else:
                     prediction, confidence = model.predict(face_roi)
 
+                name = "Desconocido" if prediction < 0 else names[prediction]
+
                 # Draw the predicted name and confidence above the face
-                text = "Prediction = %s Confidence = %s" % (names[prediction], confidence)
+                text = "Prediction = %s Confidence = %s" % (name, confidence)
                 cv2.putText(frame, text, (x - 15, y - 15), cv2.FONT_HERSHEY_PLAIN, 1.0, BLUE, 2)
 
                 # Draw a rectangle around the face

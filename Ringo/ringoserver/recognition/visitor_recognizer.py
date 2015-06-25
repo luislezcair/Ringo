@@ -3,12 +3,13 @@ import numpy
 
 
 CASCADE_FILE = 'ringoserver/recognition/lbpcascade_frontalface.xml'
+LBP_RECOGNITION_THRESHOLD = 110.0
 
 
 class VisitorRecognizer:
     def __init__(self, visitor_faces):
         self.visitors = visitor_faces
-        self.model = cv2.createLBPHFaceRecognizer()
+        self.model = cv2.createLBPHFaceRecognizer(threshold=LBP_RECOGNITION_THRESHOLD)
         self.face_cascade = cv2.CascadeClassifier(CASCADE_FILE)
 
     def _prepare_trainingset(self):
@@ -41,6 +42,7 @@ class VisitorRecognizer:
             face_roi = gray[y:y + h, x:x + w]
 
             prediction, confidence = self.model.predict(face_roi)
-            result.append((prediction, confidence))
+            if prediction >= 0:
+                result.append((prediction, confidence))
 
         return result

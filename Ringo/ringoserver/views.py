@@ -37,7 +37,7 @@ class RectViewSet(viewsets.ModelViewSet):
             for visitor_id, confidence in visitors:
                 visitor = Visitor.objects.get(pk=visitor_id)
 
-                visitor_dict = {"name": visitor.name}
+                visitor_dict = {"name": visitor.name, "confidence": confidence}
                 response_dict["visitors"].append(visitor_dict)
 
             # Pack the data (url and visitor data) in json
