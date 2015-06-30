@@ -38,7 +38,12 @@ if __name__ == "__main__":
         for subdirname in dirnames:
             subject_path = os.path.join(dirname, subdirname)
 
+            with open("%s/info.txt" % subject_path) as f:
+                full_name = f.read().split(":")[1].strip()
+
             for filename in os.listdir(subject_path):
+                if filename == "info.txt":
+                    continue
                 abs_path = "%s/%s" % (subject_path, filename)
                 print("%s%s%d%s%s" % (abs_path, SEPARATOR, label, SEPARATOR, full_name))
             label += 1

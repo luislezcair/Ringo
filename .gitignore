@@ -93,5 +93,6 @@ Ringo/ringo.sqlite3
 Util/photos/
 Util/*.csv
 Util/visitor_faces/
+Util/testing_sets/
 
 CameraClient/debug.html
