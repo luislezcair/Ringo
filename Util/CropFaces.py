@@ -31,7 +31,8 @@
 # ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-import sys, math
+import math
+import cv2
 from PIL import Image
 
 
@@ -106,3 +107,18 @@ def CropFace(image, eye_left=(0,0), eye_right=(0,0), offset_pct=(0.2,0.2), dest_
     image = image.resize(dest_sz, Image.ANTIALIAS)
 
     return image
+
+
+def GetAngleFromEyes(eye_left, eye_right):
+    # get the direction
+    eye_direction = (eye_right[0] - eye_left[0], eye_right[1] - eye_left[1])
+
+    # calc rotation angle in radians
+    rotation = math.atan2(float(eye_direction[1]), float(eye_direction[0]))
+    return rotation
+
+
+def Rotate(image, angle, center):
+    rows, cols = image.shape
+    rotation = cv2.getRotationMatrix2D(center, math.degrees(angle), 1)
+    return cv2.warpAffine(image, rotation, (cols, rows))

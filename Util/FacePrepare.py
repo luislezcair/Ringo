@@ -1,12 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 import cv2
 import numpy
 import argparse
-import CropFaces as cf
+import math
 import EyesFSM
-from PIL import Image
 
-cascade_dir = '/usr/share/opencv/haarcascades'
+cascade_dir = 'cascades'
 
 face_cascade_files = ['haarcascade_frontalface_alt_tree.xml',
                       'haarcascade_frontalface_alt.xml',
@@ -39,6 +41,9 @@ RED = (0, 0, 255)
 # Window names
 MAIN_WINDOW = "Webcam"
 FACE_WINDOW = "Face"
+FINAL_FACE_WINDOW = "Final face"
+
+FACE_OFFSET_Y = 30
 
 
 def detect_feature(frame, cascade_list):
@@ -64,7 +69,22 @@ def on_mouse_event(event, x, y, flags, (fsm, face)):
     fsm.update_window(FACE_WINDOW, face)
 
 
-def main_loop(subject_name, directory):
+def get_angle_from_eyes(eye_left, eye_right):
+    # get the direction
+    eye_direction = (eye_right[0] - eye_left[0], eye_right[1] - eye_left[1])
+
+    # calc rotation angle in radians
+    rotation = math.atan2(float(eye_direction[1]), float(eye_direction[0]))
+    return rotation
+
+
+def rotate(image, angle, center):
+    rows, cols = image.shape
+    rotation = cv2.getRotationMatrix2D(center, math.degrees(angle), 1)
+    return cv2.warpAffine(image, rotation, (cols, rows))
+
+
+def main_loop(directory):
     image_index = 0
     image = numpy.empty(0)
 
@@ -83,59 +103,67 @@ def main_loop(subject_name, directory):
 
             # We want just one face, because we're training the detector
             if faces.size == 4:
-                for (x, y, w, h) in faces:
-                    face_roi = frame[y:y + h, x:x + w]
+                x, y, w, h = faces[0]
+                face_roi = frame[y:y + h, x:x + w]
 
-                    eyes = detect_feature(face_roi, eyes_cascades)
+                # Try to detect eyes in this face
+                eyes = detect_feature(face_roi, eyes_cascades)
 
-                    # Create a window with custom attributes
-                    cv2.namedWindow(FACE_WINDOW, CV_WINDOW_AUTOSIZE | CV_GUI_NORMAL)
+                # Create a window with custom attributes
+                cv2.namedWindow(FACE_WINDOW, CV_WINDOW_AUTOSIZE | CV_GUI_NORMAL)
 
-                    # Initialize our state machine for the eyes
-                    eyes_fsm = EyesFSM.EyesFSM(face_roi.shape)
+                # Initialize our state machine for the eyes
+                eyes_fsm = EyesFSM.EyesFSM(face_roi.shape)
 
-                    # Setup a callback function for mouse events
-                    cv2.setMouseCallback(FACE_WINDOW, on_mouse_event, (eyes_fsm, face_roi))
+                # Setup a callback function for mouse events
+                cv2.setMouseCallback(FACE_WINDOW, on_mouse_event, (eyes_fsm, face_roi))
 
-                    # Make a copy of the image to save it later
-                    image = face_roi.copy()
+                # Make a copy of the image to save it later
+                image = frame.copy()
 
-                    # We only care about people with two eyes.
-                    if eyes.size == 8:
-                        # Populate the state machine with the eyes just found
-                        for e in eyes:
-                            eyes_fsm.set_current_eye_pos(e)
-                            eyes_fsm.next()
+                # We only care about people with two eyes.
+                if eyes.size == 8:
+                    # Populate the state machine with the eyes just found
+                    for e in eyes:
+                        eyes_fsm.set_current_eye_pos(e)
+                        eyes_fsm.next()
 
-                    # Update the window to show the eyes
-                    eyes_fsm.update_window(FACE_WINDOW, face_roi)
+                # Update the window to show the eyes
+                eyes_fsm.update_window(FACE_WINDOW, face_roi)
 
         elif key == ord('s') and image.size > 0 and eyes_fsm and eyes_fsm.is_valid():
             # Find a non-existing filename for the new image
             while True:
-                filename = os.path.join(directory,
-                                        '%s_%s.png' % (subject_name, image_index))
+                filename = os.path.join(directory, '%s.png' % image_index)
 
                 if not os.path.exists(filename):
                     break
                 image_index += 1
 
-            # CropFaces expects a Pillow image, so convert to it
-            rgb_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            pil_img = Image.fromarray(rgb_img)
-
             # Sort the eyes
             eyes_fsm.sort_eyes()
 
-            print("Saving image to %s." % filename)
-            cf.CropFace(pil_img,
-                        eye_left=eyes_fsm.eyes[0],
-                        eye_right=eyes_fsm.eyes[1],
-                        offset_pct=(0.3, 0.3),
-                        dest_sz=(92, 112)).save(filename)
-            # .save(filename)
+            # Get the eyes position relative to the frame from the face ROI
+            eye_left = eyes_fsm.get_frame_coordinates(eyes_fsm.eyes[0], x, y)
+            eye_right = eyes_fsm.get_frame_coordinates(eyes_fsm.eyes[1], x, y)
 
-            cv2.destroyWindow(FACE_WINDOW)
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+            # Rotate the whole frame to align eyes
+            image = rotate(image, get_angle_from_eyes(eye_left, eye_right), eye_left)
+
+            # Crop to the face
+            image = image[y - FACE_OFFSET_Y: y + h + FACE_OFFSET_Y, x: x + w]
+
+            # Rezise the face to a standard size
+            image = cv2.resize(image, (260, 315), interpolation=cv2.INTER_CUBIC)
+
+            print("Saving image to %s." % filename)
+            cv2.imwrite(filename, image)
+
+            # cv2.destroyWindow(FACE_WINDOW)
+            cv2.imshow(FINAL_FACE_WINDOW, image)
+
             image_index += 1
             image = numpy.empty(0)
 
@@ -168,4 +196,4 @@ if __name__ == '__main__':
         with open(info_file, "w") as f:
             f.write("name:%s" % full_name)
 
-    main_loop(args.name, subject_dir)
+    main_loop(subject_dir)

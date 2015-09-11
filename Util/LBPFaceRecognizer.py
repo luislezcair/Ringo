@@ -19,12 +19,11 @@ def parse_csv(filename):
         for line in csv:
             image_file, label, name = line.split(";")
 
-            image = cv2.imread(image_file)
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+            image = cv2.imread(image_file, cv2.CV_LOAD_IMAGE_GRAYSCALE)
 
             label = int(label)
 
-            images_gray.append(gray)
+            images_gray.append(image)
             labels.append(label)
             names[label] = name.strip()
 
@@ -36,7 +35,7 @@ def parse_csv(filename):
 
 def main_loop(csv_file, use_ff=False):
     # Open the cascade file and create the classifier
-    cascade_file = '/usr/share/opencv/lbpcascades/lbpcascade_frontalface.xml'
+    cascade_file = 'cascades/lbpcascade_frontalface.xml'
     lbp_cascade = cv2.CascadeClassifier(cascade_file)
 
     # Parse the CSV file
@@ -73,11 +72,13 @@ def main_loop(csv_file, use_ff=False):
                 face_roi = gray[y:y + h, x:x + w]
 
                 # Only for fisher faces and eigen faces resize the face
+                face_resized = cv2.resize(face_roi, (92, 112), 1, 1, cv2.INTER_CUBIC)
                 if use_ff:
-                    face_resized = cv2.resize(face_roi, (92, 112), 1, 1, cv2.INTER_CUBIC)
+                    # face_resized = cv2.resize(face_roi, (92, 112), 1, 1, cv2.INTER_CUBIC)
                     prediction, confidence = model.predict(face_resized)
                 else:
-                    prediction, confidence = model.predict(face_roi)
+                    # prediction, confidence = model.predict(face_roi)
+                    prediction, confidence = model.predict(face_resized)
 
                 name = "Desconocido" if prediction < 0 else names[prediction]
 
@@ -87,6 +88,8 @@ def main_loop(csv_file, use_ff=False):
 
                 # Draw a rectangle around the face
                 cv2.rectangle(frame, (x, y), (x + w, y + h), GREEN, 1)
+
+                cv2.imshow('Processed face', face_resized)
 
             cv2.imshow('Face', frame)
 

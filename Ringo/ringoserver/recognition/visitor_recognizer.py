@@ -18,9 +18,8 @@ class VisitorRecognizer:
 
         images_gray = []
         for image in images:
-            pic = cv2.imread(image.path)
-            pic_gray = cv2.cvtColor(pic, cv2.COLOR_BGR2GRAY)
-            images_gray.append(pic_gray)
+            pic = cv2.imread(image.path, cv2.CV_LOAD_IMAGE_GRAYSCALE)
+            images_gray.append(pic)
 
         return numpy.array(images_gray), numpy.array(labels)
 
