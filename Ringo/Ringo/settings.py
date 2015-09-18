@@ -103,8 +103,11 @@ REST_FRAMEWORK = {
 }
 
 RINGO = {
-    'XMPP_SERVICE_NAME': 'RingoXMPPServer',
-    'XMPP_SERVICE_TYPE': '_xmpp-server._tcp',
+    'XMPP_SERVICE_NAME': 'ringoxmppserver',
+    'XMPP_SERVER': 'localhost',
+    'XMPP_SERVER_PORT': 5222,
     'XMPP_USERNAME': 'ringo',
-    'XMPP_PASSWORD': 'ringo-123'
+    'XMPP_PASSWORD': 'ringo-123',
+    'XMPP_MUC_NAME': 'ringo',
+    'XMPP_MUC_HOST': 'conference'
 }

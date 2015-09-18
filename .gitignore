@@ -96,3 +96,6 @@ Util/visitor_faces/
 Util/testing_sets/
 
 CameraClient/debug.html
+
+Ringo/ejabberd_django_auth.bat
+Ringo/ejabberd_django_auth.sh
