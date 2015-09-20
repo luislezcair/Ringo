@@ -100,3 +100,5 @@ CameraClient/debug.html
 .idea/workspace.xml
 .idea/tasks.xml
 
+Ringo/ejabberd_django_auth.bat
+Ringo/ejabberd_django_auth.sh

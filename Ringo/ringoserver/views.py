@@ -4,8 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from models import Picture, Rect, VisitorFaceSample, Visitor
 from serializers import PictureSerializer, RectSerializer
-from xmpp import XMPPConnector
-from xmpp.XMPPClient import XMPPClient
+from xmpp import xmppconnector
 from recognition.visitor_recognizer import VisitorRecognizer
 
 
@@ -44,17 +43,7 @@ class RectViewSet(viewsets.ModelViewSet):
             json_response = json.dumps(response_dict)
 
             # Send the data to the xmpp server where the devices are listening
-            info = XMPPConnector.connection_info
-            connector = XMPPClient(jid=info['jid'],
-                                   password=info['password'],
-                                   room=info['room'],
-                                   nick='RingoServer')
-            connector.connect(address=info['address'])
-            connector.process(block=False)
-
-            connector.disconnect_after_send = True
-
-            connector.send_muc_message(json_response)
+            xmppconnector.connect_and_send(json_response)
 
         # Return an empty response since we don't need to inform anything
         return Response()

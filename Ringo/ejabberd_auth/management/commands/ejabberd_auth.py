@@ -87,11 +87,11 @@ class Command(BaseCommand):
         Gathers parameters from eJabberd and executes authentication
         against django backend
         """
-        #logging.basicConfig(
-        #    level="DEBUG",
-        #    format='%(asctime)s %(levelname)s %(message)s',
-        #    filename="/home/luis/a.log",
-        #    filemode='a')
+        # logging.basicConfig(
+        #     level="DEBUG",
+        #     format='%(asctime)s %(levelname)s %(message)s',
+        #     filename="C:\\Users\\luisl\\a.log",
+        #     filemode='a')
 
         self.logger.debug("Starting serving authentication requests for eJabberd")
         success = False
