@@ -7,14 +7,15 @@ import numpy
 import argparse
 import math
 import EyesFSM
+import TanTriggs
 
 cascade_dir = 'cascades'
 
-face_cascade_files = ['haarcascade_frontalface_alt_tree.xml',
+face_cascade_files = ['lbpcascade_frontalface.xml',
+                      'haarcascade_frontalface_alt_tree.xml',
                       'haarcascade_frontalface_alt.xml',
                       'haarcascade_frontalface_alt2.xml',
-                      'haarcascade_frontalface_default.xml',
-                      'haarcascade_profileface.xml']
+                      'haarcascade_frontalface_default.xml']
 
 face_cascades = [cv2.CascadeClassifier(os.path.join(cascade_dir, c))
                  for c in face_cascade_files]
@@ -163,6 +164,8 @@ def main_loop(directory):
 
             # cv2.destroyWindow(FACE_WINDOW)
             cv2.imshow(FINAL_FACE_WINDOW, image)
+
+            TanTriggs.tan_triggs(image)
 
             image_index += 1
             image = numpy.empty(0)

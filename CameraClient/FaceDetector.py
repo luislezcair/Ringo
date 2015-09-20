@@ -1,18 +1,20 @@
+import os
 import cv2
 import numpy
 import struct
 from FaceSender import FaceSender
 
 
-cascade_dir = '/usr/share/opencv/haarcascades/'
+cascade_dir = 'cascades/'
 
-cascade_files = ['haarcascade_frontalface_alt_tree.xml',
+cascade_files = ['lbpcascade_frontalface.xml',
+                 'haarcascade_frontalface_alt_tree.xml',
                  'haarcascade_frontalface_alt.xml',
                  'haarcascade_frontalface_alt2.xml',
-                 'haarcascade_frontalface_default.xml',
-                 'haarcascade_profileface.xml']
+                 'haarcascade_frontalface_default.xml']
 
-cascades = [cv2.CascadeClassifier(cascade_dir + c) for c in cascade_files]
+cascades = [cv2.CascadeClassifier(os.path.join(cascade_dir, c))
+            for c in cascade_files]
 
 
 def detect_face(frame):
@@ -40,7 +42,7 @@ def get_rect(x, y, width, height, picture):
 
 
 sender = FaceSender()
-sender.get_service_info("RingoHTTPMediaServer")
+# sender.get_service_info("RingoHTTPMediaServer")
 sender.set_auth('ringo', 'ringo-123')
 
 capture = cv2.VideoCapture(-1)
