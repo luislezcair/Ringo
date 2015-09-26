@@ -45,7 +45,7 @@ sender = FaceSender()
 # sender.get_service_info("RingoHTTPMediaServer")
 sender.set_auth('ringo', 'ringo-123')
 
-capture = cv2.VideoCapture(-1)
+capture = cv2.VideoCapture(0)
 
 GREEN = (0, 255, 0)
 

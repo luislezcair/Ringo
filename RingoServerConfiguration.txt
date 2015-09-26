@@ -4,16 +4,11 @@ Ringo server configuration:
     - Create admin user "ringo"
     - Create multiuser chat "Ringo" and make it persistent
     - Generate self-signed certificate for the vhost
+    - Make ejabberd run at boot
 
     - Create Avahi server with ejabberd configuration
         - Service type: "_xmpp-server._tcp"
         - Port: 5222
         - Service name: RingoXMPPServer
 
-        - Service type: "_http._tcp"
-        - Port: 8000
-        - Service name: RingoHTTPMediaServer
-
-    - Make ejabberd run at boot
-    - Set enviroment vars: RINGO_PROJECT_PATH and PYTHONPATH, this last one
-      pointing to the former.
+    - Set an eviroment var called RINGO_PROJECT_PATH that points to the project directory

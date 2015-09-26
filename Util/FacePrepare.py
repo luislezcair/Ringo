@@ -90,7 +90,7 @@ def main_loop(directory):
     image = numpy.empty(0)
 
     # Open the default webcam
-    capture = cv2.VideoCapture(-1)
+    capture = cv2.VideoCapture(0)
 
     while True:
         # Read a frame from the capture device and show it
