@@ -25,13 +25,23 @@ def tan_triggs(image):
     image = np.float32(image)
 
     image = cv2.pow(image, GAMMA)
-
     image = difference_of_gaussian(image)
 
-    # mean
-    image = cv2.pow(cv2.absdiff(image, 0), ALPHA)
-    mean = cv2.mean(image)[0]
-    np.divide(image, cv2.pow(mean, 1.0/ALPHA))
+    # mean 1
+    tmp = cv2.pow(cv2.absdiff(image, 0), ALPHA)
+    mean = cv2.mean(tmp)[0]
+    image = cv2.divide(image, cv2.pow(mean, 1.0/ALPHA))
+
+    # mean 2
+    tmp = cv2.pow(cv2.min(cv2.absdiff(image, 0), TAU), ALPHA)
+    mean = cv2.mean(tmp)[0]
+    image = cv2.divide(image, cv2.pow(mean, 1.0/ALPHA))
+
+    # tanh
+    exp_x = cv2.exp(cv2.divide(image, TAU))
+    exp_negx = cv2.exp(cv2.divide(-image, TAU))
+    image = cv2.divide(cv2.subtract(exp_x, exp_negx), cv2.add(exp_x, exp_negx))
+    image = cv2.multiply(image, TAU)
 
     show(image)
 
