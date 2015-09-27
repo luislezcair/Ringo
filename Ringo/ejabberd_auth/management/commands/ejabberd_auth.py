@@ -27,7 +27,8 @@ __author__ = "fabio"
 class Command(BaseCommand):
     logger = logging.getLogger(__name__)
 
-    def from_ejabberd(self, encoding="utf-8"):
+    @staticmethod
+    def from_ejabberd(encoding="utf-8"):
         """
         Reads data from stdin as passed by eJabberd
         """
@@ -48,7 +49,7 @@ class Command(BaseCommand):
 
     def auth(self, username=None, server="localhost", password=None):
         self.logger.debug("Authenticating %s with password %s on server %s" % (username, password, server))
-        #TODO: would be nice if this could take server into account
+        # TODO: would be nice if this could take server into account
         user = authenticate(username=username, password=password)
         return user and user.is_active
 
@@ -57,7 +58,7 @@ class Command(BaseCommand):
         Checks if the user exists and is active
         """
         self.logger.debug("Validating %s on server %s" % (username, server))
-        #TODO: would be nice if this could take server into account
+        # TODO: would be nice if this could take server into account
         try:
             user = get_user_model().objects.get(username=username)
             if user.is_active:
@@ -73,7 +74,7 @@ class Command(BaseCommand):
         Handles password change
         """
         self.logger.debug("Changing password to %s with new password %s on server %s" % (username, password, server))
-        #TODO: would be nice if this could take server into account
+        # TODO: would be nice if this could take server into account
         try:
             user = get_user_model().objects.get(username=username)
             user.set_password(password)

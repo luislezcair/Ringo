@@ -104,7 +104,7 @@ REST_FRAMEWORK = {
 
 RINGO = {
     'XMPP_SERVICE_NAME': 'ringoxmppserver',
-    'XMPP_SERVER': 'localhost',
+    'XMPP_SERVER': '127.0.0.1',
     'XMPP_SERVER_PORT': 5222,
     'XMPP_USERNAME': 'ringo',
     'XMPP_PASSWORD': 'ringo-123',

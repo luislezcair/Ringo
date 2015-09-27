@@ -42,7 +42,6 @@ def get_rect(x, y, width, height, picture):
 
 
 sender = FaceSender()
-# sender.get_service_info("RingoHTTPMediaServer")
 sender.set_auth('ringo', 'ringo-123')
 
 capture = cv2.VideoCapture(0)
