@@ -54,7 +54,8 @@ target/
 .kateproject
 .kateproject.d/
 
-Ringo/media/*
+Ringo/media/photos/*
+Ringo/media/visits/*
 Ringo/static/*
 
 # Ignore ringo database file
