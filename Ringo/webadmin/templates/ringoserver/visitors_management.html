@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visitors</title>
+    <h3><u>List of stored visitors!</u></h3>
+</head>
+<body>
+    {% if visitors_list %}
+        <ul>
+            {% for visitor in visitors_list %}
+            <li> {{ visitor }}   </li>
+            <form action="{% url 'webadmin:visitor_details' visitor.id %}">
+                <input type="submit" value="Go to details!">
+            </form>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No visitors saved!</p>
+    {% endif %}
+    <form action="{% url 'webadmin:create_visitor' %}">
+        <input type="submit" value="Create a Visitor">
+    </form>
+</body>
+</html>
+
+
