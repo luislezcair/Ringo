@@ -16,6 +16,14 @@
   },
 
   {
+    "model": "ringoserver.visitor",
+    "pk": 3,
+    "fields": {
+      "name": "Juliana Torre"
+    }
+  },
+
+  {
     "model": "ringoserver.visitorfacesample",
     "pk": 1,
     "fields": {
@@ -139,5 +147,42 @@
       "picture": "visitor_faces/andrea/5.png",
       "visitor": 2
     }
+  },
+
+  {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 15,
+    "fields": {
+      "picture": "visitor_faces/juli/0.png",
+      "visitor": 3
+    }
+  },
+
+    {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 16,
+    "fields": {
+      "picture": "visitor_faces/juli/1.png",
+      "visitor": 3
+    }
+  },
+
+    {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 17,
+    "fields": {
+      "picture": "visitor_faces/juli/2.png",
+      "visitor": 3
+    }
+  },
+
+    {
+    "model": "ringoserver.visitorfacesample",
+    "pk": 18,
+    "fields": {
+      "picture": "visitor_faces/juli/3.png",
+      "visitor": 3
+    }
   }
 ]
+
