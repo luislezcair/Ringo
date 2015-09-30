@@ -6,7 +6,6 @@ class Picture(models.Model):
     Picture class stores the picture taken in a visit
     """
     picture = models.ImageField(upload_to='photos')
-    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Rect(models.Model):
@@ -54,9 +53,8 @@ class Visit(models.Model):
     Is it mandatory for a visit to have a visitor? what if the visitor is unknown
     """
     visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
-    date = models.DateTimeField('Date of Visit')
+    date = models.DateTimeField(auto_now_add=True)
     picture = models.ForeignKey(Picture, null=True)
-    # visit should store the picture taken from the visitor?
 
     def __unicode__(self):
         return self.visitor.__unicode__() + ' ' + self.date.__str__()

@@ -107,6 +107,7 @@ def process(picture_path):
         image = frame.copy()
 
         # Crop to the face Region of Interest
+        # TODO: there's an error when y - offset goes off limits
         face_roi = image[y - FACE_OFFSET_Y:y + h + FACE_OFFSET_Y, x:x + w]
 
         # Try to detect eyes in this face

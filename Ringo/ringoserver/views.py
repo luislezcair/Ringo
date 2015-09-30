@@ -21,24 +21,32 @@ class RectViewSet(viewsets.ModelViewSet):
 
             # We receive a list of Rects with the same picture, so we just
             # take the picture from the first Rect.
-            picture = serializer.validated_data[0]['picture'].picture
+            picture_obj = serializer.validated_data[0]['picture']
+            image = picture_obj.picture
 
             # Create the Recognizer and pass all available faces
             recognizer = VisitorRecognizer(VisitorFaceSample.objects.all())
             recognizer.train_model()
 
-            # Try to recognize people in the incoming picture
-            visitors = recognizer.recognize_visitor(picture)
-
             # Build an URL where the clients can download the image
-            picture_url = request.build_absolute_uri(picture.url)
+            picture_url = request.build_absolute_uri(image.url)
             response_dict = {"visitors": [], "picture_url": picture_url}
+
+            # Try to recognize people in the incoming picture
+            visitors = recognizer.recognize_visitor(image)
 
             for visitor_id, confidence in visitors:
                 visitor = Visitor.objects.get(pk=visitor_id)
 
                 visitor_dict = {"name": visitor.name, "confidence": confidence}
                 response_dict["visitors"].append(visitor_dict)
+
+            # TODO: handle the case where there are many visitors in a single visit. For now, we use the first one
+            # Create a new visit
+            visitor_id = visitors[0][0]
+            visit = Visit(picture=picture_obj)
+            visit.visitor = Visitor.objects.get(pk=visitor_id) if visitors else None
+            visit.save()
 
             # Pack the data (url and visitor data) in json
             json_response = json.dumps(response_dict)
