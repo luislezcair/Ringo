@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Picture, Rect, Visit, Visitor, Message, Notification
+from .models import Picture, Rect, Visit, Visitor, Message, Notification, VisitorFaceSample
 
 # Register your models here.
 
@@ -9,4 +9,4 @@ admin.site.register(Visitor)
 admin.site.register(Visit)
 admin.site.register(Message)
 admin.site.register(Notification)
-
+admin.site.register(VisitorFaceSample)

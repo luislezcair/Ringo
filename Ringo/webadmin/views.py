@@ -27,7 +27,7 @@ def visit_detail(request, visit_id):
 
 @login_required
 def visitors_management(request):
-    visitors_list = Visitor.objects.order_by('surname')
+    visitors_list = Visitor.objects.order_by('name')
     context = RequestContext(request, {
         'visitors_list': visitors_list,
     })
@@ -37,7 +37,8 @@ def visitors_management(request):
 @login_required
 def visitor_details(request, visitor_id):
     visitor = get_object_or_404(Visitor, pk=visitor_id)
-    return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor})
+    images = VisitorFaceSample.objects.filter(visitor__name=visitor.name)
+    return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
 
 
 @login_required
