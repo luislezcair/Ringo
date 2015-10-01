@@ -58,7 +58,7 @@ class Visit(models.Model):
             unknown = int(self.people) - len(visitors)
             description = ''
             for visitor in visitors:
-                description = description + visitor.__unicode__() + ' '
+                description = description + visitor.__unicode__() + ', '
             if unknown != 0:
                 return description + 'and ' + unknown.__str__() + ' unknown visitors at ' + self.date.__str__()
             else:

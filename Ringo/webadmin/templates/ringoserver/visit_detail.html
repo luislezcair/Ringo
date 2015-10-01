@@ -7,7 +7,15 @@
 <body>
 
 <h2>Visit Details</h2>
-<h3>Mr. {{ visit.visitor }}</h3>
+<h3>Visitors:</h3>
+<ul>
+    {% for visitor in visitors %}
+        <li><h4>Mr. {{ visitor.name }}</h4></li>
+    {% endfor %}
+    {% if unknowns != 0 %}
+        <li>Unknown: {{ unknowns }}</li>
+    {% endif %}
+</ul>
 <h3>Date: {{ visit.date }}</h3>
 
 {% if error_message %}
@@ -18,13 +26,6 @@
 Here will be displayed every visit detail of the visit, including an
 audio message left by the visitor
 </p>
-
-<p>This one bellow is just a test form :)</p>
-<form action="/your_name/" method="post">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form>
 
 </body>
 </html>

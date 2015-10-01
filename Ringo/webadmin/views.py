@@ -7,6 +7,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.shortcuts import render, get_object_or_404, redirect
 
+
 # WEB views
 
 
@@ -22,7 +23,10 @@ def visit_detail(request, visit_id):
     # except Visitor.DoesNotExist:
     #     raise Http404("Visitor does not exist")
     visit = get_object_or_404(Visit, pk=visit_id)
-    return render(request, 'ringoserver/visit_detail.html', {'visit': visit})
+    visitors = Visitor.objects.filter(visit=visit_id)
+    unknowns = int(visit.people) - len(visitors)
+    return render(request, 'ringoserver/visit_detail.html',
+                  {'visit': visit, 'visitors': visitors, 'unknowns': unknowns})
 
 
 @login_required
@@ -80,4 +84,3 @@ class VisitorCreate(CreateView):
     fields = '__all__'
     template_name_suffix = '_create'
     success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
-
