@@ -3,13 +3,16 @@ from django.db import models
 
 class Picture(models.Model):
     """
-    Picture class stores the picture taken in a visit
+    A Picture object represents the picture taken in each visit.
     """
     picture = models.ImageField(upload_to='photos')
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Rect(models.Model):
+    """
+    A Rect saves the coordinates of a face in a picture.
+    """
     x = models.IntegerField()
     y = models.IntegerField()
     height = models.IntegerField()
@@ -32,10 +35,26 @@ class Visitor(models.Model):
 
 class VisitorFaceSample(models.Model):
     """
-    VisitorFaceSample stores every picture of known visitores
+    VisitorFaceSample represents a picture of a known visitor's face.
     """
     picture = models.ImageField(upload_to='visitor_faces')
     visitor = models.ForeignKey(Visitor)
+
+
+class Visit(models.Model):
+    """
+    Represents a visit from a known or unknown visitor.
+    """
+    visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
+    date = models.DateTimeField('Date of Visit')
+    picture = models.ForeignKey(Picture, null=True, blank=True, default=None)
+    people = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        if self.visitor is None:
+            return 'Visitor unknown at ' + self.date.__str__()
+        else:
+            return self.visitor.__unicode__() + ' ' + self.date.__str__()
 
 
 class Account(models.Model):
@@ -47,22 +66,6 @@ class Account(models.Model):
 
     def __unicode__(self):
         return self.name + ' ' + self.surname
-
-
-class Visit(models.Model):
-    """
-    Visit class stores the data from every visit made, either it was from a known or unknown visitor
-    """
-    visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
-    date = models.DateTimeField('Date of Visit')
-    picture = models.ForeignKey(Picture, null=True, blank=True, default=None)
-    # visit should store the picture taken from the visitor?
-
-    def __unicode__(self):
-        if self.visitor is None:
-            return 'Visitor unknown at ' + self.date.__str__()
-        else:
-            return self.visitor.__unicode__() + ' ' + self.date.__str__()
 
 
 class Message(models.Model):
