@@ -55,11 +55,9 @@ def message(request, visitor_id):
 @login_required
 def visit_record(request):
     latest_visits_list = Visit.objects.order_by('-date')
-    # template = loader.get_template('bell/visit_record.html')
     context = RequestContext(request, {
         'latest_visits_list': latest_visits_list,
     })
-    # return HttpResponse(template.render(context))
     return render(request, 'ringoserver/visit_record.html', context)
 
 

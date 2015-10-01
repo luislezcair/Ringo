@@ -9,7 +9,11 @@
     {% if latest_visits_list %}
         <ul>
         {% for visit in latest_visits_list %}
-            <li><a href="{% url 'webadmin:visit_detail' visit.id %}">Mr. {{ visit.visitor }} on {{ visit.date }}</a></li>
+            {% ifequal visit.visitor Null  %}
+                <li><a href="{% url 'webadmin:visit_detail' visit.id %}">Unknown visitor on {{ visit.date }}</a></li>
+            {% else %}
+                <li><a href="{% url 'webadmin:visit_detail' visit.id %}">Mr. {{ visit.visitor }} on {{ visit.date }}</a></li>
+            {% endifequal %}
         {% endfor %}
         </ul>
     {% else %}

@@ -51,15 +51,16 @@ class Account(models.Model):
 
 class Visit(models.Model):
     """
-    Is it mandatory for a visit to have a visitor? what if the visitor is unknown
+    Visit class stores the data from every visit made, either it was from a known or unknown visitor
     """
     visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
     date = models.DateTimeField('Date of Visit')
-    picture = models.ForeignKey(Picture, null=True)
+    picture = models.ForeignKey(Picture, null=True, blank=True, default=None)
     # visit should store the picture taken from the visitor?
 
     def __unicode__(self):
-        return self.visitor.__unicode__() + ' ' + self.date.__str__()
+        visitante = self.visitor.name
+        return visitante + ' ' + self.date.__str__()
 
 
 class Message(models.Model):
