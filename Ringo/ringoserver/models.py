@@ -45,16 +45,24 @@ class Visit(models.Model):
     Represents a visit from a known or unknown visitor.
     """
     # visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
-    visitors = models.ManyToManyField(Visitor)
+    visitors = models.ManyToManyField(Visitor, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     picture = models.ForeignKey(Picture, null=True)
     people = models.IntegerField(default=0)
 
     def __unicode__(self):
-        if self.visitor is None:
-            return 'Visitor unknown at ' + self.date.__str__()
+        if self.visitors is None:
+            return self.visitors + ' visitor unknown at ' + self.date.__str__()
         else:
-            return self.visitor.__unicode__() + ' ' + self.date.__str__()
+            unknown = self.people - self.visitors_set.count()
+            visitors = self.visitors.all()
+            description = ''
+            for visitor in visitors:
+                description = description + visitor.__unicode__() + ' '
+            if unknown != 0:
+                return description + 'and ' + unknown + ' unknown visitors at ' + self.date.__str__()
+            else:
+                return description + 'at ' + self.date.__str__()
 
 
 class Account(models.Model):
