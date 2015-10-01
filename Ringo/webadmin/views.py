@@ -42,17 +42,6 @@ def visitor_details(request, visitor_id):
 
 
 @login_required
-def results(request, visitor_id):
-    response = "you are looking at the results of visitor %s."
-    return HttpResponse(response % visitor_id)
-
-
-@login_required
-def message(request, visitor_id):
-    return HttpResponse("you are leaving a message on visitor %s." % visitor_id)
-
-
-@login_required
 def visit_record(request):
     latest_visits_list = Visit.objects.order_by('-date')
     context = RequestContext(request, {
