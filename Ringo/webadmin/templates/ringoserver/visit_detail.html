@@ -7,9 +7,26 @@
 <body>
 
 <h2>Visit Details</h2>
-<h3>Mr. {{ visit.visitor }}</h3>
+<h3>Visitors:</h3>
+<ul>
+    {% for visitor in visitors %}
+        <li><h4>Mr. {{ visitor.name }}</h4></li>
+    {% endfor %}
+    {% if unknowns != 0 %}
+        <li>Unknown: {{ unknowns }}</li>
+    {% endif %}
+</ul>
+{% block content %}
+    <img src="{{ visit.picture.picture.url }}">
+{% endblock %}
 <h3>Date: {{ visit.date }}</h3>
 
+{% if unknowns != 0 %}
+<p>There seems to be some unknown visitors, would you like to store them?</p>
+    <form action="{% url 'webadmin:create_visitor' %}">
+        <input type="submit" value="Create Unknown">
+    </form>
+{% endif %}
 {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
 {% endif %}
@@ -18,13 +35,6 @@
 Here will be displayed every visit detail of the visit, including an
 audio message left by the visitor
 </p>
-
-<p>This one bellow is just a test form :)</p>
-<form action="/your_name/" method="post">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form>
 
 </body>
 </html>

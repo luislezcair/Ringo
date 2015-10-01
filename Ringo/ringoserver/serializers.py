@@ -15,13 +15,13 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
 class VisitorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visitor
-        fields = ('id', 'name', 'surname', 'welcome')
+        fields = ('id', 'name', 'welcome')
 
 
 class VisitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Visit
-        fields = ('id', 'visitor', 'date')
+        fields = ('id', 'visitors', 'date', 'picture', 'people')
 
 
 class MessageSerializer(serializers.ModelSerializer):
