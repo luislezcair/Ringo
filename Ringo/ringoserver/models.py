@@ -45,7 +45,8 @@ class Visit(models.Model):
     """
     Represents a visit from a known or unknown visitor.
     """
-    visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
+    # visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
+    visitors = models.ManyToManyField(Visitor)
     date = models.DateTimeField('Date of Visit')
     picture = models.ForeignKey(Picture, null=True, blank=True, default=None)
     people = models.IntegerField(default=0)
