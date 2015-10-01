@@ -6,7 +6,6 @@ class Picture(models.Model):
     A Picture object represents the picture taken in each visit.
     """
     picture = models.ImageField(upload_to='photos')
-    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Rect(models.Model):
@@ -47,8 +46,8 @@ class Visit(models.Model):
     """
     # visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
     visitors = models.ManyToManyField(Visitor)
-    date = models.DateTimeField('Date of Visit')
-    picture = models.ForeignKey(Picture, null=True, blank=True, default=None)
+    date = models.DateTimeField(auto_now_add=True)
+    picture = models.ForeignKey(Picture, null=True)
     people = models.IntegerField(default=0)
 
     def __unicode__(self):
@@ -63,10 +62,9 @@ class Account(models.Model):
     Account class represents the device owner's information
     """
     name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return self.name + ' ' + self.surname
+        return self.name
 
 
 class Message(models.Model):
