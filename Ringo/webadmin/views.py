@@ -18,13 +18,11 @@ def index(request):
 
 @login_required
 def visit_detail(request, visit_id):
-    # try:
-    #     visitor = Visitor.objects.get(pk=visitorId)
-    # except Visitor.DoesNotExist:
-    #     raise Http404("Visitor does not exist")
+    # TODO: discuss how to treat the case when unknown people is in the picture.
     visit = get_object_or_404(Visit, pk=visit_id)
     visitors = Visitor.objects.filter(visit=visit_id)
     unknowns = int(visit.people) - len(visitors)
+    # picture = Picture.objects.get(id=visit.picture.id)
     return render(request, 'ringoserver/visit_detail.html',
                   {'visit': visit, 'visitors': visitors, 'unknowns': unknowns})
 
@@ -41,7 +39,12 @@ def visitors_management(request):
 @login_required
 def visitor_details(request, visitor_id):
     visitor = get_object_or_404(Visitor, pk=visitor_id)
-    images = VisitorFaceSample.objects.filter(visitor__name=visitor.name)
+    # TODO: commented code get every picture of the visitor
+    # visits = Visit.objects.filter(visitor__id=visitor_id)
+    # images = []
+    # for visit in visits:
+    #     images.append(visit.picture)
+    images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
     return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
 
 

@@ -16,8 +16,17 @@
         <li>Unknown: {{ unknowns }}</li>
     {% endif %}
 </ul>
+{% block content %}
+    <img src="{{ visit.picture.picture.url }}">
+{% endblock %}
 <h3>Date: {{ visit.date }}</h3>
 
+{% if unknowns != 0 %}
+<p>There seems to be some unknown visitors, would you like to store them?</p>
+    <form action="{% url 'webadmin:create_visitor' %}">
+        <input type="submit" value="Create Unknown">
+    </form>
+{% endif %}
 {% if error_message %}
     <p><strong>{{ error_message }}</strong></p>
 {% endif %}
