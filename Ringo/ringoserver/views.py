@@ -16,29 +16,39 @@ class RectViewSet(viewsets.ModelViewSet):
     def create(self, request, **kwargs):
         serializer = RectSerializer(data=request.data, many=True)
         if serializer.is_valid():
-            # We can remove this later... We don't really need to save this
             serializer.save()
 
             # We receive a list of Rects with the same picture, so we just
             # take the picture from the first Rect.
-            picture = serializer.validated_data[0]['picture'].picture
+            picture_obj = serializer.validated_data[0]['picture']
+            image = picture_obj.picture
 
             # Create the Recognizer and pass all available faces
             recognizer = VisitorRecognizer(VisitorFaceSample.objects.all())
             recognizer.train_model()
 
-            # Try to recognize people in the incoming picture
-            visitors = recognizer.recognize_visitor(picture)
-
             # Build an URL where the clients can download the image
-            picture_url = request.build_absolute_uri(picture.url)
-            response_dict = {"visitors": [], "picture_url": picture_url}
+            picture_url = request.build_absolute_uri(image.url)
+            response_dict = {"visitors": [], "people": 0, "picture_url": picture_url}
 
+            # Create a new visit
+            visit = Visit(picture=picture_obj)
+            visit.save()
+
+            # Try to recognize people in the incoming picture
+            visitors, faces = recognizer.recognize_visitor(image)
+
+            # Add the recognized visitors to the Visit and to the JSON response
             for visitor_id, confidence in visitors:
                 visitor = Visitor.objects.get(pk=visitor_id)
+                visit.visitors.add(visitor)
 
                 visitor_dict = {"name": visitor.name, "confidence": confidence}
                 response_dict["visitors"].append(visitor_dict)
+
+            # Save and send the number of people in the visit
+            response_dict["people"] = visit.people = faces
+            visit.save()
 
             # Pack the data (url and visitor data) in json
             json_response = json.dumps(response_dict)

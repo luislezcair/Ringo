@@ -20,7 +20,7 @@ SIGMA0 = 1
 SIGMA1 = 2
 
 
-def tan_triggs(image):
+def tantriggs(image):
     # Convert to float
     image = np.float32(image)
 
