@@ -65,9 +65,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'ringo.sqlite3'
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'ringo',
-        # 'USER': 'ringo'
     }
 }
 

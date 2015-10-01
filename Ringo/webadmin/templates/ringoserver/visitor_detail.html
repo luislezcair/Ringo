@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visitor Details</title>
+    <h1>Behold the visitor details!!</h1>
+</head>
+<body>
+    <h4>Name: {{ visitor.name }}</h4>
+    <h4>Is he welcome?: {{ visitor.welcome }}</h4>
+    {% block content %}
+    {% for image in images %}
+        <img src="{{ image.picture.url }}">
+    {% endfor %}
+    {% endblock %}
+    <form action="{% url 'webadmin:update_visitor' visitor.id %}">
+        <input type="submit" value="Modify!">
+    </form>
+</body>
+</html>
+

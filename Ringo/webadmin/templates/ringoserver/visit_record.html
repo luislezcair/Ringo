@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visit Record</title>
+    <h3>Last visits in order:</h3>
+</head>
+<body>
+    {% if latest_visits_list %}
+        <ul>
+        {% for visit in latest_visits_list %}
+            <li><a href="{% url 'webadmin:visit_detail' visit.id %}">{{ visit }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No visits were made</p>
+    {% endif %}
+</body>
+</html>
+

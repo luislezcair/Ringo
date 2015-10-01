@@ -1,9 +1,10 @@
 import cv2
 import numpy
+import processing
 
 
-CASCADE_FILE = 'ringoserver/recognition/lbpcascade_frontalface.xml'
-LBP_RECOGNITION_THRESHOLD = 110.0
+CASCADE_FILE = 'ringoserver/recognition/cascades/lbpcascade_frontalface.xml'
+LBP_RECOGNITION_THRESHOLD = 25.0
 
 
 class VisitorRecognizer:
@@ -30,18 +31,12 @@ class VisitorRecognizer:
         self.model.train(images, labels)
 
     def recognize_visitor(self, picture):
-        cv_picture = cv2.imread(picture.path)
-        gray = cv2.cvtColor(cv_picture, cv2.COLOR_BGR2GRAY)
-        faces = self.face_cascade.detectMultiScale(gray, minSize=(30, 30))
-
         result = []
+        faces = processing.process(picture.path)
 
-        for (x, y, w, h) in faces:
-            # Crop to the face Region of Interest
-            face_roi = gray[y:y + h, x:x + w]
-
-            prediction, confidence = self.model.predict(face_roi)
+        for face in faces:
+            prediction, confidence = self.model.predict(face)
             if prediction >= 0:
                 result.append((prediction, confidence))
 
-        return result
+        return result, len(faces)

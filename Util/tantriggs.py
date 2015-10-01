@@ -20,7 +20,7 @@ SIGMA0 = 1
 SIGMA1 = 2
 
 
-def tan_triggs(image):
+def tantriggs(image):
     # Convert to float
     image = np.float32(image)
 
@@ -43,7 +43,9 @@ def tan_triggs(image):
     image = cv2.divide(cv2.subtract(exp_x, exp_negx), cv2.add(exp_x, exp_negx))
     image = cv2.multiply(image, TAU)
 
-    show(image)
+    image = cv2.normalize(image, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1)
+
+    return image
 
 
 def difference_of_gaussian(image):
@@ -57,8 +59,3 @@ def difference_of_gaussian(image):
     gaussian1 = cv2.GaussianBlur(image, (kernel_size1, kernel_size1), SIGMA1, None, SIGMA1, cv2.BORDER_REPLICATE)
 
     return cv2.subtract(gaussian0, gaussian1)
-
-
-def show(image):
-    image = cv2.normalize(image, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8UC1)
-    cv2.imshow("Tan Triggs", image)

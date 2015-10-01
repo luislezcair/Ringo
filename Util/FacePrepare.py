@@ -7,7 +7,7 @@ import numpy
 import argparse
 import math
 import EyesFSM
-import TanTriggs
+import tantriggs
 
 cascade_dir = 'cascades'
 
@@ -43,6 +43,7 @@ RED = (0, 0, 255)
 MAIN_WINDOW = "Webcam"
 FACE_WINDOW = "Face"
 FINAL_FACE_WINDOW = "Final face"
+TANTRIGGS_WINDOW = "Tan Triggs"
 
 FACE_OFFSET_Y = 30
 
@@ -122,12 +123,10 @@ def main_loop(directory):
                 # Make a copy of the image to save it later
                 image = frame.copy()
 
-                # We only care about people with two eyes.
-                if eyes.size == 8:
-                    # Populate the state machine with the eyes just found
-                    for e in eyes:
-                        eyes_fsm.set_current_eye_pos(e)
-                        eyes_fsm.next()
+                # Populate the state machine with the eyes just found
+                for e in eyes:
+                    eyes_fsm.set_current_eye_pos(e)
+                    eyes_fsm.next()
 
                 # Update the window to show the eyes
                 eyes_fsm.update_window(FACE_WINDOW, face_roi)
@@ -159,16 +158,20 @@ def main_loop(directory):
             # Rezise the face to a standard size
             image = cv2.resize(image, (260, 315), interpolation=cv2.INTER_CUBIC)
 
-            print("Saving image to %s." % filename)
-            cv2.imwrite(filename, image)
-
             # cv2.destroyWindow(FACE_WINDOW)
             cv2.imshow(FINAL_FACE_WINDOW, image)
 
-            TanTriggs.tan_triggs(image)
+            image = tantriggs.tantriggs(image)
+            cv2.imshow(TANTRIGGS_WINDOW, image)
+
+            print("Saving image to %s." % filename)
+            cv2.imwrite(filename, image)
 
             image_index += 1
             image = numpy.empty(0)
+
+        elif key == ord('f'):
+            cv2.imwrite(os.path.join(directory, "%s%s%s%s.png" % (x, y, h, w)), frame)
 
         elif key == 27:  # Escape
             break
