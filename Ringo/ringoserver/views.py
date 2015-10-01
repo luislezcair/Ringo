@@ -16,7 +16,6 @@ class RectViewSet(viewsets.ModelViewSet):
     def create(self, request, **kwargs):
         serializer = RectSerializer(data=request.data, many=True)
         if serializer.is_valid():
-            # We can remove this later... We don't really need to save this
             serializer.save()
 
             # We receive a list of Rects with the same picture, so we just
@@ -30,22 +29,25 @@ class RectViewSet(viewsets.ModelViewSet):
 
             # Build an URL where the clients can download the image
             picture_url = request.build_absolute_uri(image.url)
-            response_dict = {"visitors": [], "picture_url": picture_url}
+            response_dict = {"visitors": [], "people": 0, "picture_url": picture_url}
+
+            # Create a new visit
+            visit = Visit(picture=picture_obj)
+            visit.save()
 
             # Try to recognize people in the incoming picture
-            visitors = recognizer.recognize_visitor(image)
+            visitors, faces = recognizer.recognize_visitor(image)
 
+            # Add the recognized visitors to the Visit and to the JSON response
             for visitor_id, confidence in visitors:
                 visitor = Visitor.objects.get(pk=visitor_id)
+                visit.visitors.add(visitor)
 
                 visitor_dict = {"name": visitor.name, "confidence": confidence}
                 response_dict["visitors"].append(visitor_dict)
 
-            # TODO: handle the case where there are many visitors in a single visit. For now, we use the first one
-            # Create a new visit
-            visitor_id = visitors[0][0]
-            visit = Visit(picture=picture_obj)
-            visit.visitor = Visitor.objects.get(pk=visitor_id) if visitors else None
+            # Save and send the number of people in the visit
+            response_dict["people"] = visit.people = faces
             visit.save()
 
             # Pack the data (url and visitor data) in json

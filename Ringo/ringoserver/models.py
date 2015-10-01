@@ -3,12 +3,15 @@ from django.db import models
 
 class Picture(models.Model):
     """
-    Picture class stores the picture taken in a visit
+    A Picture object represents the picture taken in each visit.
     """
     picture = models.ImageField(upload_to='photos')
 
 
 class Rect(models.Model):
+    """
+    A Rect saves the coordinates of a face in a picture.
+    """
     x = models.IntegerField()
     y = models.IntegerField()
     height = models.IntegerField()
@@ -20,7 +23,6 @@ class Rect(models.Model):
 class Visitor(models.Model):
     """
     Visitor class represents each visitor stored in the doorbell system
-    Expetamus Dominum
     """
     name = models.CharField(max_length=200)
     welcome = models.BooleanField(default=True)
@@ -31,10 +33,24 @@ class Visitor(models.Model):
 
 class VisitorFaceSample(models.Model):
     """
-    VisitorFaceSample stores every picture of known visitores
+    VisitorFaceSample represents a picture of a known visitor's face.
     """
     picture = models.ImageField(upload_to='visitor_faces')
     visitor = models.ForeignKey(Visitor)
+
+
+class Visit(models.Model):
+    """
+    Represents a visit from a known or unknown visitor.
+    """
+    # visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
+    visitors = models.ManyToManyField(Visitor)
+    date = models.DateTimeField(auto_now_add=True)
+    picture = models.ForeignKey(Picture, null=True)
+    people = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.date.__str__()
 
 
 class Account(models.Model):
@@ -42,22 +58,9 @@ class Account(models.Model):
     Account class represents the device owner's information
     """
     name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return self.name + ' ' + self.surname
-
-
-class Visit(models.Model):
-    """
-    Is it mandatory for a visit to have a visitor? what if the visitor is unknown
-    """
-    visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
-    date = models.DateTimeField(auto_now_add=True)
-    picture = models.ForeignKey(Picture, null=True)
-
-    def __unicode__(self):
-        return self.visitor.__unicode__() + ' ' + self.date.__str__()
+        return self.name
 
 
 class Message(models.Model):

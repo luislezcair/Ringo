@@ -3,9 +3,10 @@ import sys
 import os
 import argparse
 import numpy
+import processing
 
 
-LBP_RECOGNITION_THRESHOLD = 63.27
+LBP_RECOGNITION_THRESHOLD = 25
 
 
 def parse_csv(filename):
@@ -50,21 +51,16 @@ def main_loop(training_file, testing_file, use_ff=False):
     unknowns = 0
 
     for s in range(0, len(test_labels)):
-        image = test_images[s]
+        image = processing.process(test_images[s])
 
-        # Only for fisher faces and eigen faces resize the face
-        if use_ff:
-            face_resized = cv2.resize(image, (92, 112), 1, 1, cv2.INTER_CUBIC)
-            prediction, confidence = model.predict(face_resized)
-        else:
-            prediction, confidence = model.predict(image)
+        for i in image:
+            prediction, confidence = model.predict(i)
+            print("PREDICTED: %d, REAL: %d, CONFIDENCE: %s" % (prediction, test_labels[s], confidence))
 
-        print("PREDICTED: %d, REAL: %d, CONFIDENCE: %s" % (prediction, test_labels[s], confidence))
-
-        if prediction == test_labels[s]:
-            recognized_faces_good += 1
-        if prediction < 0:
-            unknowns += 1
+            if prediction == test_labels[s]:
+                recognized_faces_good += 1
+            if prediction < 0:
+                unknowns += 1
 
     total = len(test_labels)
     print("Well predicted faces: %s of %s total." % (recognized_faces_good, total))
