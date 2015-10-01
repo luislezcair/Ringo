@@ -59,8 +59,10 @@ class Visit(models.Model):
     # visit should store the picture taken from the visitor?
 
     def __unicode__(self):
-        visitante = self.visitor.name
-        return visitante + ' ' + self.date.__str__()
+        if self.visitor is None:
+            return 'Visitor unknown at ' + self.date.__str__()
+        else:
+            return self.visitor.__unicode__() + ' ' + self.date.__str__()
 
 
 class Message(models.Model):
