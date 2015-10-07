@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index page</title>
+{% extends "_layout.html" %}
+
+{% block title %} Ringo web administration {% endblock %}
+
+{% block content %}
     <h3>This will be the index page for the website!!</h3>
-</head>
-<body>
     <ul>
         <li>
              <a href="{% url 'webadmin:visit_record' %}">Go to visit record</a>
@@ -17,9 +15,4 @@
             <a>TODO: Settings</a>
         </li>
     </ul>
-</body>
-<footer>
-    <a href="{% url 'webadmin:contact' %}">Contact us!</a>
-    <p> &copy;2015 All rights reserved. Ringo Inc.</p>
-</footer>
-</html>
+{% endblock %}

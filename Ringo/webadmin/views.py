@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 @login_required
 def index(request):
-    return render(request, 'webadmin/home.html')
+    return render(request, 'webadmin/index.html')
 
 
 @login_required
