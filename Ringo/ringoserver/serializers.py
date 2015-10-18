@@ -12,26 +12,21 @@ class PictureSerializer(serializers.HyperlinkedModelSerializer):
         model = Picture
 
 
-class VisitorSerializer(serializers.ModelSerializer):
+class VisitorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Visitor
-        fields = ('id', 'name', 'welcome')
 
 
-class VisitSerializer(serializers.ModelSerializer):
+class VisitSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Visit
-        fields = ('id', 'visitors', 'date', 'picture', 'people')
 
 
-class MessageSerializer(serializers.ModelSerializer):
+class MessageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Message
-        fields = ('id', 'visit', 'message_text')
 
 
-class NotificationSerializer(serializers.ModelSerializer):
+class NotificationSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Notification
-        fields = ('id', 'visitor', 'notification_text', 'date')
-

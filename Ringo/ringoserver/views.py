@@ -1,6 +1,6 @@
 import json
 
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework.response import Response
 from models import Picture, Rect, VisitorFaceSample, Visitor, Visit, Message, Notification
 from serializers import PictureSerializer, RectSerializer, VisitorSerializer, VisitSerializer, MessageSerializer, \
@@ -66,46 +66,25 @@ class PictureViewSet(viewsets.ModelViewSet):
 
 
 # Visitor REST
-class VisitorList(generics.ListCreateAPIView):
-    queryset = Visitor.objects.all()
-    serializer_class = VisitorSerializer
-
-
-class VisitorDetail(generics.RetrieveUpdateDestroyAPIView):
+class VisitorViewSet(viewsets.ModelViewSet):
     queryset = Visitor.objects.all()
     serializer_class = VisitorSerializer
 
 
 # Visit REST
-class VisitList(generics.ListCreateAPIView):
-    queryset = Visit.objects.all()
-    serializer_class = VisitSerializer
-
-
-class VisitDetail(generics.RetrieveUpdateDestroyAPIView):
+class VisitViewSet(viewsets.ModelViewSet):
     queryset = Visit.objects.all()
     serializer_class = VisitSerializer
 
 
 # Message REST
 # Is there a need for a complete list of messages?
-class MessageList(generics.ListCreateAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-
-
-class MessageDetail(generics.RetrieveUpdateDestroyAPIView):
+class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
 
 # Notification REST
-class NotificationList(generics.ListCreateAPIView):
+class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
-
-
-class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
-

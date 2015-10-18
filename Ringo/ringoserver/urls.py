@@ -1,17 +1,15 @@
-from django.conf.urls import url
-from rest_framework.urlpatterns import format_suffix_patterns
-from ringoserver import views
+from django.conf.urls import url, include
+from ringoserver.views import *
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register(r'rects', RectViewSet)
+router.register(r'pictures', PictureViewSet)
+router.register(r'visitors', VisitorViewSet)
+router.register(r'visits', VisitViewSet)
+router.register(r'messages', MessageViewSet)
+router.register(r'notifications', NotificationViewSet)
 
 urlpatterns = [
-    url(r'^visitor/(?P<pk>[0-9]+)/$', views.VisitorDetail.as_view()),
-    url(r'^visitor/$', views.VisitorList.as_view()),
-    url(r'^visit/(?P<pk>[0-9]+)/$', views.VisitDetail.as_view()),
-    url(r'^visit/$', views.VisitList.as_view()),
-    url(r'^message/(?P<pk>[0-9]+)/$', views.MessageDetail.as_view()),
-    url(r'^message/$', views.MessageList.as_view()),
-    url(r'^notification/(?P<pk>[0-9]+)/$', views.NotificationDetail.as_view()),
-    url(r'^notification/$', views.NotificationList.as_view()),
+    url(r'', include(router.urls))
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
-

@@ -14,6 +14,15 @@ def index(request):
 
 
 @login_required
+def visit_list(request):
+    latest_visits_list = Visit.objects.order_by('-date')
+    context = RequestContext(request, {
+        'latest_visits_list': latest_visits_list,
+    })
+    return render(request, 'ringoserver/visits.html', context)
+
+
+@login_required
 def visit_detail(request, visit_id):
     # TODO: discuss how to treat the case when unknown people is in the picture.
     visit = get_object_or_404(Visit, pk=visit_id)
@@ -25,12 +34,12 @@ def visit_detail(request, visit_id):
 
 
 @login_required
-def visitors_management(request):
-    visitors_list = Visitor.objects.order_by('name')
+def visitor_list(request):
+    visitors = Visitor.objects.order_by('name')
     context = RequestContext(request, {
-        'visitors_list': visitors_list,
+        'visitor_list': visitors,
     })
-    return render(request, 'ringoserver/visitors_management.html', context)
+    return render(request, 'ringoserver/visitor_list.html', context)
 
 
 @login_required
@@ -43,15 +52,6 @@ def visitor_details(request, visitor_id):
     #     images.append(visit.picture)
     images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
     return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
-
-
-@login_required
-def visit_record(request):
-    latest_visits_list = Visit.objects.order_by('-date')
-    context = RequestContext(request, {
-        'latest_visits_list': latest_visits_list,
-    })
-    return render(request, 'ringoserver/visit_record.html', context)
 
 
 @login_required
