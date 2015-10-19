@@ -44,7 +44,7 @@ def get_rect(x, y, width, height, picture):
 sender = FaceSender()
 sender.set_auth('ringo', 'ringo-123')
 
-capture = cv2.VideoCapture(0)
+capture = cv2.VideoCapture(-1)
 
 GREEN = (0, 255, 0)
 

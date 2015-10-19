@@ -4,9 +4,9 @@
 
 {% block content %}
     <h3>List of stored visitors!</h3>
-    {% if visitors_list %}
+    {% if visitor_list %}
         <ul>
-            {% for visitor in visitors_list %}
+            {% for visitor in visitor_list %}
             <li>{{ visitor }}</li>
             <form action="{% url 'webadmin:visitor_details' visitor.id %}">
                 <input type="submit" value="Go to details!">
