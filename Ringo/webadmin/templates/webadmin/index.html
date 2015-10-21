@@ -1,0 +1,18 @@
+{% extends "_layout.html" %}
+
+{% block title %} Ringo web administration {% endblock %}
+
+{% block content %}
+    <h3>This will be the index page for the website!!</h3>
+    <ul>
+        <li>
+             <a href="{% url 'webadmin:visit_list' %}">Go to visit record</a>
+        </li>
+        <li>
+            <a href="{% url 'webadmin:visitor_list' %}">Go to visitors page</a>
+        </li>
+        <li>
+            <a>TODO: Settings</a>
+        </li>
+    </ul>
+{% endblock %}

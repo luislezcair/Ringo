@@ -2,20 +2,21 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Account',
+            name='Device',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=255)),
-                ('surname', models.CharField(max_length=255)),
+                ('device_auth_user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -34,11 +35,17 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='Owner',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Picture',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('picture', models.ImageField(upload_to=b'photos')),
-                ('timestamp', models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
@@ -56,7 +63,9 @@ class Migration(migrations.Migration):
             name='Visit',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('date', models.DateTimeField(verbose_name=b'Date of Visit')),
+                ('date', models.DateTimeField(auto_now_add=True)),
+                ('people', models.IntegerField(default=0)),
+                ('picture', models.ForeignKey(blank=True, to='ringoserver.Picture', null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -64,7 +73,6 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
-                ('surname', models.CharField(default=b'Sin Apellido', max_length=200)),
                 ('welcome', models.BooleanField(default=True)),
             ],
         ),
@@ -78,8 +86,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='visit',
-            name='visitor',
-            field=models.ForeignKey(default=None, blank=True, to='ringoserver.Visitor', null=True),
+            name='visitors',
+            field=models.ManyToManyField(to='ringoserver.Visitor', blank=True),
         ),
         migrations.AddField(
             model_name='notification',
@@ -90,5 +98,10 @@ class Migration(migrations.Migration):
             model_name='message',
             name='visit',
             field=models.ForeignKey(to='ringoserver.Visit'),
+        ),
+        migrations.AddField(
+            model_name='device',
+            name='owner',
+            field=models.ForeignKey(to='ringoserver.Owner'),
         ),
     ]

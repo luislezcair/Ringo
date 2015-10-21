@@ -4,7 +4,7 @@ import processing
 
 
 CASCADE_FILE = 'ringoserver/recognition/cascades/lbpcascade_frontalface.xml'
-LBP_RECOGNITION_THRESHOLD = 110.0
+LBP_RECOGNITION_THRESHOLD = 25.0
 
 
 class VisitorRecognizer:
@@ -39,4 +39,4 @@ class VisitorRecognizer:
             if prediction >= 0:
                 result.append((prediction, confidence))
 
-        return result
+        return result, len(faces)

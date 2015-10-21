@@ -1,0 +1,16 @@
+{% extends "_layout.html" %}
+
+{% block title %}Registro de visitas{% endblock %}
+
+{% block content %}
+    <h3>Last visits in order:</h3>
+    {% if latest_visits_list %}
+        <ul>
+        {% for visit in latest_visits_list %}
+            <li><a href="{% url 'webadmin:visit_detail' visit.id %}">{{ visit }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No visits were made</p>
+    {% endif %}
+{% endblock %}

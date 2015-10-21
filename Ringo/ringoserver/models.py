@@ -1,15 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Picture(models.Model):
     """
-    Picture class stores the picture taken in a visit
+    A Picture object represents the picture taken in each visit.
     """
     picture = models.ImageField(upload_to='photos')
-    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 class Rect(models.Model):
+    """
+    A Rect saves the coordinates of a face in a picture.
+    """
     x = models.IntegerField()
     y = models.IntegerField()
     height = models.IntegerField()
@@ -20,8 +23,7 @@ class Rect(models.Model):
 
 class Visitor(models.Model):
     """
-    Visitor class represents each visitor stored in the doorbell system
-    Expetamus Dominum
+    Represents each known visitor stored in the system.
     """
     name = models.CharField(max_length=200)
     welcome = models.BooleanField(default=True)
@@ -32,40 +34,58 @@ class Visitor(models.Model):
 
 class VisitorFaceSample(models.Model):
     """
-    VisitorFaceSample stores every picture of known visitores
+    Represents a picture of a known visitor's face.
     """
     picture = models.ImageField(upload_to='visitor_faces')
     visitor = models.ForeignKey(Visitor)
 
 
-class Account(models.Model):
-    """
-    Account class represents the device owner's information
-    """
-    name = models.CharField(max_length=255)
-    surname = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return self.name + ' ' + self.surname
-
-
 class Visit(models.Model):
     """
-    Visit class stores the data from every visit made, either it was from a known or unknown visitor
+    Represents a visit from a known or unknown visitor.
     """
-    visitor = models.ForeignKey(Visitor, null=True, blank=True, default=None)
-    date = models.DateTimeField('Date of Visit')
-    picture = models.ForeignKey(Picture, null=True, blank=True, default=None)
-    # visit should store the picture taken from the visitor?
+    visitors = models.ManyToManyField(Visitor, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    picture = models.ForeignKey(Picture, null=True, blank=True)
+    people = models.IntegerField(default=0)
 
     def __unicode__(self):
-        visitante = self.visitor.name
-        return visitante + ' ' + self.date.__str__()
+        visitors = Visitor.objects.filter(visit=self.id)
+        if len(visitors) == 0:
+            return int(self.people).__str__() + ' visitor unknown at ' + self.date.__str__()
+        else:
+            unknown = int(self.people) - len(visitors)
+            description = ''
+            for visitor in visitors:
+                description = description + visitor.__unicode__() + ', '
+            if unknown != 0:
+                return description + 'and ' + unknown.__str__() + ' unknown visitors at ' + self.date.__str__()
+            else:
+                return description + 'at ' + self.date.__str__()
+
+
+class Owner(models.Model):
+    """
+    Represents a home resident
+    """
+    user = models.OneToOneField(User)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Device(models.Model):
+    """
+    Represents an owner's device. A device can authenticate against django when connecting to the
+    XMPP server, so it needs a django User associated.
+    """
+    device_auth_user = models.OneToOneField(User)
+    owner = models.ForeignKey(Owner)
 
 
 class Message(models.Model):
     """
-    Message class represents each message delivered from a visitor to the owner
+    Represents each message delivered from a visitor to the owner.
     """
     visit = models.ForeignKey(Visit)
     # audio files handling needs to be defined
@@ -92,3 +112,4 @@ class Notification(models.Model):
 
     def __unicode__(self):
         return self.notification_text + ' ' + self.date.__str__()
+

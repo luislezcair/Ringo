@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact us!</title>
-</head>
-<body>
+{% extends "_layout.html" %}
+
+{% block title %} Contact us! {% endblock %}
+
+{% block content %}
     <h1>Contact us!</h1>
 
     {% if form.errors %}
         <p style="color: red;">
-            Please correct the error {{ form.errors|pluralize }} below.
+            Please correct the error {{ form.errors | pluralize }} below.
         </p>
     {% endif %}
 
@@ -20,5 +18,4 @@
         </table>
         <p><input type="submit" value="Submit"></p>
     </form>
-</body>
-</html>
+{% endblock %}

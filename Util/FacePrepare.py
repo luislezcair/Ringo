@@ -123,10 +123,6 @@ def main_loop(directory):
                 # Make a copy of the image to save it later
                 image = frame.copy()
 
-                # We only care about people with two eyes.
-                if eyes.size == 8:
-                    ex, ey, ew, eh = eyes[0]
-                    print ex, ey, ew, eh
                 # Populate the state machine with the eyes just found
                 for e in eyes:
                     eyes_fsm.set_current_eye_pos(e)
@@ -165,7 +161,7 @@ def main_loop(directory):
             # cv2.destroyWindow(FACE_WINDOW)
             cv2.imshow(FINAL_FACE_WINDOW, image)
 
-            image = tantriggs.tan_triggs(image)
+            image = tantriggs.tantriggs(image)
             cv2.imshow(TANTRIGGS_WINDOW, image)
 
             print("Saving image to %s." % filename)
@@ -173,6 +169,9 @@ def main_loop(directory):
 
             image_index += 1
             image = numpy.empty(0)
+
+        elif key == ord('f'):
+            cv2.imwrite(os.path.join(directory, "%s%s%s%s.png" % (x, y, h, w)), frame)
 
         elif key == 27:  # Escape
             break

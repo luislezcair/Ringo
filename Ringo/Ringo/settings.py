@@ -65,9 +65,6 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'ringo.sqlite3'
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'ringo',
-        # 'USER': 'ringo'
     }
 }
 
@@ -97,6 +94,8 @@ MEDIA_URL = '/media/'
 
 # Templates
 TEMPLATE_DIRS = ('templates/',)
+
+LOGIN_URL = '/api-auth/login'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),

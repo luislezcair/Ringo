@@ -40,5 +40,5 @@ if __name__ == "__main__":
 
             for filename in os.listdir(subject_path):
                 abs_path = "%s/%s" % (subject_path, filename)
-                print("%s%s%d%s%s" % (abs_path, SEPARATOR, label, SEPARATOR, full_name))
+                print("%s%s%d" % (abs_path, SEPARATOR, label))
             label += 1

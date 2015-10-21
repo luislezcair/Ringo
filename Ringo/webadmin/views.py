@@ -3,62 +3,55 @@ from forms import ContactForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import RequestContext, loader
-from django.shortcuts import render, get_object_or_404, redirect
-
-# WEB views
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 
 
 @login_required
 def index(request):
-    return render(request, 'webadmin/home.html')
+    return render(request, 'webadmin/index.html')
+
+
+@login_required
+def visit_list(request):
+    latest_visits_list = Visit.objects.order_by('-date')
+    context = RequestContext(request, {
+        'latest_visits_list': latest_visits_list,
+    })
+    return render(request, 'ringoserver/visit_list.html', context)
 
 
 @login_required
 def visit_detail(request, visit_id):
-    # try:
-    #     visitor = Visitor.objects.get(pk=visitorId)
-    # except Visitor.DoesNotExist:
-    #     raise Http404("Visitor does not exist")
+    # TODO: discuss how to treat the case when unknown people is in the picture.
     visit = get_object_or_404(Visit, pk=visit_id)
-    return render(request, 'ringoserver/visit_detail.html', {'visit': visit})
+    visitors = Visitor.objects.filter(visit=visit_id)
+    unknowns = int(visit.people) - len(visitors)
+    # picture = Picture.objects.get(id=visit.picture.id)
+    return render(request, 'ringoserver/visit_detail.html',
+                  {'visit': visit, 'visitors': visitors, 'unknowns': unknowns})
 
 
 @login_required
-def visitors_management(request):
-    visitors_list = Visitor.objects.order_by('name')
+def visitor_list(request):
+    visitors = Visitor.objects.order_by('name')
     context = RequestContext(request, {
-        'visitors_list': visitors_list,
+        'visitor_list': visitors,
     })
-    return render(request, 'ringoserver/visitors_management.html', context)
+    return render(request, 'ringoserver/visitor_list.html', context)
 
 
 @login_required
 def visitor_details(request, visitor_id):
     visitor = get_object_or_404(Visitor, pk=visitor_id)
-    images = VisitorFaceSample.objects.filter(visitor__name=visitor.name)
+    # TODO: commented code get every picture of the visitor
+    # visits = Visit.objects.filter(visitor__id=visitor_id)
+    # images = []
+    # for visit in visits:
+    #     images.append(visit.picture)
+    images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
     return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
-
-
-@login_required
-def results(request, visitor_id):
-    response = "you are looking at the results of visitor %s."
-    return HttpResponse(response % visitor_id)
-
-
-@login_required
-def message(request, visitor_id):
-    return HttpResponse("you are leaving a message on visitor %s." % visitor_id)
-
-
-@login_required
-def visit_record(request):
-    latest_visits_list = Visit.objects.order_by('-date')
-    context = RequestContext(request, {
-        'latest_visits_list': latest_visits_list,
-    })
-    return render(request, 'ringoserver/visit_record.html', context)
 
 
 @login_required
@@ -83,12 +76,11 @@ class VisitorUpdate(UpdateView):
     model = Visitor
     fields = '__all__'
     template_name_suffix = '_update'
-    success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
+    success_url = '/webadmin/visitors'
 
 
 class VisitorCreate(CreateView):
     model = Visitor
     fields = '__all__'
     template_name_suffix = '_create'
-    success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
-
+    success_url = '/webadmin/visitors'

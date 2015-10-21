@@ -1,0 +1,19 @@
+{% extends "_layout.html" %}
+
+{% block title %}Visitantes{% endblock %}
+
+{% block content %}
+    <h3>List of stored visitors!</h3>
+    {% if visitor_list %}
+        <ul>
+            {% for visitor in visitor_list %}
+            <li><a href="{% url 'webadmin:visitor_details' visitor.id %}">{{ visitor }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No visitors saved!</p>
+    {% endif %}
+    <form action="{% url 'webadmin:create_visitor' %}">
+        <input type="submit" value="Create a Visitor">
+    </form>
+{% endblock %}

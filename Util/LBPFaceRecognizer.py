@@ -10,6 +10,7 @@ GREEN = (0, 255, 0)
 
 LBP_RECOGNITION_THRESHOLD = 110.0
 
+
 def parse_csv(filename):
     images_gray = []
     labels = []
