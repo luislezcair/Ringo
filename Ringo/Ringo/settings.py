@@ -95,6 +95,8 @@ MEDIA_URL = '/media/'
 # Templates
 TEMPLATE_DIRS = ('templates/',)
 
+LOGIN_URL = '/api-auth/login'
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGINATE_BY': 10

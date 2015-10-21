@@ -7,10 +7,7 @@
     {% if visitor_list %}
         <ul>
             {% for visitor in visitor_list %}
-            <li>{{ visitor }}</li>
-            <form action="{% url 'webadmin:visitor_details' visitor.id %}">
-                <input type="submit" value="Go to details!">
-            </form>
+            <li><a href="{% url 'webadmin:visitor_details' visitor.id %}">{{ visitor }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

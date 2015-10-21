@@ -9,6 +9,8 @@ router.register(r'visitors', VisitorViewSet)
 router.register(r'visits', VisitViewSet)
 router.register(r'messages', MessageViewSet)
 router.register(r'notifications', NotificationViewSet)
+router.register(r'owners', OwnerViewSet)
+router.register(r'devices', DeviceViewSet)
 
 urlpatterns = [
     url(r'', include(router.urls))

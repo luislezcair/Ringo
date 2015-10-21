@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Picture(models.Model):
@@ -63,14 +64,23 @@ class Visit(models.Model):
                 return description + 'at ' + self.date.__str__()
 
 
-class Account(models.Model):
+class Owner(models.Model):
     """
-    Represents the device owner's information
+    Represents a home resident
     """
-    name = models.CharField(max_length=255)
+    user = models.OneToOneField(User)
 
     def __unicode__(self):
         return self.name
+
+
+class Device(models.Model):
+    """
+    Represents an owner's device. A device can authenticate against django when connecting to the
+    XMPP server, so it needs a django User associated.
+    """
+    device_auth_user = models.OneToOneField(User)
+    owner = models.ForeignKey(Owner)
 
 
 class Message(models.Model):

@@ -3,9 +3,9 @@ from forms import ContactForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import RequestContext, loader
-from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 
 
 @login_required
@@ -19,7 +19,7 @@ def visit_list(request):
     context = RequestContext(request, {
         'latest_visits_list': latest_visits_list,
     })
-    return render(request, 'ringoserver/visits.html', context)
+    return render(request, 'ringoserver/visit_list.html', context)
 
 
 @login_required
@@ -76,11 +76,11 @@ class VisitorUpdate(UpdateView):
     model = Visitor
     fields = '__all__'
     template_name_suffix = '_update'
-    success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
+    success_url = '/webadmin/visitors'
 
 
 class VisitorCreate(CreateView):
     model = Visitor
     fields = '__all__'
     template_name_suffix = '_create'
-    success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
+    success_url = '/webadmin/visitors'

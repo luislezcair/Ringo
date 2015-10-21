@@ -9,7 +9,5 @@
     {% for image in images %}
         <img src="{{ image.picture.url }}">
     {% endfor %}
-    <form action="{% url 'webadmin:update_visitor' visitor.id %}">
-        <input type="submit" value="Modify!">
-    </form>
+    <a href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
 {% endblock %}

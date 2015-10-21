@@ -2,11 +2,10 @@ import json
 
 from rest_framework import viewsets
 from rest_framework.response import Response
-from models import Picture, Rect, VisitorFaceSample, Visitor, Visit, Message, Notification
-from serializers import PictureSerializer, RectSerializer, VisitorSerializer, VisitSerializer, MessageSerializer, \
-    NotificationSerializer
 from xmpp import xmppconnector
 from recognition.visitor_recognizer import VisitorRecognizer
+from models import *
+from serializers import *
 
 
 class RectViewSet(viewsets.ModelViewSet):
@@ -88,3 +87,13 @@ class MessageViewSet(viewsets.ModelViewSet):
 class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
+
+
+class OwnerViewSet(viewsets.ModelViewSet):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
+
+
+class DeviceViewSet(viewsets.ModelViewSet):
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
