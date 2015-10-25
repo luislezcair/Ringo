@@ -111,3 +111,5 @@ RINGO = {
     'XMPP_MUC_NAME': 'ringo',
     'XMPP_MUC_HOST': 'conference'
 }
+
+RINGO_TRAINING_FILE = 'ringoserver/recognition/training.xml'
