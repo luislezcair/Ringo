@@ -68,7 +68,7 @@ class Owner(models.Model):
     """
     Represents a home resident
     """
-    user = models.OneToOneField(User)
+    auth_user = models.OneToOneField(User)
 
     def __unicode__(self):
         return self.name
