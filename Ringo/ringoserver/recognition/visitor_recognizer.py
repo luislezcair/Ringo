@@ -6,8 +6,6 @@ import logging
 from django.conf import settings
 
 
-CASCADE_FILE = 'ringoserver/recognition/cascades/lbpcascade_frontalface.xml'
-
 LBP_RECOGNITION_THRESHOLD = 25.0
 
 logging.basicConfig(level=logging.INFO)
@@ -17,7 +15,6 @@ class VisitorRecognizer:
     def __init__(self, visitor_faces):
         self.visitors = visitor_faces
         self.model = cv2.createLBPHFaceRecognizer(threshold=LBP_RECOGNITION_THRESHOLD)
-        self.face_cascade = cv2.CascadeClassifier(CASCADE_FILE)
 
     def _prepare_trainingset(self):
         labels = [sample.visitor.id for sample in self.visitors]

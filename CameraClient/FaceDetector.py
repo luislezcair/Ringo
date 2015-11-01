@@ -5,21 +5,23 @@ import struct
 from FaceSender import FaceSender
 
 
-cascade_dir = 'cascades/'
+CASCADE_DIR = 'cascades/'
 
-cascade_files = ['lbpcascade_frontalface.xml',
+CASCADE_FILES = ['lbpcascade_frontalface.xml',
                  'haarcascade_frontalface_alt_tree.xml',
                  'haarcascade_frontalface_alt.xml',
                  'haarcascade_frontalface_alt2.xml',
                  'haarcascade_frontalface_default.xml']
 
-cascades = [cv2.CascadeClassifier(os.path.join(cascade_dir, c))
-            for c in cascade_files]
+CASCADES = [cv2.CascadeClassifier(os.path.join(CASCADE_DIR, cascade))
+            for cascade in CASCADE_FILES]
+
+GREEN = (0, 255, 0)
 
 
 def detect_face(frame):
     """Try each cascade in the list until a face is found"""
-    for c in cascades:
+    for c in CASCADES:
         faces = c.detectMultiScale(frame, minSize=(40, 40))
         if len(faces) > 0:
             return faces
@@ -41,41 +43,41 @@ def get_rect(x, y, width, height, picture):
             'picture': picture}
 
 
-sender = FaceSender()
-sender.set_auth('ringo', 'ringo-123')
+def capture_frame():
+    sender = FaceSender()
+    capture = cv2.VideoCapture(-1)
 
-capture = cv2.VideoCapture(-1)
+    while True:
+        _, frame = capture.read()
+        cv2.imshow('Ringo Capture', frame)
 
-GREEN = (0, 255, 0)
+        key = 0xFF & cv2.waitKey(10)
 
-while True:
-    _, frame = capture.read()
+        if key == 13 or key == 10:  # Enter
+            gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = detect_face(gray_frame)
 
-    cv2.imshow('Ringo Capture', frame)
+            if faces.size > 0:
+                # If we have a face, send the picture and wait for the reply which
+                # contains the URL assigned to the picture.
+                picture = sender.post_picture(frame_to_png(frame), 'png')
 
-    key = 0xFF & cv2.waitKey(10)
+                # Append each rect to the list along with the picture URL obtained
+                # before
+                rects = []
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(frame, (x, y), (x+w, y+h), GREEN, 1)
+                    rects.append(get_rect(x, y, w, h, picture))
 
-    if key == 13 or key == 10:  # Enter
-        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = detect_face(gray_frame)
+                # Send the rects
+                sender.post_rect(rects)
+                sender.close()
 
-        if faces.size > 0:
-            # If we have a face, send the picture and wait for the reply which
-            # contains the URL assigned to the picture.
-            picture = sender.post_picture(frame_to_png(frame), 'png')
+                cv2.imshow('Face', frame)
 
-            # Append each rect to the list along with the picture URL obtained
-            # before
-            rects = []
-            for (x, y, w, h) in faces:
-                cv2.rectangle(frame, (x, y), (x+w, y+h), GREEN, 1)
-                rects.append(get_rect(x, y, w, h, picture))
+        elif key == 27:  # Escape
+            break
 
-            # Send the rects
-            sender.post_rect(rects)
-            sender.close()
 
-            cv2.imshow('Face', frame)
-
-    elif key == 27:  # Escape
-        break
+if __name__ == '__main__':
+    capture_frame()
