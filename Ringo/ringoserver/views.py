@@ -27,8 +27,7 @@ class RectViewSet(viewsets.ModelViewSet):
             recognizer.train_model()
 
             # Build an URL where the clients can download the image
-            picture_url = request.build_absolute_uri(image.url)
-            response_dict = {"visitors": [], "people": 0, "picture_url": picture_url}
+            response_dict = {"visitors": [], "people": 0, "picture_url": image.url}
 
             # Create a new visit
             visit = Visit(picture=picture_obj)
