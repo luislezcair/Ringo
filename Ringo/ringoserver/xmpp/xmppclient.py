@@ -49,8 +49,11 @@ class XMPPClient(ClientXMPP):
             self.ready_to_send = True
 
             if not self.has_users():
-                logging.info("GO TO INTERNET MODE")
                 # TODO: don't send the message. Disconnect and connect to GCM
+                logging.info("GO TO INTERNET MODE")
+                self.disconnect(wait=False)
+                logging.info("Disconnected...")
+                return
 
             # If we have messages in the queue, send them
             if self.msg_queue:

@@ -13,7 +13,5 @@
     {% else %}
         <p>No visitors saved!</p>
     {% endif %}
-    <form action="{% url 'webadmin:create_visitor' %}">
-        <input type="submit" value="Create a Visitor">
-    </form>
+    <a class="btn btn-primary" href="{% url 'webadmin:create_visitor' %}">Add visitor</a>
 {% endblock %}
