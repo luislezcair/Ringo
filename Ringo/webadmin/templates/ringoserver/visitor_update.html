@@ -6,6 +6,6 @@
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Update!" />
+        <button class="btn btn-primary" type="submit">Update</button>
     </form>
 {% endblock %}

@@ -37,7 +37,7 @@ class VisitorFaceSample(models.Model):
     Represents a picture of a known visitor's face.
     """
     picture = models.ImageField(upload_to='visitor_faces')
-    visitor = models.ForeignKey(Visitor)
+    visitor = models.ForeignKey(Visitor, related_name='face_samples')
 
 
 class Visit(models.Model):
@@ -68,7 +68,7 @@ class Owner(models.Model):
     """
     Represents a home resident
     """
-    user = models.OneToOneField(User)
+    auth_user = models.OneToOneField(User)
 
     def __unicode__(self):
         return self.name

@@ -98,7 +98,7 @@ TEMPLATE_DIRS = ('templates/',)
 LOGIN_URL = '/api-auth/login'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
     'PAGINATE_BY': 10
 }
 
@@ -106,8 +106,10 @@ RINGO = {
     'XMPP_SERVICE_NAME': 'ringoxmppserver',
     'XMPP_SERVER': '127.0.0.1',
     'XMPP_SERVER_PORT': 5222,
-    'XMPP_USERNAME': 'ringo',
-    'XMPP_PASSWORD': 'ringo-123',
-    'XMPP_MUC_NAME': 'ringo',
+    'XMPP_USERNAME': 'doorbell',
+    'XMPP_PASSWORD': 'doorbell-123',
+    'XMPP_MUC_NAME': 'Ringo',
     'XMPP_MUC_HOST': 'conference'
 }
+
+RINGO_TRAINING_FILE = 'ringoserver/recognition/training.xml'
