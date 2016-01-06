@@ -1,0 +1,46 @@
+{% extends "_layout.html" %}
+
+{% block title %}Registro de visitas{% endblock %}
+
+{% block content %}
+    <h3>Last visits</h3>
+    {% if latest_visits_list %}
+        <table class="table table-stripped table-hover">
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Name</th>
+                    <th>Date / Time</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visit in latest_visits_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if visit.visitors.all %}
+                                {% for v in visit.visitors.all %}
+                                    {{ v.name }}
+                                {% endfor %}
+                            {% else %}
+                                <strong>Unknown visitor</strong>
+                            {% endif %}
+                        </td>
+                        <td>{{ visit.date }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'webadmin:visit_detail' visit.id %}">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </a>
+                            <a class="btn btn-success" href="#">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No visits were made</p>
+    {% endif %}
+{% endblock %}

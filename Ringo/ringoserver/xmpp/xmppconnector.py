@@ -14,7 +14,7 @@ def connect_and_send(json):
     client = xmpp.XMPPClient(jid=jid,
                              password=password,
                              room=room,
-                             nick='RingoServer')
+                             nick='TheDoorbell')
 
     client.connect(address=address)
     client.process(block=False)

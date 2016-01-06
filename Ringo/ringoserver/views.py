@@ -1,12 +1,11 @@
 import json
 
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from rest_framework.response import Response
-from models import Picture, Rect, VisitorFaceSample, Visitor, Visit, Message, Notification
-from serializers import PictureSerializer, RectSerializer, VisitorSerializer, VisitSerializer, MessageSerializer, \
-    NotificationSerializer
 from xmpp import xmppconnector
 from recognition.visitor_recognizer import VisitorRecognizer
+from models import *
+from serializers import *
 
 
 class RectViewSet(viewsets.ModelViewSet):
@@ -28,8 +27,10 @@ class RectViewSet(viewsets.ModelViewSet):
             recognizer.train_model()
 
             # Build an URL where the clients can download the image
-            picture_url = request.build_absolute_uri(image.url)
-            response_dict = {"visitors": [], "people": 0, "picture_url": picture_url}
+            response_dict = {"visitors": [],
+                             "people": 0,
+                             "picture_url": image.url,
+                             "service_port": request.META['SERVER_PORT']}
 
             # Create a new visit
             visit = Visit(picture=picture_obj)
@@ -66,46 +67,35 @@ class PictureViewSet(viewsets.ModelViewSet):
 
 
 # Visitor REST
-class VisitorList(generics.ListCreateAPIView):
-    queryset = Visitor.objects.all()
-    serializer_class = VisitorSerializer
-
-
-class VisitorDetail(generics.RetrieveUpdateDestroyAPIView):
+class VisitorViewSet(viewsets.ModelViewSet):
     queryset = Visitor.objects.all()
     serializer_class = VisitorSerializer
 
 
 # Visit REST
-class VisitList(generics.ListCreateAPIView):
-    queryset = Visit.objects.all()
-    serializer_class = VisitSerializer
-
-
-class VisitDetail(generics.RetrieveUpdateDestroyAPIView):
+class VisitViewSet(viewsets.ModelViewSet):
     queryset = Visit.objects.all()
     serializer_class = VisitSerializer
 
 
 # Message REST
 # Is there a need for a complete list of messages?
-class MessageList(generics.ListCreateAPIView):
-    queryset = Message.objects.all()
-    serializer_class = MessageSerializer
-
-
-class MessageDetail(generics.RetrieveUpdateDestroyAPIView):
+class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
 
 
 # Notification REST
-class NotificationList(generics.ListCreateAPIView):
+class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
 
 
-class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Notification.objects.all()
-    serializer_class = NotificationSerializer
+class OwnerViewSet(viewsets.ModelViewSet):
+    queryset = Owner.objects.all()
+    serializer_class = OwnerSerializer
 
+
+class DeviceViewSet(viewsets.ModelViewSet):
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer

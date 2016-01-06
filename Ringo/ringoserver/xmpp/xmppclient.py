@@ -3,6 +3,9 @@ from sleekxmpp import ClientXMPP
 from collections import deque
 
 
+logging.basicConfig(level=logging.INFO)
+
+
 class XMPPClient(ClientXMPP):
     def __init__(self, jid, password, room, nick):
         ClientXMPP.__init__(self, jid, password)
@@ -28,7 +31,7 @@ class XMPPClient(ClientXMPP):
         self.ca_certs = 'ringoserver/xmpp/xmpp_cert.pem'
 
     def on_socket_error(self, args):
-        print("socket error %s" % args)
+        logging.error("Socket error %s" % args)
         self.stop.set()
 
     def session_start(self, event):
@@ -44,6 +47,13 @@ class XMPPClient(ClientXMPP):
         if presence['muc']['nick'] == self.nick:
             logging.log(logging.DEBUG, "GOT MY OWN PRESENCE!!!!")
             self.ready_to_send = True
+
+            if not self.has_users():
+                # TODO: don't send the message. Disconnect and connect to GCM
+                logging.info("GO TO INTERNET MODE")
+                self.disconnect(wait=False)
+                logging.info("Disconnected...")
+                return
 
             # If we have messages in the queue, send them
             if self.msg_queue:
@@ -66,3 +76,8 @@ class XMPPClient(ClientXMPP):
 
     def _send_msg_to_muc(self, msg):
         self.send_message(mto=self.room, mbody=msg, mtype='groupchat')
+
+    def has_users(self):
+        """Returns True if there are other users connected to the room"""
+        users = self.plugin['xep_0045'].getRoster(self.room)
+        return len(users) > 1

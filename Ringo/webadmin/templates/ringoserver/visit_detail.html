@@ -1,41 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "_layout.html" %}
 
-<h2>Visit Details</h2>
-<h3>Visitors:</h3>
-<ul>
-    {% for visitor in visitors %}
-        <li><h4>Mr. {{ visitor.name }}</h4></li>
-    {% endfor %}
-    {% if unknowns != 0 %}
-        <li>Unknown: {{ unknowns }}</li>
-    {% endif %}
-</ul>
+{% block title %}Detalles de visita{% endblock %}
+
 {% block content %}
+    <h2>Visit Details</h2>
+    <h3>Visitors:</h3>
+    <ul>
+        {% for visitor in visitors %}
+            <li><h4>Mr. {{ visitor.name }}</h4></li>
+        {% endfor %}
+        {% if unknowns != 0 %}
+            <li>Unknown: {{ unknowns }}</li>
+        {% endif %}
+    </ul>
+
     <img src="{{ visit.picture.picture.url }}">
+    <h3>Date: {{ visit.date }}</h3>
+
+    {% if unknowns != 0 %}
+        <p>There seems to be some unknown visitors, would you like to store them?</p>
+        <form action="{% url 'webadmin:create_visitor' %}">
+            <input type="submit" value="Create Unknown">
+        </form>
+    {% endif %}
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    <p>Here will be displayed every visit detail of the visit, including an
+    audio message left by the visitor</p>
 {% endblock %}
-<h3>Date: {{ visit.date }}</h3>
-
-{% if unknowns != 0 %}
-<p>There seems to be some unknown visitors, would you like to store them?</p>
-    <form action="{% url 'webadmin:create_visitor' %}">
-        <input type="submit" value="Create Unknown">
-    </form>
-{% endif %}
-{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-{% endif %}
-
-<p>
-Here will be displayed every visit detail of the visit, including an
-audio message left by the visitor
-</p>
-
-</body>
-</html>
-

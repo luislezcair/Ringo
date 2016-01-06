@@ -3,17 +3,23 @@ from forms import ContactForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import RequestContext, loader
-from django.shortcuts import render, get_object_or_404, redirect
-
-
-# WEB views
+from django.http import HttpResponseRedirect
+from django.template import RequestContext
+from django.shortcuts import render, get_object_or_404
 
 
 @login_required
 def index(request):
-    return render(request, 'webadmin/home.html')
+    return render(request, 'webadmin/index.html')
+
+
+@login_required
+def visit_list(request):
+    latest_visits_list = Visit.objects.order_by('-date')
+    context = RequestContext(request, {
+        'latest_visits_list': latest_visits_list,
+    })
+    return render(request, 'ringoserver/visit_list.html', context)
 
 
 @login_required
@@ -28,12 +34,12 @@ def visit_detail(request, visit_id):
 
 
 @login_required
-def visitors_management(request):
-    visitors_list = Visitor.objects.order_by('name')
+def visitor_list(request):
+    visitors = Visitor.objects.order_by('name')
     context = RequestContext(request, {
-        'visitors_list': visitors_list,
+        'visitor_list': visitors,
     })
-    return render(request, 'ringoserver/visitors_management.html', context)
+    return render(request, 'ringoserver/visitor_list.html', context)
 
 
 @login_required
@@ -46,15 +52,6 @@ def visitor_details(request, visitor_id):
     #     images.append(visit.picture)
     images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
     return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
-
-
-@login_required
-def visit_record(request):
-    latest_visits_list = Visit.objects.order_by('-date')
-    context = RequestContext(request, {
-        'latest_visits_list': latest_visits_list,
-    })
-    return render(request, 'ringoserver/visit_record.html', context)
 
 
 @login_required
@@ -79,11 +76,11 @@ class VisitorUpdate(UpdateView):
     model = Visitor
     fields = '__all__'
     template_name_suffix = '_update'
-    success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
+    success_url = '/webadmin/visitors'
 
 
 class VisitorCreate(CreateView):
     model = Visitor
     fields = '__all__'
     template_name_suffix = '_create'
-    success_url = 'http://127.0.0.1:8000/webadmin/visitors/'
+    success_url = '/webadmin/visitors'
