@@ -10,7 +10,6 @@
         <p>
             <img src="{{ image.picture.url }}">
         </p>
-        
     {% endfor %}
     <a class="btn btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
 {% endblock %}
