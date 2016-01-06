@@ -15,5 +15,8 @@ urlpatterns = [
     url(r'^visitors/(?P<pk>[0-9]+)/edit$', login_required(views.VisitorUpdate.as_view()), name='update_visitor'),
     url(r'^visitors/create/$', login_required(views.VisitorCreate.as_view()), name='create_visitor'),
 
+    # Settings
+    url(r'^settings/(?P<pk>[0-9]+)', login_required(views.ConfigurationUpdate.as_view()), name='configuration_update'),
+
     url(r'^contact/$', views.contact, name='contact')
 ]

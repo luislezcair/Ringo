@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User, Group, Permission
 from django.utils import timezone
-from ringoserver.models import Device, Owner, Visitor, VisitorFaceSample
+from ringoserver.models import Device, Owner, Visitor, VisitorFaceSample, Configuration
 
 
 __author__ = 'Luis Lezcano Airaldi'
@@ -103,3 +103,6 @@ class Command(BaseCommand):
             VisitorFaceSample(picture='visitor_faces/juli/2.png', visitor=v3),
             VisitorFaceSample(picture='visitor_faces/juli/3.png', visitor=v3)
         ])
+
+        self.stdout.write('Creating Configuration')
+        c1 = Configuration.objects.create(id='1')

@@ -50,7 +50,11 @@ def visitor_details(request, visitor_id):
     # images = []
     # for visit in visits:
     #     images.append(visit.picture)
-    images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
+    visits = Visit.objects.filter(visitors__id=visitor_id)
+    images = []
+    for visit in visits:
+        images.append(visit.picture)
+    # images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
     return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
 
 
@@ -84,3 +88,10 @@ class VisitorCreate(CreateView):
     fields = '__all__'
     template_name_suffix = '_create'
     success_url = '/webadmin/visitors'
+
+
+class ConfigurationUpdate(UpdateView):
+    model = Configuration
+    fields = '__all__'
+    template_name_suffix = '_update'
+    success_url = '/webadmin/settings/1'
