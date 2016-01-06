@@ -84,3 +84,10 @@ class VisitorCreate(CreateView):
     fields = '__all__'
     template_name_suffix = '_create'
     success_url = '/webadmin/visitors'
+
+
+class ConfigurationUpdate(UpdateView):
+    model = Configuration
+    fields = '__all__'
+    template_name_suffix = '_update'
+    success_url = '/webadmin/settings/1'

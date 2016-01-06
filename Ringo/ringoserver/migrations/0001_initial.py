@@ -13,6 +13,14 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Configuration',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('doorbell_status', models.BooleanField(default=True)),
+                ('out_of_house_mode', models.BooleanField(default=False)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Device',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -81,7 +89,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('picture', models.ImageField(upload_to=b'visitor_faces')),
-                ('visitor', models.ForeignKey(to='ringoserver.Visitor')),
+                ('visitor', models.ForeignKey(related_name='face_samples', to='ringoserver.Visitor')),
             ],
         ),
         migrations.AddField(
