@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 @login_required
@@ -90,11 +91,17 @@ class VisitorCreate(CreateView):
     success_url = '/webadmin/visitors'
 
 
-class ConfigurationUpdate(UpdateView):
+class ConfigurationUpdate(SuccessMessageMixin, UpdateView):
     model = Configuration
     fields = '__all__'
     template_name_suffix = '_update'
     success_url = '/webadmin/settings/1'
+    success_message = "The configuration was successfully updated"
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+        )
 
 
 class VisitUpdate(UpdateView):
