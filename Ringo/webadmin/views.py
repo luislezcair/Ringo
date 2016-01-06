@@ -50,7 +50,11 @@ def visitor_details(request, visitor_id):
     # images = []
     # for visit in visits:
     #     images.append(visit.picture)
-    images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
+    visits = Visit.objects.filter(visitors__id=visitor_id)
+    images = []
+    for visit in visits:
+        images.append(visit.picture)
+    # images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
     return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
 
 
