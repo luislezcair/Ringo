@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^visits/$', views.visit_list, name='visit_list'),
     url(r'^visit/(?P<visit_id>[0-9]+)/$', views.visit_detail, name='visit_detail'),
+    url(r'^visit/(?P<pk>[0-9]+)/edit$', login_required(views.VisitUpdate.as_view()), name='visit_update'),
 
     # Visitors
     url(r'^visitors/$', views.visitor_list, name='visitor_list'),

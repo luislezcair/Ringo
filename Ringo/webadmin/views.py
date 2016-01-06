@@ -95,3 +95,10 @@ class ConfigurationUpdate(UpdateView):
     fields = '__all__'
     template_name_suffix = '_update'
     success_url = '/webadmin/settings/1'
+
+
+class VisitUpdate(UpdateView):
+    model = Visit
+    fields = ('visitors',)
+    template_name_suffix = '_update'
+    success_url = '/webadmin'
