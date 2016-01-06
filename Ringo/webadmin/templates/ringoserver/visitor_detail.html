@@ -7,7 +7,9 @@
     <h4>Name: {{ visitor.name }}</h4>
     <h4>Is he welcome?: {{ visitor.welcome }}</h4>
     {% for image in images %}
-        <img src="{{ image.picture.url }}">
+        <p>
+            <img src="{{ image.picture.url }}">
+        </p>
     {% endfor %}
-    <a href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
+    <a class="btn btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
 {% endblock %}
