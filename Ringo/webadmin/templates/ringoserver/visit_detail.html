@@ -28,6 +28,5 @@
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
 
-    <p>Here will be displayed every visit detail of the visit, including an
-    audio message left by the visitor</p>
+    <a class="btn btn-primary" href="{% url 'webadmin:visit_update' visit.id %}">Not the right visitor?</a>
 {% endblock %}

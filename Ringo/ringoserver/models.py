@@ -113,3 +113,10 @@ class Notification(models.Model):
     def __unicode__(self):
         return self.notification_text + ' ' + self.date.__str__()
 
+
+class Configuration(models.Model):
+    """
+    Configuration class stores the the user's configuration of the doorbell
+    """
+    doorbell_status = models.BooleanField(default=True)
+    out_of_house_mode = models.BooleanField(default=False)

@@ -2,7 +2,8 @@ import sys
 import requests
 import json
 
-URL = "http://localhost:8000/doorbell/api/"
+#URL = "http://localhost:8000/doorbell/api/"
+URL = "http://192.168.1.105:8000/doorbell/api/"
 PICTURE_URL = URL + "pictures/"
 RECT_URL = URL + "rects/"
 
