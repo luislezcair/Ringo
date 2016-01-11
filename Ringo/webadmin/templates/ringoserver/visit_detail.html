@@ -1,31 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "_layout.html" %}
 
-<h2>Visit Details</h2>
-<h3>Mr. {{ visit.visitor }}</h3>
-<h3>Date: {{ visit.date }}</h3>
+{% block title %}Detalles de visita{% endblock %}
 
-{% if error_message %}
-    <p><strong>{{ error_message }}</strong></p>
-{% endif %}
+{% block content %}
+    <h2>Visit Details</h2>
+    <h3>Visitors:</h3>
+    <ul>
+        {% for visitor in visitors %}
+            <li><h4>Mr. {{ visitor.name }}</h4></li>
+        {% endfor %}
+        {% if unknowns != 0 %}
+            <li>Unknown: {{ unknowns }}</li>
+        {% endif %}
+    </ul>
 
-<p>
-Here will be displayed every visit detail of the visit, including an
-audio message left by the visitor
-</p>
+    <img src="{{ visit.picture.picture.url }}">
+    <h3>Date: {{ visit.date }}</h3>
 
-<p>This one bellow is just a test form :)</p>
-<form action="/your_name/" method="post">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form>
+    {% if unknowns != 0 %}
+        <p>There seems to be some unknown visitors, would you like to store them?</p>
+        <form action="{% url 'webadmin:create_visitor' %}">
+            <input type="submit" value="Create Unknown">
+        </form>
+    {% endif %}
 
-</body>
-</html>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
 
+    <a class="btn btn-primary" href="{% url 'webadmin:visit_update' visit.id %}">Not the right visitor?</a>
+{% endblock %}

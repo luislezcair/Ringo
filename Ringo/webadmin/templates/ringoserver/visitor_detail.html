@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Visitor Details</title>
+{% extends "_layout.html" %}
+
+{% block title %}Detalles del visitante{% endblock %}
+
+{% block content %}
     <h1>Behold the visitor details!!</h1>
-</head>
-<body>
     <h4>Name: {{ visitor.name }}</h4>
     <h4>Is he welcome?: {{ visitor.welcome }}</h4>
-    {% block content %}
     {% for image in images %}
-        <img src="{{ image.picture.url }}">
+        <p>
+            <img src="{{ image.picture.url }}">
+        </p>
     {% endfor %}
-    {% endblock %}
-    <form action="{% url 'webadmin:update_visitor' visitor.id %}">
-        <input type="submit" value="Modify!">
-    </form>
-</body>
-</html>
-
+    <a class="btn btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
+{% endblock %}

@@ -1,17 +1,20 @@
+import os
 import cv2
 import numpy
 import processing
+import logging
+from django.conf import settings
 
 
-CASCADE_FILE = 'ringoserver/recognition/cascades/lbpcascade_frontalface.xml'
 LBP_RECOGNITION_THRESHOLD = 25.0
+
+logging.basicConfig(level=logging.INFO)
 
 
 class VisitorRecognizer:
     def __init__(self, visitor_faces):
         self.visitors = visitor_faces
         self.model = cv2.createLBPHFaceRecognizer(threshold=LBP_RECOGNITION_THRESHOLD)
-        self.face_cascade = cv2.CascadeClassifier(CASCADE_FILE)
 
     def _prepare_trainingset(self):
         labels = [sample.visitor.id for sample in self.visitors]
@@ -25,10 +28,18 @@ class VisitorRecognizer:
         return numpy.array(images_gray), numpy.array(labels)
 
     def train_model(self):
-        # TODO: save the training set and load it here: model.save() & model.load()
-
-        images, labels = self._prepare_trainingset()
-        self.model.train(images, labels)
+        """
+        Load the training file if it exists. If not, train the model with the
+        visitors from the database and save the training.
+        """
+        if os.path.exists(settings.RINGO_TRAINING_FILE):
+            self.model.load(settings.RINGO_TRAINING_FILE)
+            logging.info("Training file loaded")
+        else:
+            images, labels = self._prepare_trainingset()
+            self.model.train(images, labels)
+            self.model.save(settings.RINGO_TRAINING_FILE)
+            logging.info("Training file not found. Training and saving...")
 
     def recognize_visitor(self, picture):
         result = []

@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "_layout.html" %}
+
+{% block title %}Agregar visitante conocido{% endblock %}
+
+{% block content %}
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Create">
+        <button class="btn btn-primary" type="submit">Create</button>
     </form>
-</body>
-</html>
-
+{% endblock %}
