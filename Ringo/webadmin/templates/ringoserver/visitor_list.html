@@ -2,8 +2,11 @@
 
 {% block title %}Visitantes{% endblock %}
 
+{% block page_header %}
+    <h1>Known visitors</h1>
+{% endblock %}
+
 {% block content %}
-    <h3>List of stored visitors!</h3>
     {% if visitor_list %}
         <ul>
             {% for visitor in visitor_list %}

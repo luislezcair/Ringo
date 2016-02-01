@@ -12,8 +12,8 @@
     <title>{% block title %}Ringo{% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -25,24 +25,30 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li><a href="{% url 'webadmin:visit_list' %}">Visit history</a></li>
+                <li><a href="{% url 'webadmin:visitor_list' %}">Owners & Devices</a></li>
                 <li><a href="{% url 'webadmin:visitor_list' %}">Visitors</a></li>
+                <li><a href="{% url 'webadmin:visit_list' %}">Visit history</a></li>
                 <li><a href="{% url 'webadmin:configuration_update' 1 %}">Settings</a></li>
               </ul>
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
-        <div class="row">
-            {% block content %}{% endblock %}
+
+    <div class="container">
+        <div class="page-header">
+            {% block page_header %}{% endblock %}
         </div>
+
+        {% block content %}{% endblock %}
     </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">&copy;2015 All rights reserved. Ringo Inc. <a href="{% url 'webadmin:contact' %}">Contact us!</a></p>
+        </div>
+    </footer>
 
     <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
-<footer>
-    <a href="{% url 'webadmin:contact' %}">Contact us!</a>
-    <p>&copy;2015 All rights reserved. Ringo Inc.</p>
-</footer>
 </html>

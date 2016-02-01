@@ -2,8 +2,11 @@
 
 {% block title %}Detalles de visita{% endblock %}
 
+{% block page_header %}
+    <h1>Visit details</h1>
+{% endblock %}
+
 {% block content %}
-    <h2>Visit Details</h2>
     <h3>Visitors:</h3>
     <ul>
         {% for visitor in visitors %}

@@ -2,8 +2,8 @@ import json
 
 from rest_framework import viewsets
 from rest_framework.response import Response
-from xmpp import xmppconnector
-from recognition.visitor_recognizer import VisitorRecognizer
+from ringoserver.xmpp import xmppconnector
+from ringoserver.recognition.visitor_recognizer import VisitorRecognizer
 from models import *
 from serializers import *
 

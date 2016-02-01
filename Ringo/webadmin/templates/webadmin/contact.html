@@ -2,9 +2,11 @@
 
 {% block title %} Contact us! {% endblock %}
 
-{% block content %}
+{% block page_header %}
     <h1>Contact us!</h1>
+{% endblock %}
 
+{% block content %}
     {% if form.errors %}
         <p style="color: red;">
             Please correct the error {{ form.errors | pluralize }} below.
