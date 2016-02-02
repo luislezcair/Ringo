@@ -25,6 +25,8 @@ class Command(BaseCommand):
         # Create the superuser
         self.stdout.write('Creating super user')
         User.objects.create(username='ringo',
+                            first_name='Ringo',
+                            last_name='System',
                             password=make_password('ringo-123'),
                             is_active=True,
                             is_superuser=True,
@@ -35,6 +37,8 @@ class Command(BaseCommand):
         # Create an user for the doorbell API
         self.stdout.write('Creating doorbell user')
         doorbell_user = User.objects.create(username='doorbell',
+                                            first_name='Doorbell',
+                                            last_name='System',
                                             password=make_password('doorbell-123'),
                                             is_active=True,
                                             is_superuser=False,
@@ -44,6 +48,8 @@ class Command(BaseCommand):
 
         # Create an owner and a device
         owner_user = User.objects.create(username='luis',
+                                         first_name='Luis',
+                                         last_name='Lezcano Airaldi',
                                          password=make_password('luis-123'),
                                          email='luislezcair@gmail.com',
                                          is_active=True,
@@ -53,6 +59,7 @@ class Command(BaseCommand):
                                          date_joined=today)
 
         device_user = User.objects.create(username='device1',
+                                          first_name='Sony Xperia M',
                                           password=make_password('device1-123'),
                                           is_active=True,
                                           is_superuser=False,
@@ -105,4 +112,4 @@ class Command(BaseCommand):
         ])
 
         self.stdout.write('Creating Configuration')
-        c1 = Configuration.objects.create(id='1')
+        Configuration.objects.create(id='1')

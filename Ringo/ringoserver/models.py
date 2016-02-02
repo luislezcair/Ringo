@@ -70,9 +70,6 @@ class Owner(models.Model):
     """
     auth_user = models.OneToOneField(User)
 
-    def __unicode__(self):
-        return self.name
-
 
 class Device(models.Model):
     """

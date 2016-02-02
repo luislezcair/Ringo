@@ -4,6 +4,8 @@ from ringoserver.models import *
 from forms import ContactForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -95,3 +97,11 @@ class VisitUpdate(UpdateView):
     fields = ('visitors',)
     template_name_suffix = '_update'
     success_url = '/webadmin'
+
+
+class OwnersDevicesListView(ListView):
+    model = Owner
+
+
+class OwnersDevicesDetailView(DetailView):
+    model = Owner

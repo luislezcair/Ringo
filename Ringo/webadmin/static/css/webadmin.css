@@ -30,3 +30,7 @@ img {
     width: 20%;
     height: 20%;
 }
+
+.dropdown-menu > li > a > i {
+    margin-right: 6px;
+}
