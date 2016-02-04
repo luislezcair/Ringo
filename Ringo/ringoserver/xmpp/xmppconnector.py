@@ -1,5 +1,5 @@
 from django.conf import settings
-import xmppclient as xmpp
+from ringoserver.xmpp import xmppclient as xmpp
 
 # Read settings
 jid = "%s@%s" % (settings.RINGO['XMPP_USERNAME'], settings.RINGO['XMPP_SERVICE_NAME'])

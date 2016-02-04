@@ -1,0 +1,21 @@
+{% extends "_layout.html" %}
+
+{% block title %}Owners & Devices{% endblock %}
+
+{% block page_header %}
+    <h1>Owners & Devices</h1>
+{% endblock %}
+
+{% block content %}
+    <h2>Owners</h2>
+    {% for owner in object_list %}
+        {{ owner.auth_user.get_full_name }}
+
+        <h3>Devices for {{ owner.auth_user.first_name }}</h3>
+        <ul>
+        {% for device in owner.device_set.all %}
+            <li>{{ device.device_auth_user.first_name }}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}

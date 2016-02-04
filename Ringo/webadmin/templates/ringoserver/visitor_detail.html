@@ -1,15 +1,17 @@
 {% extends "_layout.html" %}
 
-{% block title %}Detalles del visitante{% endblock %}
+{% block title %}Visitor details{% endblock %}
+
+{% block page_header %}
+    <h1>Visitor details</h1>
+{% endblock %}
 
 {% block content %}
-    <h1>Behold the visitor details!!</h1>
     <h4>Name: {{ visitor.name }}</h4>
     <h4>Is he welcome?: {{ visitor.welcome }}</h4>
-    {% for image in images %}
-        <p>
-            <img src="{{ image.picture.url }}">
-        </p>
+    <h4>Last visits from {{ visitor.name.split.0 }}</h4>
+    {% for visit in visitor.visit_set.all %}
+        <p><img src="{{ visit.picture.picture.url }}"></p>
     {% endfor %}
     <a class="btn btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
 {% endblock %}

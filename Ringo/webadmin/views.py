@@ -1,10 +1,13 @@
+# coding=utf-8
+
 from ringoserver.models import *
 from forms import ContactForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -17,9 +20,7 @@ def index(request):
 @login_required
 def visit_list(request):
     latest_visits_list = Visit.objects.order_by('-date')
-    context = RequestContext(request, {
-        'latest_visits_list': latest_visits_list,
-    })
+    context = {'latest_visits_list': latest_visits_list}
     return render(request, 'ringoserver/visit_list.html', context)
 
 
@@ -30,33 +31,22 @@ def visit_detail(request, visit_id):
     visitors = Visitor.objects.filter(visit=visit_id)
     unknowns = int(visit.people) - len(visitors)
     # picture = Picture.objects.get(id=visit.picture.id)
-    return render(request, 'ringoserver/visit_detail.html',
-                  {'visit': visit, 'visitors': visitors, 'unknowns': unknowns})
+    context = {'visit': visit, 'visitors': visitors, 'unknowns': unknowns}
+    return render(request, 'ringoserver/visit_detail.html', context)
 
 
 @login_required
 def visitor_list(request):
     visitors = Visitor.objects.order_by('name')
-    context = RequestContext(request, {
-        'visitor_list': visitors,
-    })
+    context = {'visitor_list': visitors}
     return render(request, 'ringoserver/visitor_list.html', context)
 
 
 @login_required
 def visitor_details(request, visitor_id):
     visitor = get_object_or_404(Visitor, pk=visitor_id)
-    # TODO: commented code get every picture of the visitor
-    # visits = Visit.objects.filter(visitor__id=visitor_id)
-    # images = []
-    # for visit in visits:
-    #     images.append(visit.picture)
-    visits = Visit.objects.filter(visitors__id=visitor_id)
-    images = []
-    for visit in visits:
-        images.append(visit.picture)
-    # images = VisitorFaceSample.objects.filter(visitor__id=visitor.id)
-    return render(request, 'ringoserver/visitor_detail.html', {'visitor': visitor, 'images': images})
+    context = {'visitor': visitor}
+    return render(request, 'ringoserver/visitor_detail.html', context)
 
 
 @login_required
@@ -99,9 +89,7 @@ class ConfigurationUpdate(SuccessMessageMixin, UpdateView):
     success_message = "The configuration was successfully updated"
 
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(
-            cleaned_data,
-        )
+        return self.success_message % dict(cleaned_data,)
 
 
 class VisitUpdate(UpdateView):
@@ -109,3 +97,11 @@ class VisitUpdate(UpdateView):
     fields = ('visitors',)
     template_name_suffix = '_update'
     success_url = '/webadmin'
+
+
+class OwnersDevicesListView(ListView):
+    model = Owner
+
+
+class OwnersDevicesDetailView(DetailView):
+    model = Owner

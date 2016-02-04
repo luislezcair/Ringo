@@ -1,7 +1,6 @@
 import logging
-from sleekxmpp import ClientXMPP
 from collections import deque
-
+from sleekxmpp import ClientXMPP
 
 logging.basicConfig(level=logging.INFO)
 

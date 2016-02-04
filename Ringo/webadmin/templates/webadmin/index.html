@@ -2,8 +2,11 @@
 
 {% block title %}Ringo web administration{% endblock %}
 
+{% block page_header %}
+    <h1>Home</h1>
+{% endblock %}
+
 {% block content %}
-    <h1>This will be the index page for the website!!</h1>
     <ul>
         <li>
              <a href="{% url 'webadmin:visit_list' %}">Go to visit record</a>

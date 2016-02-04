@@ -24,6 +24,13 @@ from django.core.management.base import BaseCommand
 __author__ = "fabio"
 
 
+# logging.basicConfig(
+#      level="DEBUG",
+#      format='%(asctime)s %(levelname)s %(message)s',
+#      filename="/home/luis/a.log",
+#      filemode='a')
+
+
 class Command(BaseCommand):
     logger = logging.getLogger(__name__)
 
@@ -36,14 +43,14 @@ class Command(BaseCommand):
         (size,) = struct.unpack(">h", input_length)
         return sys.stdin.read(size).split(":")
 
-    def to_ejabberd(self, answer=False):
+    @staticmethod
+    def to_ejabberd(answer=False):
         """
         Converts the response into eJabberd format
         """
         b = struct.pack('>hh',
                         2,
                         1 if answer else 0)
-        self.logger.debug("To jabber: %s" % b)
         sys.stdout.write(b.decode("utf-8"))
         sys.stdout.flush()
 
@@ -88,12 +95,6 @@ class Command(BaseCommand):
         Gathers parameters from eJabberd and executes authentication
         against django backend
         """
-        # logging.basicConfig(
-        #     level="DEBUG",
-        #     format='%(asctime)s %(levelname)s %(message)s',
-        #     filename="C:\\Users\\luisl\\a.log",
-        #     filemode='a')
-
         self.logger.debug("Starting serving authentication requests for eJabberd")
         success = False
         try:
