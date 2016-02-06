@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Picture, Rect, Visit, Visitor, Message, Notification, VisitorFaceSample
+from ringoserver.models import *
 
 # Register your models here.
 
@@ -10,3 +10,5 @@ admin.site.register(Visit)
 admin.site.register(Message)
 admin.site.register(Notification)
 admin.site.register(VisitorFaceSample)
+admin.site.register(Owner)
+admin.site.register(Device)

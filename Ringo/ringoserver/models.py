@@ -1,5 +1,9 @@
+import os
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.authtoken.models import Token
 
 
 class Picture(models.Model):
@@ -66,9 +70,15 @@ class Visit(models.Model):
 
 class Owner(models.Model):
     """
-    Represents a home resident
+    Represents a home resident with profile information
     """
     auth_user = models.OneToOneField(User)
+    picture = models.ImageField(upload_to=settings.USER_PROFILE_PICTURES_DIR, null=True)
+
+    def get_picture_or_default(self):
+        return self.picture.url if self.picture else os.path.join(settings.STATIC_URL,
+                                                                  'images',
+                                                                  'marijuana.png')
 
 
 class Device(models.Model):
@@ -78,6 +88,17 @@ class Device(models.Model):
     """
     device_auth_user = models.OneToOneField(User)
     owner = models.ForeignKey(Owner)
+
+    def get_token(self):
+        return Token.objects.get(user=self.device_auth_user)
+
+    @staticmethod
+    def user_is_device(user):
+        u = User.objects.get(pk=user.id)
+        try:
+            return True if u.device else False
+        except ObjectDoesNotExist:
+            return False
 
 
 class Message(models.Model):

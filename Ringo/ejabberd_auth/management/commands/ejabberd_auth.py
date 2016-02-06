@@ -20,6 +20,7 @@ import sys
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
+from ringoserver.models import Device
 
 __author__ = "fabio"
 
@@ -58,7 +59,7 @@ class Command(BaseCommand):
         self.logger.debug("Authenticating %s with password %s on server %s" % (username, password, server))
         # TODO: would be nice if this could take server into account
         user = authenticate(username=username, password=password)
-        return user and user.is_active
+        return user and user.is_active and Device.user_is_device(user)
 
     def isuser(self, username=None, server="localhost"):
         """

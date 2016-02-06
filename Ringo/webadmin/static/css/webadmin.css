@@ -26,11 +26,39 @@ body {
   margin: 20px 0;
 }
 
-img {
+.dropdown-menu > li > a > i {
+    margin-right: 6px;
+}
+
+.navbar-nav li.dropdown {
+    height: 45px;
+}
+
+.dropdown a.dropdown-toggle {
+    padding: 5px;
+    height: 100%;
+}
+
+.user-photo {
+    max-width: 40px !important;
+    border-radius: 100%;
+    border: 2px solid #fff;
+}
+
+img.visit {
     width: 20%;
     height: 20%;
 }
 
-.dropdown-menu > li > a > i {
-    margin-right: 6px;
+.picture-td {
+    width: 50px;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#devices-view {
+    display: none;
 }

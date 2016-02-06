@@ -7,9 +7,10 @@ from django.views.generic.edit import UpdateView, CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.messages.views import SuccessMessageMixin
+from django.template.loader import render_to_string
 
 
 @login_required
@@ -101,6 +102,11 @@ class VisitUpdate(UpdateView):
 
 class OwnersDevicesListView(ListView):
     model = Owner
+
+    def post(self, request, *args, **kwargs):
+        owner = Owner.objects.get(pk=request.POST['id'])
+        html = render_to_string('ringoserver/device_list.html', {'owner': owner})
+        return JsonResponse({'html': html})
 
 
 class OwnersDevicesDetailView(DetailView):

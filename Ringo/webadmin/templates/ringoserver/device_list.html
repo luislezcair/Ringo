@@ -1,0 +1,28 @@
+<h3>Devices for {{ owner.auth_user.first_name }}</h3>
+
+<table class="table table-hover">
+    <tbody>
+        {% if owner.device_set.count > 0 %}
+            {% for device in owner.device_set.all %}
+            <tr>
+                <td class="picture-td"><i class="fa fa-mobile-phone fa-3x"></i></td>
+                <td>{{ device.device_auth_user.first_name }}</td>
+                <td>Last connected: <strong>{{ device.device_auth_user.last_login | date:'DATETIME_FORMAT' }}</strong></td>
+                <td>
+                    <a href="#" class="btn btn-default btn-sm">
+                        <i class="fa fa-pencil white"></i>
+                    </a>
+                    <a href="#" class="btn btn-default btn-sm">
+                        <i class="fa fa-trash white"></i>
+                    </a>
+                    <input type="hidden" class="device-id" value="{{ device.id }}">
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td><h4>{{ owner.auth_user.first_name }} has no devices associated</h4></td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
