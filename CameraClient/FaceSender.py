@@ -8,6 +8,7 @@ PICTURE_URL = URL + "pictures/"
 RECT_URL = URL + "rects/"
 
 USER = 'doorbell'
+
 PASSWORD = 'doorbell-123'
 AUTH = (USER, PASSWORD)
 

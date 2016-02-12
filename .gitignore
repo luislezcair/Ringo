@@ -56,6 +56,7 @@ target/
 
 Ringo/media/photos/*
 Ringo/media/visits/*
+Ringo/media/owner_profiles/*
 Ringo/static/*
 Ringo/ringoserver/recognition/training.xml
 Ringo/Ringo/settings_local.py

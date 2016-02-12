@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'ringoserver',
     'webadmin',
     'ejabberd_auth',
@@ -115,6 +116,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/api-auth/login/'
+LOGIN_REDIRECT_URL = '/webadmin/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
@@ -132,3 +134,5 @@ RINGO = {
 }
 
 RINGO_TRAINING_FILE = 'ringoserver/recognition/training.xml'
+
+USER_PROFILE_PICTURES_DIR = 'owner_profiles'
