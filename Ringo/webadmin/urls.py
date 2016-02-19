@@ -19,7 +19,8 @@ urlpatterns = [
     # Owner & devices
     url(r'^owners_devices/$', views.OwnersDevicesListView.as_view(), name='ownersdevices_list'),
     url(r'^owners_devices/create_owner$', views.OwnersDevicesListView.as_view(), name='create_owner'),
-    url(r'^owners_devices/(?P<slug>[-\w]+)/$', views.OwnersDevicesDetailView.as_view(), name='ownersdevices_detail'),
+    url(r'^owners_devices/(?P<pk>[0-9]+)/$', views.OwnerDetailView.as_view(), name='owner_detail'),
+    url(r'^owners_devices/(?P<pk>[0-9]+)/edit$', views.OwnerEditView.as_view(), name='owner_edit'),
 
     # Settings
     url(r'^settings/(?P<pk>[0-9]+)', login_required(views.ConfigurationUpdate.as_view()), name='configuration_update'),

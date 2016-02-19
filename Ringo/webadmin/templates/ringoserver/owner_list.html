@@ -10,20 +10,32 @@
     <h2>Owners</h2>
     <table id="owner-table" class="table table-hover">
         <tbody>
-        {% for owner in object_list %}
+        {% for owner in owners %}
             <tr>
                 <td class="picture-td">
                     <img class="user-photo" src="{{ owner.get_picture_or_default }}">
                 </td>
                 <td>{{ owner.auth_user.get_full_name }}</td>
+
                 {% if owner.device_set.count > 0 %}
                     <td>{{ owner.device_set.count }} device{{ owner.device_set.count|pluralize }}</td>
                 {% else %}
                     <td>No devices</td>
                 {% endif %}
-                <td>Last seen on <strong>{{ owner.auth_user.last_login | date:'DATETIME_FORMAT' }}</strong></td>
+
                 <td>
-                    <a href="#" class="btn btn-default btn-sm">
+                    {% if request.user.id == owner.auth_user.id %}
+                        Last seen: <strong>online now!</strong>
+                    {% else %}
+                        Last seen on <strong>{{ owner.auth_user.last_login | date:'DATETIME_FORMAT' }}</strong>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a href="{% url 'webadmin:owner_detail' owner.id %}" class="btn btn-default btn-sm">
+                        <i class="fa fa-eye white"></i>
+                    </a>
+                    <a href="{% url 'webadmin:owner_edit' owner.id %}" class="btn btn-default btn-sm">
                         <i class="fa fa-pencil white"></i>
                     </a>
                     <a href="#" class="btn btn-default btn-sm">

@@ -9,9 +9,17 @@
 {% block content %}
     <h4>Name: {{ visitor.name }}</h4>
     <h4>Is he welcome?: {{ visitor.welcome }}</h4>
+    <br>
     <h4>Last visits from {{ visitor.name.split.0 }}</h4>
-    {% for visit in visitor.visit_set.all %}
-        <p><img class="visit" src="{{ visit.picture.picture.url }}"></p>
-    {% endfor %}
+
+    <div class="row">
+        {% for visit in visitor.visit_set.all %}
+            <div class="col-md-3">
+                <a href="#" class="thumbnail">
+                    <img src="{{ visit.picture.picture.url }}">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
     <a class="btn btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
 {% endblock %}
