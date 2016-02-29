@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 70px;
     margin-bottom: 60px;
 }
 
@@ -61,4 +61,48 @@ img.visit {
 
 #devices-view {
     display: none;
+}
+
+/* Redefino colores de la barra de navegación*/
+.navbar-style{
+    background-color: #428bca;
+    -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+}
+
+.navbar-default .active {
+  color: #fff;
+}
+.navbar-default .active:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid;
+  border-left: 5px solid transparent;
+}
+
+/* Nav links */
+.menu-us{
+    font-weight: bolder;
+    font-style: italic;
+    font-size: large;
+}
+.navbar-default .menu-us>li>a {
+    color: #fff;
+
+}
+.navbar-default .color-item>li>a {
+      color: #cdddeb;
+}
+
+.navbar-default .color-item>li>a:hover,
+.navbar-default .color-item>li>a:focus {
+  color: #fff;
+  text-decoration: none;
 }
