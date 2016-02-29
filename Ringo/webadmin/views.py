@@ -102,12 +102,21 @@ class VisitUpdate(UpdateView):
 
 class OwnersDevicesListView(ListView):
     model = Owner
+    context_object_name = 'owners'
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    def post(request, *args, **kwargs):
         owner = Owner.objects.get(pk=request.POST['id'])
         html = render_to_string('ringoserver/device_list.html', {'owner': owner})
         return JsonResponse({'html': html})
 
 
-class OwnersDevicesDetailView(DetailView):
+class OwnerDetailView(DetailView):
     model = Owner
+    context_object_name = 'owner'
+
+
+class OwnerEditView(UpdateView):
+    model = Owner
+    fields = ['auth_user']
+    template_name_suffix = '_update'
