@@ -4,8 +4,14 @@ html {
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 70px;
     margin-bottom: 60px;
+    background-color: rgb(119, 119, 119);
+    color: #fff;
+}
+
+a{
+    color: #fff;
 }
 
 .footer {
@@ -14,7 +20,7 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
+  background-color: rgb(90, 90, 105);
 }
 
 .footer > .container {
@@ -24,6 +30,7 @@ body {
 
 .container .text-muted {
   margin: 20px 0;
+  color: #989797;
 }
 
 .dropdown-menu > li > a > i {
@@ -61,4 +68,111 @@ img.visit {
 
 #devices-view {
     display: none;
+}
+
+/*Fila seleccionada en las Tablas*/
+.table-hover > tbody > tr:hover {
+  background-color: #333;
+}
+
+/* Redefino colores de la barra de navegación*/
+.navbar-style{
+    background-color: rgba(101, 163, 218, 0.831);
+    -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+}
+
+.navbar-default .active {
+  color: #fff;
+}
+.navbar-default .active:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid;
+  border-left: 5px solid transparent;
+}
+
+/* Nav links */
+.menu-us{
+    font-weight: bolder;
+    font-style: italic;
+    font-size: large;
+}
+.navbar-default .menu-us>li>a {
+    color: #fff;
+
+}
+.navbar-default .color-item>li>a {
+      color: #cdddeb;
+}
+
+.navbar-default .color-item>li>a:hover,
+.navbar-default .color-item>li>a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  height: 350px;
+  margin-bottom: 60px;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  height: 350px;
+  background-color: #777;
+}
+.carousel-inner > .item > img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 350px;
+}
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+
+/* RESPONSIVE CSS FOR CAROUSEL
+-------------------------------------------------- */
+
+@media (min-width: 768px) {
+
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 992px) {
+  .featurette-heading {
+    margin-top: 120px;
+  }
 }

@@ -1,5 +1,10 @@
 {% extends "_layout.html" %}
 
+{% block stylesheet %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
+{% endblock %}
+
 {% block title %}Visitantes{% endblock %}
 
 {% block page_header %}
@@ -8,11 +13,71 @@
 
 {% block content %}
     {% if visitor_list %}
+
+    <!-- CODIGO ORIGINAL
         <ul>
             {% for visitor in visitor_list %}
             <li><a href="{% url 'webadmin:visitor_details' visitor.id %}">{{ visitor }}</a></li>
             {% endfor %}
-        </ul>
+        </ul> -->
+
+    <section id="SliderTest_Container" class="col-md-12">
+     <div id="Carousel-Visitors" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+        {% for visitor in visitor_list %}
+                {% if forloop.counter0 == 0 %}
+                    <li data-target="#Carousel-Visitors" data-slide-to="0" class="active"></li>
+                {% else %}
+                    <li data-target="#Carousel-Visitors" data-slide-to="{{ forloop.counter0 }}" class=""></li>
+                {% endif %}
+        {% endfor %}
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            {% for visitor in visitor_list %}
+                {% if forloop.counter0 == 0 %}
+                    <div class="item item-vis active">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1>{{ visitor.name }}</h1>
+                                {% if visitor.welcome %}
+                                    <p>Friend</p>
+                                {% else %}
+                                    <p>Not welcome</p>
+                                {% endif %}
+                                <p><a class="btn btn-lg btn-primary" href="{% url 'webadmin:visitor_details' visitor.id %}" role="button">Last Visists</a></p>
+                                <p><a class="btn btn-lg btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}" role="button">Edit</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="item item-vis">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h1>{{ visitor.name }}</h1>
+                                {% if visitor.welcome %}
+                                    <p>Friend</p>
+                                {% else %}
+                                    <p>Not welcome</p>
+                                {% endif %}
+                                <p><a class="btn btn-lg btn-primary" href="{% url 'webadmin:visitor_details' visitor.id %}" role="button">Last Visists</a></p>
+                                <p><a class="btn btn-lg btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}" role="button">Edit</a></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>'
+        <a class="left carousel-control" href="#Carousel-Visitors" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+        <a class="right carousel-control" href="#Carousel-Visitors" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+     </div>
+    </section>
+
     {% else %}
         <p>No visitors saved!</p>
     {% endif %}

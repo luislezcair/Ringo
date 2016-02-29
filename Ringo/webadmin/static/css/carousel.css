@@ -1,0 +1,11 @@
+body {
+   background-color: rgba(115, 91, 110, 0.85);
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Declare heights because of positioning of img element */
+.carousel .item {
+  background-color: rgba(115, 91, 110, 0.85);
+}
