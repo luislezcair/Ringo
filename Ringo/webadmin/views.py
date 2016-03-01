@@ -3,7 +3,7 @@
 from ringoserver.models import *
 from forms import ContactForm
 from django.core.mail import send_mail
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
@@ -82,6 +82,11 @@ class VisitorCreate(CreateView):
     success_url = '/webadmin/visitors'
 
 
+class VisitorDelete(DeleteView):
+    model = Visitor
+    success_url = '/webadmin/visitors'
+
+
 class ConfigurationUpdate(SuccessMessageMixin, UpdateView):
     model = Configuration
     fields = '__all__'
@@ -120,3 +125,8 @@ class OwnerEditView(UpdateView):
     model = Owner
     fields = ['auth_user']
     template_name_suffix = '_update'
+
+
+class OwnerDeletView(DeleteView):
+    model = Owner
+    success_url = '/webadmin/owners_devices'

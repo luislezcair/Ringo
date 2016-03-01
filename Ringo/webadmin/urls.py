@@ -15,10 +15,12 @@ urlpatterns = [
     url(r'^visitors/(?P<visitor_id>[0-9]+)/$', views.visitor_details, name='visitor_details'),
     url(r'^visitors/(?P<pk>[0-9]+)/edit$', login_required(views.VisitorUpdate.as_view()), name='update_visitor'),
     url(r'^visitors/create/$', login_required(views.VisitorCreate.as_view()), name='create_visitor'),
+    url(r'^visitors/delete/(?P<pk>[0-9]+)/$', login_required(views.VisitorDelete.as_view()), name='delete_visitor'),
 
     # Owner & devices
     url(r'^owners_devices/$', views.OwnersDevicesListView.as_view(), name='ownersdevices_list'),
     url(r'^owners_devices/create_owner$', views.OwnersDevicesListView.as_view(), name='create_owner'),
+    url(r'^owners_devices/delete_owner/(?P<pk>[0-9]+)/$', views.OwnerDeletView.as_view(), name='delete_owner'),
     url(r'^owners_devices/(?P<pk>[0-9]+)/$', views.OwnerDetailView.as_view(), name='owner_detail'),
     url(r'^owners_devices/(?P<pk>[0-9]+)/edit$', views.OwnerEditView.as_view(), name='owner_edit'),
 
