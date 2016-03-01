@@ -38,7 +38,7 @@
                     <a href="{% url 'webadmin:owner_edit' owner.id %}" class="btn btn-default btn-sm">
                         <i class="fa fa-pencil white"></i>
                     </a>
-                    <a href="#" class="btn btn-default btn-sm">
+                    <a href="{% url 'webadmin:delete_owner' owner.id %}" class="btn btn-default btn-sm">
                         <i class="fa fa-trash white"></i>
                     </a>
                     <input type="hidden" class="owner-id" value="{{ owner.id }}">
