@@ -1,4 +1,5 @@
 from django import forms
+from ringoserver.models import Visitor
 
 
 TOPIC_CHOICES = (
@@ -14,3 +15,9 @@ class ContactForm (forms.Form):
     email = forms.EmailField(required=False)
 
 
+class VisitorForm(forms.ModelForm):
+    next = forms.CharField(required=False)
+
+    class Meta:
+        model = Visitor
+        exclude = tuple()

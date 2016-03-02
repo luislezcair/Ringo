@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^visitors/(?P<visitor_id>[0-9]+)/$', views.visitor_details, name='visitor_details'),
     url(r'^visitors/(?P<pk>[0-9]+)/edit$', login_required(views.VisitorUpdate.as_view()), name='update_visitor'),
     url(r'^visitors/create/$', login_required(views.VisitorCreate.as_view()), name='create_visitor'),
+    url(r'^visitors/createnew/$', login_required(views.NewVisitorCreate.as_view()), name='new_visitor_create'),
     url(r'^visitors/delete/(?P<pk>[0-9]+)/$', login_required(views.VisitorDelete.as_view()), name='delete_visitor'),
 
     # Owner & devices
