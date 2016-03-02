@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from ringoserver.models import *
-from forms import ContactForm
+from forms import ContactForm, VisitorForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -82,6 +82,34 @@ class VisitorCreate(CreateView):
     success_url = '/webadmin/visitors'
 
 
+class NewVisitorCreate(CreateView):
+    template_name = "ringoserver/visitor_form.html"
+    form_class = VisitorForm
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(NewVisitorCreate, self).get_form_kwargs()
+        redirect = self.request.GET.get('next')
+        if redirect:
+            if 'initial' in kwargs.keys():
+                kwargs['initial'].update({'next': redirect})
+            else:
+                kwargs['initial'] = {'next': redirect}
+        return kwargs
+
+    def form_invalid(self, form):
+        import pdb;pdb.set_trace()  # debug example
+        # inspect the errors by typing the variable form.errors
+        # in your command line debugger. See the pdb package for
+        # more useful keystrokes
+        return super(NewVisitorCreate, self).form_invalid(form)
+
+    def form_valid(self, form):
+        redirect = form.cleaned_data.get('next')
+        if redirect:
+            self.success_url = redirect
+        return super(NewVisitorCreate, self).form_valid(form)
+
+
 class VisitorDelete(DeleteView):
     model = Visitor
     success_url = '/webadmin/visitors'
@@ -102,7 +130,7 @@ class VisitUpdate(UpdateView):
     model = Visit
     fields = ('visitors',)
     template_name_suffix = '_update'
-    success_url = '/webadmin'
+    success_url = '/webadmin/visits'
 
 
 class OwnersDevicesListView(ListView):

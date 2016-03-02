@@ -14,5 +14,5 @@
         <button class="btn btn-primary" type="submit">Update</button>
     </form>
     <p></p>
-    <a class="btn btn-warning" href="{% url 'webadmin:create_visitor' %}" role="button">New visitor?</a>
+    <a class="btn btn-warning" href="{% url 'webadmin:new_visitor_create' %}?next={% url 'webadmin:visit_update' visit.id %}" role="button">New visitor?</a>
 {% endblock %}
