@@ -1,0 +1,17 @@
+{% extends "_layout.html" %}
+
+{% block title %}Create Visitor{% endblock %}
+
+{% block page_header %}
+    <h1>Create Visitor</h1>
+{% endblock %}
+{% block content %}
+<form method="POST"> {% csrf_token %}
+    <p>Name: {{ form.name }}
+    <p>Welcome: {{ form.welcome }}
+    <div hidden="True">
+        {{ form.next }}
+    </div>
+    <input class="btn btn-danger" type="submit" value="Submit">
+</form>
+{% endblock content %}

@@ -7,14 +7,25 @@
 {% endblock %}
 
 {% block content %}
-    {% if visitor_list %}
-        <ul>
-            {% for visitor in visitor_list %}
-            <li><a href="{% url 'webadmin:visitor_details' visitor.id %}">{{ visitor }}</a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No visitors saved!</p>
-    {% endif %}
+    <table id="visitor-table" class="table table-hover">
+        <tbody>
+        {% for visitor in visitor_list %}
+            <tr>
+                <td>{{ visitor }}</td>
+                <td>
+                    <a href="{% url 'webadmin:visitor_details' visitor.id %}" class="btn btn-default btn-sm">
+                        <i class="fa fa-eye white"></i>
+                    </a>
+                    <a href="{% url 'webadmin:update_visitor' visitor.id %}" class="btn btn-default btn-sm">
+                        <i class="fa fa-pencil white"></i>
+                    </a>
+                    <a href="{% url 'webadmin:delete_visitor' visitor.id %}" class="btn btn-default btn-sm">
+                        <i class="fa fa-trash white"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
     <a class="btn btn-primary" href="{% url 'webadmin:create_visitor' %}">Add visitor</a>
 {% endblock %}
