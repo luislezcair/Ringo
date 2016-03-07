@@ -1,15 +1,22 @@
 {% extends "_layout.html" %}
 
-{% block title %}Agregar visitante conocido{% endblock %}
+{% block title %}Create Visitor{% endblock %}
 
 {% block page_header %}
-    <h1>Add known visitor</h1>
+    <h1>Create Visitor</h1>
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Create</button>
-    </form>
-{% endblock %}
+<form method="POST">
+    {% csrf_token %}
+
+    <p>Name: {{ form.name }}
+    <p>Welcome: {{ form.welcome }}
+
+    <div style="display: none">
+        {{ form.next }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+{% endblock content %}
