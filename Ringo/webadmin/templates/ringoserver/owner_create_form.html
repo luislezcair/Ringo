@@ -1,0 +1,15 @@
+{% extends "_layout.html" %}
+
+{% block title %}Add new Owner{% endblock %}
+
+{% block page_header %}
+    <h1>Add new Owner</h1>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Create</button>
+</form>
+{% endblock %}
