@@ -1,4 +1,4 @@
-from models import Picture, Rect, Visitor, Visit, Message, Notification, Owner, Device
+from models import Picture, Rect, Visitor, Visit, Message, Notification, Owner, Device, Configuration
 from rest_framework import serializers
 
 
@@ -40,3 +40,8 @@ class OwnerSerializer(serializers.HyperlinkedModelSerializer):
 class DeviceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Device
+
+
+class ConfigurationSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Configuration

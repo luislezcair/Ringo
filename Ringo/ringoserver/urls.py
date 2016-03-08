@@ -11,6 +11,7 @@ router.register(r'messages', views.MessageViewSet)
 router.register(r'notifications', views.NotificationViewSet)
 router.register(r'owners', views.OwnerViewSet)
 router.register(r'devices', views.DeviceViewSet)
+router.register(r'configuration', views.ConfigurationViewSet)
 
 urlpatterns = [
     url(r'', include(router.urls))
