@@ -76,10 +76,28 @@ class VisitorUpdate(UpdateView):
 
 
 class VisitorCreate(CreateView):
-    model = Visitor
-    fields = '__all__'
-    template_name_suffix = '_create'
-    success_url = '/webadmin/visitors'
+    template_name = 'ringoserver/visitor_create.html'
+    form_class = VisitorForm
+    success_url = '/webadmin/visitors/'
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(VisitorCreate, self).get_form_kwargs()
+        redirect = self.request.GET.get('next')
+        if redirect:
+            if 'initial' in kwargs.keys():
+                kwargs['initial'].update({'next': redirect})
+            else:
+                kwargs['initial'] = {'next': redirect}
+        return kwargs
+
+    def form_invalid(self, form):
+        return super(VisitorCreate, self).form_invalid(form)
+
+    def form_valid(self, form):
+        redirect = form.cleaned_data.get('next')
+        if redirect:
+            self.success_url = redirect
+        return super(VisitorCreate, self).form_valid(form)
 
 
 class NewVisitorCreate(CreateView):
@@ -155,6 +173,6 @@ class OwnerEditView(UpdateView):
     template_name_suffix = '_update'
 
 
-class OwnerDeletView(DeleteView):
+class OwnerDeleteView(DeleteView):
     model = Owner
     success_url = '/webadmin/owners_devices'
