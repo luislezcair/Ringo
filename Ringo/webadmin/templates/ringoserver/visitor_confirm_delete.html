@@ -1,0 +1,14 @@
+{% extends "_layout.html" %}
+
+{% block title %}Delete Visitor{% endblock %}
+
+{% block page_header %}
+    <h1>{{ visitor }}</h1>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ visitor }}"?</p>
+    <input type="submit" value="Confirm" />
+    </form>
+{% endblock %}

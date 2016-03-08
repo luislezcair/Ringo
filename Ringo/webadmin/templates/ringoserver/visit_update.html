@@ -1,15 +1,18 @@
 {% extends "_layout.html" %}
 
-{% block title %}Actualizar Visita{% endblock %}
+{% block title %}Update Visit{% endblock %}
 
 {% block page_header %}
-    <h1>Update visit</h1>
+    <h1>Update Visit</h1>
 {% endblock %}
 
 {% block content %}
+    <p></p>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button class="btn btn-primary" type="submit">Update</button>
     </form>
+    <p></p>
+    <a class="btn btn-warning" href="{% url 'webadmin:create_visitor' %}?next={% url 'webadmin:visit_update' visit.id %}" role="button">New visitor?</a>
 {% endblock %}

@@ -1,9 +1,9 @@
 # coding=utf-8
 
 from ringoserver.models import *
-from forms import ContactForm
+from forms import ContactForm, VisitorForm
 from django.core.mail import send_mail
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
@@ -76,9 +76,32 @@ class VisitorUpdate(UpdateView):
 
 
 class VisitorCreate(CreateView):
+    template_name = 'ringoserver/visitor_create.html'
+    form_class = VisitorForm
+    success_url = '/webadmin/visitors/'
+
+    def get_form_kwargs(self, **kwargs):
+        kwargs = super(VisitorCreate, self).get_form_kwargs()
+        redirect = self.request.GET.get('next')
+        if redirect:
+            if 'initial' in kwargs.keys():
+                kwargs['initial'].update({'next': redirect})
+            else:
+                kwargs['initial'] = {'next': redirect}
+        return kwargs
+
+    def form_invalid(self, form):
+        return super(VisitorCreate, self).form_invalid(form)
+
+    def form_valid(self, form):
+        redirect = form.cleaned_data.get('next')
+        if redirect:
+            self.success_url = redirect
+        return super(VisitorCreate, self).form_valid(form)
+
+
+class VisitorDelete(DeleteView):
     model = Visitor
-    fields = '__all__'
-    template_name_suffix = '_create'
     success_url = '/webadmin/visitors'
 
 
@@ -97,7 +120,7 @@ class VisitUpdate(UpdateView):
     model = Visit
     fields = ('visitors',)
     template_name_suffix = '_update'
-    success_url = '/webadmin'
+    success_url = '/webadmin/visits'
 
 
 class OwnersDevicesListView(ListView):
@@ -120,3 +143,8 @@ class OwnerEditView(UpdateView):
     model = Owner
     fields = ['auth_user']
     template_name_suffix = '_update'
+
+
+class OwnerDeleteView(DeleteView):
+    model = Owner
+    success_url = '/webadmin/owners_devices'
