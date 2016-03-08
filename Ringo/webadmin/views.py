@@ -148,3 +148,10 @@ class OwnerEditView(UpdateView):
 class OwnerDeleteView(DeleteView):
     model = Owner
     success_url = '/webadmin/owners_devices'
+
+
+class OwnerCreateView(CreateView):
+    model = User
+    template_name = 'ringoserver/owner_create_form.html'
+    fields = ('first_name', 'last_name', 'email', 'password',)
+
