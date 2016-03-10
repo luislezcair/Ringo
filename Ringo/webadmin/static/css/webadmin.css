@@ -155,7 +155,7 @@ img.visit {
 /* Declare heights because of positioning of img element */
 .carousel .item {
   height: 350px;
-  background-color: #777;
+  background-color: transparent;
 }
 .carousel-inner > .item > img {
   position: absolute;
@@ -163,6 +163,20 @@ img.visit {
   left: 0;
   min-width: 100%;
   height: 350px;
+}
+
+.carousel-caption >h1{
+    color: rgba(130, 11, 11, 0.84);
+}
+.carousel-caption >p{
+    color:grey;
+}
+
+.carousel-control.right {
+    background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(181, 158, 158, 0.5) 100%);
+}
+.carousel-control.left {
+    background-image: linear-gradient(to left,rgba(0,0,0,.0001) 0,rgba(181, 158, 158, 0.5) 100%);
 }
 
 /* Featurettes
@@ -196,6 +210,7 @@ img.visit {
   }
 }
 
+
 .titulo_ppal{
   background: -webkit-linear-gradient(red,#565353);
   -webkit-background-clip: text;
@@ -203,8 +218,6 @@ img.visit {
   color: #9C2813;
   font-family: serif;
   font-weight: 900;
-  font-style: italic;
-  /*letter-spacing: .3em ;*/
   word-spacing: .2em;
   font-size: 350%;
 

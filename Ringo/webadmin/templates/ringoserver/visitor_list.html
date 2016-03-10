@@ -4,7 +4,7 @@
 {% block title %}Visitantes{% endblock %}
 
 {% block page_header %}
-    <h1>Known visitors</h1>
+    <h1 class="text-center titulo_ppal">Known visitors</h1>
 {% endblock %}
 
 {% block content %}
@@ -47,8 +47,8 @@
         <div class="carousel-inner" role="listbox">
             {% for visitor in visitor_list %}
                 {% if forloop.counter0 == 0 %}
-                    <div class="item item-vis active">
-                        <div class="container">
+                    <div class="item active">
+                        <div class="container" style="vertical-align: middle;">
                             <div class="carousel-caption">
                                 <h1>{{ visitor.name }}</h1>
                                 {% if visitor.welcome %}
@@ -69,8 +69,8 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="item item-vis">
-                        <div class="container">
+                    <div class="item ">
+                        <div class="container" style="vertical-align: middle;">
                             <div class="carousel-caption">
                                 <h1>{{ visitor.name }}</h1>
                                 {% if visitor.welcome %}
