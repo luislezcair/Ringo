@@ -3,10 +3,12 @@
 {% block title %}Ringo web administration{% endblock %}
 
 {% block page_header %}
-    <h1 class="text-center" style="font-style: italic; font-weight: bolder;">Welcome {{ request.user.first_name }}</h1>
+    <h1 class="text-center titulo_ppal">Welcome {{ request.user.first_name }}</h1>
 {% endblock %}
 
 {% block content %}
+
+<!-- CAROUSEL --------------------------
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class=""></li>
@@ -64,5 +66,45 @@
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
+     </div>
+     -->
+
+<div class="menu_inicial menu_item showhim">
+   <a href="{% url 'webadmin:visit_list' %}">
+       <div>
+           <h2 class="text-center">Visits Record</h2>
+           <div class="showme seccion_texto">Peek who's been coming around!</div>
+
+       </div>
+   </a>
 </div>
+<div class="menu_inicial menu_item showhim">
+   <a href="{% url 'webadmin:visitor_list' %}">
+       <div>
+           <h2 class="text-center">Visitors</h2>
+           <div class="showme seccion_texto">Take a look at your friends, edit them and add new ones</div>
+
+       </div>
+   </a>
+</div>
+<div class="menu_inicial menu_item showhim">
+   <a href="{% url 'webadmin:configuration_update' 1 %}">
+       <div>
+           <h2 class="text-center">Settings</h2>
+           <div class="showme seccion_texto">Enable or disable the doorbell and the Out-of-House Mode</div>
+
+       </div>
+   </a>
+</div>
+<div class="menu_inicial menu_item showhim">
+   <a href="{% url 'webadmin:ownersdevices_list' %}">
+       <div>
+           <h2 class="text-center">Owners and Devices</h2>
+           <div class="showme seccion_texto">Check the registered devices for each owner or add new ones</div>
+
+       </div>
+   </a>
+</div>
+
+
 {% endblock %}
