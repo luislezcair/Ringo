@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<!-- CAROUSEL --------------------------
+<!-- CAROUSEL -------------------------- -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class=""></li>
@@ -18,7 +18,6 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item">
-          <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>Visits Record</h1>
@@ -28,27 +27,24 @@
           </div>
         </div>
         <div class="item active">
-          <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>Visitors</h1>
               <p>Take a look at your friends, edit them and add new ones</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Go to Visitors Page</a></p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'webadmin:visitor_list' %}" role="button">Go to Visitors Page</a></p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>Settings</h1>
               <p>Enable or disable the doorbell and the Out-of-House Mode</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">GO</a></p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'webadmin:configuration_update' 1 %}" role="button">GO</a></p>
             </div>
           </div>
         </div>
         <div class="item">
-           <img class="fourth-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Fourth slide">
            <div class="container">
               <div class="carousel-caption">
                 <h1>Owners and Devices</h1>
@@ -67,44 +63,7 @@
         <span class="sr-only">Next</span>
       </a>
      </div>
-     -->
 
-<div class="menu_inicial menu_item showhim">
-   <a href="{% url 'webadmin:visit_list' %}">
-       <div>
-           <h2 class="text-center">Visits Record</h2>
-           <div class="showme seccion_texto">Peek who's been coming around!</div>
-
-       </div>
-   </a>
-</div>
-<div class="menu_inicial menu_item showhim">
-   <a href="{% url 'webadmin:visitor_list' %}">
-       <div>
-           <h2 class="text-center">Visitors</h2>
-           <div class="showme seccion_texto">Take a look at your friends, edit them and add new ones</div>
-
-       </div>
-   </a>
-</div>
-<div class="menu_inicial menu_item showhim">
-   <a href="{% url 'webadmin:configuration_update' 1 %}">
-       <div>
-           <h2 class="text-center">Settings</h2>
-           <div class="showme seccion_texto">Enable or disable the doorbell and the Out-of-House Mode</div>
-
-       </div>
-   </a>
-</div>
-<div class="menu_inicial menu_item showhim">
-   <a href="{% url 'webadmin:ownersdevices_list' %}">
-       <div>
-           <h2 class="text-center">Owners and Devices</h2>
-           <div class="showme seccion_texto">Check the registered devices for each owner or add new ones</div>
-
-       </div>
-   </a>
-</div>
 
 
 {% endblock %}

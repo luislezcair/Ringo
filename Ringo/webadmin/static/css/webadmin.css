@@ -5,9 +5,10 @@ html {
 
 body {
     padding-top: 70px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     color: #181818;
     background-color: rgba(246, 239, 183, 0.20);
+    font-family:serif;
 }
 .header-logo{
     float:left;
@@ -27,8 +28,8 @@ body {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: rgba(90, 90, 105, 0.71);
+  height: 40px;
+  background-color: rgba(27, 2, 2, 0.84);
 }
 
 .footer > .container {
@@ -37,8 +38,15 @@ body {
 }
 
 .container .text-muted {
-  margin: 20px 0;
+  margin: 10px 10px;
   color: #989797;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: rgba(64, 25, 23, 0.67);
+    border-color: #6F0707;
+    clear:both;
 }
 
 .dropdown-menu > li > a > i {
@@ -150,6 +158,7 @@ img.visit {
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   z-index: 10;
+  padding-bottom: 50px;
 }
 
 /* Declare heights because of positioning of img element */
@@ -177,6 +186,12 @@ img.visit {
 }
 .carousel-control.left {
     background-image: linear-gradient(to left,rgba(0,0,0,.0001) 0,rgba(181, 158, 158, 0.5) 100%);
+}
+.carousel-indicators li{
+    border-color: rgba(64, 25, 23, 0.87);
+}
+.carousel-indicators .active{
+    background-color: rgba(64, 25, 23, 0.67);
 }
 
 /* Featurettes
@@ -210,9 +225,10 @@ img.visit {
   }
 }
 
+/* ------ Degradado para el titulo de las paginas---- */
 
 .titulo_ppal{
-  background: -webkit-linear-gradient(red,#565353);
+  background: -webkit-linear-gradient(rgba(222, 21, 21, 0.84),#565353);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #9C2813;
@@ -220,21 +236,30 @@ img.visit {
   font-weight: 900;
   word-spacing: .2em;
   font-size: 350%;
+  box-sizing: content-box;
 
 }
+.welcome-icon{
+    padding-left: 15px;
+    padding-top: 20px;
+    font-size: 30px;
+}
 
-/* ------- Menú de la página principal --------- */
+/* ------- Menú de Visitantes --------- */
 
 .showme{
-display: none;
+    display: none;
+    clear:both;
+
 }
 .showhim:hover .showme{
-display : block;
+    display : block;
 }
 
 .menu_inicial{
     display:block;
     width:70%;
+    color: white;
     position:relative;
     float:left;
     left:15%;
@@ -252,20 +277,15 @@ display : block;
          -o-transition:1.5s ;
             transition:1.5s ;
 }
-.menu_inicial>a{
-    color:white;
-    font-family: serif;
-}
-.menu_inicial>a:hover{
-    text-decoration: none;
-}
-.menu_inicial>a>h2{
-    font-size:22px;
-    font-weight:normal !important;
+
+.menu_inicial h1{
+    font-size:25px;
+    font-weight:550 !important;
     margin-bottom: 10px;
 }
+
 .menu_item{
-background-color:#352626;
+background-color: rgba(27, 2, 2, 0.84);
 }
 .menu_item:hover{
 opacity:0.6;
@@ -273,7 +293,7 @@ background-color: #666;
 }
 
 .seccion_texto{
-    text-align: center;
     padding: 5px;
     transition-duration: 2s;
+    font-size: 18px;
 }
