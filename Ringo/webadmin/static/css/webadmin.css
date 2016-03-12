@@ -46,7 +46,9 @@ body {
     color: #fff;
     background-color: rgba(64, 25, 23, 0.67);
     border-color: #6F0707;
-    clear:both;
+}
+.btn-primary:hover{
+    background-color: black;
 }
 
 .dropdown-menu > li > a > i {
@@ -86,7 +88,7 @@ img.visit {
     display: none;
 }
 
-/*Fila seleccionada en las Tablas*/
+/*-----Fila seleccionada en las Tablas--------*/
 .table-hover > tbody > tr:hover {
   background-color: #333;
 }
@@ -146,84 +148,6 @@ img.visit {
   text-decoration: none;
 }
 
-
-/* CUSTOMIZE THE CAROUSEL
--------------------------------------------------- */
-
-/* Carousel base class */
-.carousel {
-  height: 350px;
-  margin-bottom: 60px;
-}
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  z-index: 10;
-  padding-bottom: 50px;
-}
-
-/* Declare heights because of positioning of img element */
-.carousel .item {
-  height: 350px;
-  background-color: transparent;
-}
-.carousel-inner > .item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 350px;
-}
-
-.carousel-caption >h1{
-    color: rgba(130, 11, 11, 0.84);
-}
-.carousel-caption >p{
-    color:grey;
-}
-
-.carousel-control.right {
-    background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(181, 158, 158, 0.5) 100%);
-}
-.carousel-control.left {
-    background-image: linear-gradient(to left,rgba(0,0,0,.0001) 0,rgba(181, 158, 158, 0.5) 100%);
-}
-.carousel-indicators li{
-    border-color: rgba(64, 25, 23, 0.87);
-}
-.carousel-indicators .active{
-    background-color: rgba(64, 25, 23, 0.67);
-}
-
-/* Featurettes
-------------------------- */
-
-.featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
-}
-
-
-/* RESPONSIVE CSS FOR CAROUSEL
--------------------------------------------------- */
-
-@media (min-width: 768px) {
-
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 20px;
-    font-size: 21px;
-    line-height: 1.4;
-  }
-
-  .featurette-heading {
-    font-size: 50px;
-  }
-}
-
-@media (min-width: 992px) {
-  .featurette-heading {
-    margin-top: 120px;
-  }
-}
 
 /* ------ Degradado para el titulo de las paginas---- */
 
@@ -296,4 +220,5 @@ background-color: #666;
     padding: 5px;
     transition-duration: 2s;
     font-size: 18px;
+    font-style: italic;
 }

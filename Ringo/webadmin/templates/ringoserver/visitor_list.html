@@ -1,7 +1,7 @@
 {% extends "_layout.html" %}
 
 
-{% block title %}Visitantes{% endblock %}
+{% block title %}Visitors{% endblock %}
 
 {% block page_header %}
     <h1 class="text-center titulo_ppal">Known visitors</h1>
@@ -18,20 +18,21 @@
         <div class="text-center showme seccion_texto"><!--showme-->
             {% if visitor.welcome %}
                 <p>Friend</p>
-                <div style="margin: 0px auto; box-sizing:content-box;">
-                    <a href="{% url 'webadmin:visitor_details' visitor.id %}" class="btn btn-default btn-sm">
-                        <i class="fa fa-eye white"></i>
-                    </a>
-                    <a href="{% url 'webadmin:update_visitor' visitor.id %}" class="btn btn-default btn-sm">
-                        <i class="fa fa-pencil white"></i>
-                    </a>
-                    <a href="{% url 'webadmin:delete_visitor' visitor.id %}" class="btn btn-default btn-sm">
-                        <i class="fa fa-trash white"></i>
-                    </a>
-                </div>
             {% else %}
                 <p>Not welcome</p>
             {% endif %}
+            <div style="margin: 0px auto; box-sizing:content-box;">
+                <a href="{% url 'webadmin:visitor_details' visitor.id %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-eye white"></i>
+                </a>
+                <a href="{% url 'webadmin:update_visitor' visitor.id %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-pencil white"></i>
+                </a>
+                <a href="{% url 'webadmin:delete_visitor' visitor.id %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-trash white"></i>
+                </a>
+
+            </div>
         </div>
     </div>
 
