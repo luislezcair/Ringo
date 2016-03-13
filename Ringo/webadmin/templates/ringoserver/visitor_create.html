@@ -3,20 +3,22 @@
 {% block title %}Create Visitor{% endblock %}
 
 {% block page_header %}
-    <h1>Create Visitor</h1>
+    <h1 class="titulo_ppal">New Visitor</h1>
 {% endblock %}
 
 {% block content %}
 <form method="POST">
     {% csrf_token %}
-
-    <p>Name: {{ form.name }}
+    <div class="seccion_texto">
+    <p >Name: {{ form.name }}
     <p>Welcome: {{ form.welcome }}
+    </div>
 
     <div style="display: none">
         {{ form.next }}
     </div>
 
     <button type="submit" class="btn btn-primary">Create</button>
+    <a href="javascript:history.back(-1)" type="button" class="btn btn-primary">Cancel</a>
 </form>
 {% endblock content %}

@@ -1,31 +1,46 @@
 {% extends "_layout.html" %}
 
-{% block title %}Visitantes{% endblock %}
+
+{% block title %}Visitors{% endblock %}
 
 {% block page_header %}
-    <h1>Known visitors</h1>
+    <h1 class="text-center titulo_ppal">Known visitors</h1>
 {% endblock %}
 
 {% block content %}
-    <table id="visitor-table" class="table table-hover">
-        <tbody>
-        {% for visitor in visitor_list %}
-            <tr>
-                <td>{{ visitor }}</td>
-                <td>
-                    <a href="{% url 'webadmin:visitor_details' visitor.id %}" class="btn btn-default btn-sm">
-                        <i class="fa fa-eye white"></i>
-                    </a>
-                    <a href="{% url 'webadmin:update_visitor' visitor.id %}" class="btn btn-default btn-sm">
-                        <i class="fa fa-pencil white"></i>
-                    </a>
-                    <a href="{% url 'webadmin:delete_visitor' visitor.id %}" class="btn btn-default btn-sm">
-                        <i class="fa fa-trash white"></i>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a class="btn btn-primary" href="{% url 'webadmin:create_visitor' %}">Add visitor</a>
+    <div>
+    <h1 class="text-center"><a class="btn btn-default" href="{% url 'webadmin:create_visitor' %}">New visitor?</a></h1>
+    {% if visitor_list %}
+
+    {% for visitor in visitor_list %}
+    <div class="menu_inicial menu_item showhim">
+        <h1 class="text-center">{{ visitor.name }}</h1>
+        <div class="text-center showme seccion_texto"><!--showme-->
+            {% if visitor.welcome %}
+                <p>Friend</p>
+            {% else %}
+                <p>Not welcome</p>
+            {% endif %}
+            <div style="margin: 0px auto; box-sizing:content-box;">
+                <a href="{% url 'webadmin:visitor_details' visitor.id %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-eye white"></i>
+                </a>
+                <a href="{% url 'webadmin:update_visitor' visitor.id %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-pencil white"></i>
+                </a>
+                <a href="{% url 'webadmin:delete_visitor' visitor.id %}" class="btn btn-default btn-sm">
+                    <i class="fa fa-trash white"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    </div>
+    {% else %}
+        <p>No visitors saved!</p>
+    {% endif %}
+
+
 {% endblock %}

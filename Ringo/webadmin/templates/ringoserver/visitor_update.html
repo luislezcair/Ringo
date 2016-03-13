@@ -1,15 +1,26 @@
 {% extends "_layout.html" %}
 
-{% block title %}Actualizar visitante{% endblock %}
+{% block title %}Update Visitor{% endblock %}
 
 {% block page_header %}
-    <h1>Change visitor</h1>
+    <h1 class="titulo_ppal">Change visitor</h1>
 {% endblock %}
 
 {% block content %}
     <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Update</button>
+        <div class="seccion_texto">
+            {% csrf_token %}
+            {{ form.as_p }}
+        </div>
+        <a href="javascript:history.back(-1)">
+            <button class="btn btn-primary" type="submit" >
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+        </a>
+        <a href="javascript:history.back(-1)">
+            <button class="btn btn-primary" type="button" >
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+        </a>
     </form>
 {% endblock %}

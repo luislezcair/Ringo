@@ -4,17 +4,32 @@ html {
 }
 
 body {
-    padding-top: 50px;
-    margin-bottom: 60px;
+    padding-top: 70px;
+    margin-bottom: 40px;
+    color: #181818;
+    background-color: rgba(246, 239, 183, 0.20);
+    font-family:serif;
 }
+.header-logo{
+    float:left;
+    display:block;
+    width:180px;
+    height:50px;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-color:#FF0500;
+    color: #fff;
+    background-image: url(../images/Ringo-logo.png);
+}
+
 
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
+  height: 40px;
+  background-color: rgba(27, 2, 2, 0.84);
 }
 
 .footer > .container {
@@ -23,7 +38,17 @@ body {
 }
 
 .container .text-muted {
-  margin: 20px 0;
+  margin: 10px 10px;
+  color: #989797;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: rgba(64, 25, 23, 0.67);
+    border-color: #6F0707;
+}
+.btn-primary:hover{
+    background-color: black;
 }
 
 .dropdown-menu > li > a > i {
@@ -61,4 +86,139 @@ img.visit {
 
 #devices-view {
     display: none;
+}
+
+/*-----Fila seleccionada en las Tablas--------*/
+.table-hover > tbody > tr:hover {
+  background-color: #333;
+}
+
+/* Redefino colores de la barra de navegación*/
+
+.navbar-style{
+    background-color: #181818;
+    -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
+}
+
+.navbar-default .active {
+  color: #fff;
+}
+.navbar-default .active:after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -5px;
+  vertical-align: middle;
+  content: " ";
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid;
+  border-left: 5px solid transparent;
+}
+
+/* Nav links */
+.menu-us{
+    font-weight: bolder;
+    font-style: italic;
+    font-size: large;
+    font-family: serif;
+}
+.navbar-default .menu-us>li>a {
+      color: #fff;
+      font-size: 120%;
+      letter-spacing: .1em;
+
+}
+.navbar-default .menu-us>li>a:hover {
+      color: rgba(245, 235, 206, 0.98);
+}
+
+.navbar-default .color-item>li>a {
+      color: rgba(245, 235, 206, 0.98);
+      font-family: serif;
+      font-style: bolder;
+      font-size: 120%;
+}
+
+.navbar-default .color-item>li>a:hover,
+.navbar-default .color-item>li>a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/* ------ Degradado para el titulo de las paginas---- */
+
+.titulo_ppal{
+  background: -webkit-linear-gradient(rgba(222, 21, 21, 0.84),#565353);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #9C2813;
+  font-family: serif;
+  font-weight: 900;
+  word-spacing: .2em;
+  font-size: 350%;
+  box-sizing: content-box;
+
+}
+.welcome-icon{
+    padding-left: 15px;
+    padding-top: 20px;
+    font-size: 30px;
+}
+
+/* ------- Menú de Visitantes --------- */
+
+.showme{
+    display: none;
+    clear:both;
+
+}
+.showhim:hover .showme{
+    display : block;
+}
+
+.menu_inicial{
+    display:block;
+    width:70%;
+    color: white;
+    position:relative;
+    float:left;
+    left:15%;
+    vertical-align:middle;
+    margin-top:20px;
+    padding:5px;
+    padding-left:20px;
+    padding-right:20px;
+    cursor:pointer;
+    border-bottom-width:5px;
+    border-bottom-color: #711414;
+    border-bottom-style:solid;
+    -webkit-transition:1.5s ;
+       -moz-transition:1.5s ;
+         -o-transition:1.5s ;
+            transition:1.5s ;
+}
+
+.menu_inicial h1{
+    font-size:25px;
+    font-weight:550 !important;
+    margin-bottom: 10px;
+}
+
+.menu_item{
+background-color: rgba(27, 2, 2, 0.84);
+}
+.menu_item:hover{
+opacity:0.6;
+background-color: #666;
+}
+
+.seccion_texto{
+    padding: 5px;
+    transition-duration: 2s;
+    font-size: 18px;
+    font-style: italic;
 }

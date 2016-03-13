@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/webadmin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}" />
 
     <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -19,8 +20,10 @@
     <title>{% block title %}Ringo{% endblock %}</title>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-style">
+        <a class="header-logo" href="{% url 'webadmin:index' %}"></a>
+        <div class="container" >
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -28,10 +31,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'webadmin:index' %}">Ringo</a>
+
             </div>
             <div id="navbar" class="navbar-collapse collapse pull-left">
-              <ul class="nav navbar-nav">
+              <ul class="nav navbar-nav color-item">
                 <li><a href="{% url 'webadmin:ownersdevices_list' %}">Owners & Devices</a></li>
                 <li><a href="{% url 'webadmin:visitor_list' %}">Visitors</a></li>
                 <li><a href="{% url 'webadmin:visit_list' %}">Visit history</a></li>
@@ -39,8 +42,8 @@
               </ul>
             </div>
             <div class="pull-right">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
+                <ul class="nav navbar-nav menu-us">
+                    <li class="dropdown" style="padding: 10px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <img class="user-photo" src="{{ request.user.owner.get_picture_or_default }}">
                             {{ request.user.first_name }} <span class="caret"></span>
@@ -68,8 +71,7 @@
             </div>
         </div>
     </nav>
-
-    <div class="container">
+    <div class="container" style="padding-bottom:10px;">
         <div class="page-header">
             {% block page_header %}{% endblock %}
         </div>

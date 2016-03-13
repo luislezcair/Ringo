@@ -3,14 +3,32 @@
 {% block title %}Visitor details{% endblock %}
 
 {% block page_header %}
-    <h1>Visitor details</h1>
+    <div>
+        <div class="titulo_ppal" style="float:left">{{ visitor.name }}
+        </div>
+
+            {% if visitor.welcome %}
+            <span class="glyphicon glyphicon-ok-sign welcome-icon" aria-hidden="true"></span>
+            {% else %}
+            <span class="glyphicon glyphicon-remove-sign welcome-icon" aria-hidden="true"></span>
+            {% endif %}
+    </div>
 {% endblock %}
 
 {% block content %}
-    <h4>Name: {{ visitor.name }}</h4>
-    <h4>Is he welcome?: {{ visitor.welcome }}</h4>
+    <div>
+        <a href="{% url 'webadmin:visitor_list' %}" class="btn btn-default btn-sm">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+        </a>
+        <a href="{% url 'webadmin:update_visitor' visitor.id %}" class="btn btn-default btn-sm">
+            <i class="fa fa-pencil white"></i>
+        </a>
+        <a href="{% url 'webadmin:delete_visitor' visitor.id %}" class="btn btn-default btn-sm">
+            <i class="fa fa-trash white"></i>
+        </a>
+
     <br>
-    <h4>Last visits from {{ visitor.name.split.0 }}</h4>
+    <h2 style="font-style:italic;">Last visits from {{ visitor.name.split.0 }}</h2>
 
     <div class="row">
         {% for visit in visitor.visit_set.all %}
@@ -21,5 +39,6 @@
             </div>
         {% endfor %}
     </div>
-    <a class="btn btn-primary" href="{% url 'webadmin:update_visitor' visitor.id %}">Edit visitor</a>
+
+    </div>
 {% endblock %}
