@@ -19,10 +19,10 @@
 
     <title>{% block title %}Ringo{% endblock %}</title>
 </head>
+
 <body>
     <nav class="navbar navbar-default navbar-fixed-top navbar-style">
-        <a class="header-logo" href="{% url 'webadmin:index' %}"></a>
-        <div class="container" >
+        <div class="container">
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
+                <a class="navbar-brand" href="{% url 'webadmin:index' %}">Ringo</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse pull-left">
               <ul class="nav navbar-nav color-item">
@@ -43,7 +43,7 @@
             </div>
             <div class="pull-right">
                 <ul class="nav navbar-nav menu-us">
-                    <li class="dropdown" style="padding: 10px;">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <img class="user-photo" src="{{ request.user.owner.get_picture_or_default }}">
                             {{ request.user.first_name }} <span class="caret"></span>
