@@ -1,17 +1,15 @@
 {% extends "_layout.html" %}
 
-{% block title %}Update Visitor{% endblock %}
+{% block title %}Edit Visitor{% endblock %}
 
 {% block page_header %}
-    <h1 class="titulo_ppal">Change visitor</h1>
+    <h1 class="titulo_ppal">Edit visitor</h1>
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post">
-        <div class="seccion_texto">
-            {% csrf_token %}
-            {{ form.as_p }}
-        </div>
+    <form class="default-form" action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
         <a href="javascript:history.back(-1)">
             <button class="btn btn-primary" type="submit" >
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>

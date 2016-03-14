@@ -3,13 +3,14 @@
 {% block title %}Add new Owner{% endblock %}
 
 {% block page_header %}
-    <h1>Add new Owner</h1>
+    <h1 class="titulo_ppal">New Owner</h1>
 {% endblock %}
 
 {% block content %}
-<form action="" method="post">
+<form action="" method="post" class="default-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="btn btn-primary" type="submit">Create</button>
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a href="javascript:history.back(-1)" type="button" class="btn btn-primary">Cancel</a>
 </form>
 {% endblock %}

@@ -3,15 +3,16 @@
 {% block title %}Registro de visitas{% endblock %}
 
 {% block page_header %}
-    <h1>Recent visits</h1>
+    <h1 class="titulo_ppal text-center">Last visits</h1>
 {% endblock %}
 
 {% block content %}
+    <div class="owners-responsive seccion_texto">
     {% if latest_visits_list %}
         <table class="table table-stripped table-hover">
             <thead>
                 <tr>
-                    <th>Nº</th>
+                    <th></th>
                     <th>Name</th>
                     <th>Date / Time</th>
                     <th></th>
@@ -20,7 +21,9 @@
             <tbody>
                 {% for visit in latest_visits_list %}
                     <tr>
-                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            <img src="{{ visit.picture.picture.url }}" class="img-table">
+                        </td>
                         <td>
                             {% if visit.visitors.all %}
                                 {% for v in visit.visitors.all %}
@@ -32,10 +35,7 @@
                         </td>
                         <td>{{ visit.date }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{% url 'webadmin:visit_detail' visit.id %}">
-                                <span class="glyphicon glyphicon-list"></span>
-                            </a>
-                            <a class="btn btn-success" href="#">
+                            <a class="btn btn-default" href="{% url 'webadmin:visit_detail' visit.id %}">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                             </a>
                         </td>
@@ -46,4 +46,5 @@
     {% else %}
         <p>No visits were made</p>
     {% endif %}
+    </div>
 {% endblock %}

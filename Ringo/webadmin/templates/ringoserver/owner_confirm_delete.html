@@ -3,12 +3,19 @@
 {% block title %}Delete Owner{% endblock %}
 
 {% block page_header %}
-    <h1>{{ owner.auth_user.get_full_name }}</h1>
+    <h1 class="titulo_ppal">{{ owner.auth_user.get_full_name }}</h1>
 {% endblock %}
 
 {% block content %}
     <form action="" method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ owner.auth_user.get_full_name }}"?</p>
-    <input type="submit" value="Confirm" />
+    <p class="seccion_texto">Are you sure you want to delete "{{ owner.auth_user.get_full_name }}"?</p>
+    <button class="btn btn-primary" type="submit" >
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+    </button>
+    <a href="javascript:history.back(-1)">
+        <button class="btn btn-primary" type="button" >
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+    </a>
     </form>
 {% endblock %}

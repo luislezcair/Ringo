@@ -1,29 +1,35 @@
 {% extends "_layout.html" %}
 
-{% block title %}Detalles de visita{% endblock %}
+{% block title %}Visit Details{% endblock %}
 
 {% block page_header %}
-    <h1>Visit details</h1>
+    <h1 class="titulo_ppal text-center">Visit details</h1>
 {% endblock %}
 
 {% block content %}
-    <h3>Visitors:</h3>
-    <ul>
-        {% for visitor in visitors %}
-            <li><h4>Mr. {{ visitor.name }}</h4></li>
-        {% endfor %}
-        {% if unknowns != 0 %}
-            <li>Unknown: {{ unknowns }}</li>
-        {% endif %}
-    </ul>
+    <div class="text-center">
+        <div class="marco-img center-block ">
+            <img src="{{ visit.picture.picture.url }}" class="img-responsive">
+        </div>
 
-    <img src="{{ visit.picture.picture.url }}">
-    <h3>Date: {{ visit.date }}</h3>
+            <p class="seccion_texto"><strong>
+            {% for visitor in visitors %}
+               {{ visitor.name }}
+            {% endfor %}
+                {{ visitor.name }}
+            {% if unknowns != 0 %}
+                Unknown: {{ unknowns }}
+            {% endif %}
+            </strong></p>
+            <p>
+               <strong>Date:</strong> {{ visit.date }}
+            </p>
+            <a class="btn btn-primary" href="{% url 'webadmin:visit_update' visit.id %}">Change Visitor</a>
 
+    </div>
     {% if error_message %}
         <p><strong>{{ error_message }}</strong></p>
     {% endif %}
 
-    <a class="btn btn-primary" href="{% url 'webadmin:visit_update' visit.id %}">Edit Visitor</a>
 {% endblock %}
 

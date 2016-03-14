@@ -3,20 +3,19 @@
 {% block title %}Visitor details{% endblock %}
 
 {% block page_header %}
-    <div>
-        <div class="titulo_ppal" style="float:left">{{ visitor.name }}
-        </div>
-
-            {% if visitor.welcome %}
-            <span class="glyphicon glyphicon-ok-sign welcome-icon" aria-hidden="true"></span>
-            {% else %}
-            <span class="glyphicon glyphicon-remove-sign welcome-icon" aria-hidden="true"></span>
-            {% endif %}
+    <div class="text-center">
+        <p class="titulo_ppal" style="display:inline">{{ visitor.name }}
+        </p>
+        {% if visitor.welcome %}
+        <span class="glyphicon glyphicon-ok-sign welcome-icon" aria-hidden="true"></span>
+        {% else %}
+        <span class="glyphicon glyphicon-remove-sign welcome-icon" aria-hidden="true"></span>
+        {% endif %}
     </div>
 {% endblock %}
 
 {% block content %}
-    <div>
+    <div class="text-center">
         <a href="{% url 'webadmin:visitor_list' %}" class="btn btn-default btn-sm">
             <i class="glyphicon glyphicon-arrow-left"></i>
         </a>
@@ -32,11 +31,11 @@
 
     <div class="row">
         {% for visit in visitor.visit_set.all %}
-            <div class="col-md-3">
-                <a href="#" class="thumbnail">
-                    <img src="{{ visit.picture.picture.url }}">
-                </a>
+            <div class="marco-img center-block">
+                <img src="{{ visit.picture.picture.url }}" class="img-responsive">
             </div>
+            <p><strong>Date:</strong>{{ visit.date }}</p>
+
         {% endfor %}
     </div>
 

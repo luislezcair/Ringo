@@ -91,6 +91,7 @@ img.visit {
 /*-----Fila seleccionada en las Tablas--------*/
 .table-hover > tbody > tr:hover {
   background-color: #333;
+  color: #fff;
 }
 
 /* Redefino colores de la barra de navegación*/
@@ -164,9 +165,8 @@ img.visit {
 
 }
 .welcome-icon{
-    padding-left: 15px;
-    padding-top: 20px;
     font-size: 30px;
+    display: inline-block;
 }
 
 /* ------- Menú de Visitantes --------- */
@@ -221,4 +221,53 @@ background-color: #666;
     transition-duration: 2s;
     font-size: 18px;
     font-style: italic;
+}
+
+.owners-responsive {
+    max-height: 230px;
+    overflow-x: hidden;
+    overflow:auto;
+
+}
+
+/* -- Tamaño de las imagenes de visita -- */
+.marco-img{
+    max-width: 350px;
+}
+
+.img-table{
+    height: auto;
+    width: auto;
+    max-height: 70px;
+    max-width: auto;
+    display: block;
+}
+
+/* --- Formularios -- */
+.default-form{
+    font-size: 16px;
+    font-style: normal;
+}
+
+.default-form>p>label{
+    display:block;
+    font-size: 110%;
+    font-style:italic;
+}
+
+.default-form>p>select{
+    padding: 5px;
+    background-color:transparent;
+    max-height: 200px;
+    overflow: auto;
+
+}
+
+.default-form>p>input{
+    background-color:transparent;
+    padding-left: 4px;
+}
+
+.checked>p>label{
+    display:inline;
 }
