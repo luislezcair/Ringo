@@ -3,7 +3,7 @@
 {% block title %} Contact us! {% endblock %}
 
 {% block page_header %}
-    <h1>Contact us!</h1>
+    <h1 class="titulo_ppal">Contact us!</h1>
 {% endblock %}
 
 {% block content %}
@@ -13,11 +13,12 @@
         </p>
     {% endif %}
 
-    <form action="" method="post">
+    <form action="" method="post" class="default-form">
         {% csrf_token %}
         <table>
             {{ form.as_table }}
         </table>
-        <p><input type="submit" value="Submit"></p>
+        <br>
+        <a class="btn btn-primary" type="submit"> Submit</a>
     </form>
 {% endblock %}

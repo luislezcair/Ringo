@@ -249,13 +249,13 @@ background-color: #666;
     font-style: normal;
 }
 
-.default-form>p>label{
+.default-form label{
     display:block;
     font-size: 110%;
     font-style:italic;
 }
 
-.default-form>p>select{
+.default-form select{
     padding: 5px;
     background-color:transparent;
     max-height: 200px;
@@ -263,11 +263,23 @@ background-color: #666;
 
 }
 
-.default-form>p>input{
+.default-form input{
     background-color:transparent;
     padding-left: 4px;
 }
 
-.checked>p>label{
+.default-form textarea{
+    background-color:transparent;
+    padding-left: 4px;
+}
+
+.checked label{
     display:inline;
+}
+
+
+/* FORMULARIO DE CONTACTO */
+
+.contact-form label{
+
 }
