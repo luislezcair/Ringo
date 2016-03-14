@@ -209,3 +209,7 @@ img.visit {
     font-size: 18px;
     font-style: italic;
 }
+
+.container-form {
+    width: 40%;
+}

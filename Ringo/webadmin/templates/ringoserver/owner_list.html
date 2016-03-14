@@ -27,7 +27,11 @@
                     {% if request.user.id == owner.auth_user.id %}
                         Last seen: <strong>online now!</strong>
                     {% else %}
-                        Last seen on <strong>{{ owner.auth_user.last_login | date:'DATETIME_FORMAT' }}</strong>
+                        {% if owner.auth_user.last_login %}
+                            Last seen on <strong>{{ owner.auth_user.last_login | date:'DATETIME_FORMAT' }}</strong>
+                        {% else %}
+                            Never seen around
+                        {% endif %}
                     {% endif %}
                 </td>
 
