@@ -36,10 +36,10 @@
                 </td>
 
                 <td>
-                    <a href="{% url 'webadmin:owner_detail' owner.id %}" class="btn btn-default btn-sm">
+                    <a href="{% url 'webadmin:owner_detail' owner.auth_user.id %}" class="btn btn-default btn-sm">
                         <i class="fa fa-eye white"></i>
                     </a>
-                    <a href="{% url 'webadmin:owner_edit' owner.id %}" class="btn btn-default btn-sm">
+                    <a href="{% url 'webadmin:owner_edit' owner.auth_user.id %}" class="btn btn-default btn-sm">
                         <i class="fa fa-pencil white"></i>
                     </a>
                     <a href="{% url 'webadmin:delete_owner' owner.id %}" class="btn btn-default btn-sm">

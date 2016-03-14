@@ -135,14 +135,16 @@ class OwnersDevicesListView(ListView):
 
 
 class OwnerDetailView(DetailView):
-    model = Owner
-    context_object_name = 'owner'
+    model = User
+    template_name = 'ringoserver/owner_detail.html'
+    context_object_name = 'user'
 
 
 class OwnerEditView(UpdateView):
-    model = Owner
-    fields = ['auth_user']
-    template_name_suffix = '_update'
+    model = User
+    template_name = 'ringoserver/owner_update.html'
+    form_class = UserForm
+    success_url = '/webadmin/owners_devices'
 
 
 class OwnerDeleteView(DeleteView):

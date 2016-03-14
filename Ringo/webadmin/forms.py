@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from ringoserver.models import Visitor, Owner
 
@@ -53,25 +54,45 @@ class UserForm(forms.ModelForm):
         for key in self.fields:
             self.fields[key].required = True
 
+        # If we're editing an user, blank passwords are ok (we don't change the passowrd)
+        self.fields['password'].required = self.instance.pk is None
+        self.fields['confirm_password'].required = self.instance.pk is None
+
     def clean(self):
-        if self.cleaned_data.get('password') != self.cleaned_data.get('confirm_password'):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+
+        # Blank password means we're not changing it
+        if self.instance.pk and not password and not confirm_password:
+            return self.cleaned_data
+
+        if password != confirm_password:
             raise ValidationError("Passwords do not match.", code='invalid')
+
+        self.cleaned_data['password'] = make_password(password)
 
         return self.cleaned_data
 
     def clean_username(self):
         username = self.cleaned_data['username']
 
-        try:
-            User.objects.get(username=username)
-            raise ValidationError("This username is already in use. Please choose another.", code='invalid')
-        except ObjectDoesNotExist:
-            pass
+        if not self.instance.pk:
+            try:
+                User.objects.get(username=username)
+                raise ValidationError("This username is already in use. Please choose another.", code='invalid')
+            except ObjectDoesNotExist:
+                pass
 
         return username
 
     def save(self, commit=True):
         user = super(UserForm, self).save()
-        owner = Owner.objects.create(auth_user=user)
-        owner.save()
+
+        try:
+            if user.owner:
+                pass
+        except AttributeError:
+            owner = Owner.objects.create(auth_user=user)
+            owner.save()
+
         return user
