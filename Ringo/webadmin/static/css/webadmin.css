@@ -8,18 +8,10 @@ body {
     margin-bottom: 40px;
     color: #181818;
     background-color: rgba(246, 239, 183, 0.20);
-    font-family:serif;
 }
-.header-logo{
-    float:left;
-    display:block;
-    width:180px;
-    height:50px;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-color:#FF0500;
-    color: #fff;
-    background-image: url(../images/Ringo-logo.png);
+
+.navbar-default .navbar-brand {
+    color: rgb(245, 235, 206);
 }
 
 
@@ -29,7 +21,7 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 40px;
-  background-color: rgba(27, 2, 2, 0.84);
+  background-color: #181818;
 }
 
 .footer > .container {
@@ -39,7 +31,7 @@ body {
 
 .container .text-muted {
   margin: 10px 10px;
-  color: #989797;
+  color: rgb(245, 235, 206);
 }
 
 .btn-primary {
@@ -47,16 +39,13 @@ body {
     background-color: rgba(64, 25, 23, 0.67);
     border-color: #6F0707;
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: black;
 }
 
 .dropdown-menu > li > a > i {
     margin-right: 6px;
-}
-
-.navbar-nav li.dropdown {
-    height: 45px;
 }
 
 .dropdown a.dropdown-toggle {
@@ -90,8 +79,12 @@ img.visit {
 
 /*-----Fila seleccionada en las Tablas--------*/
 .table-hover > tbody > tr:hover {
+ /*
   background-color: #333;
   color: #fff;
+ */
+  background-color: #AAA;
+
 }
 
 /* Redefino colores de la barra de navegación*/
@@ -105,6 +98,7 @@ img.visit {
 .navbar-default .active {
   color: #fff;
 }
+
 .navbar-default .active:after {
   position: absolute;
   bottom: 0;
@@ -120,27 +114,22 @@ img.visit {
 }
 
 /* Nav links */
-.menu-us{
+.menu-us {
     font-weight: bolder;
-    font-style: italic;
     font-size: large;
-    font-family: serif;
 }
+
 .navbar-default .menu-us>li>a {
       color: #fff;
-      font-size: 120%;
-      letter-spacing: .1em;
-
 }
-.navbar-default .menu-us>li>a:hover {
+
+.navbar-default .menu-us > li > a:hover {
       color: rgba(245, 235, 206, 0.98);
 }
 
 .navbar-default .color-item>li>a {
-      color: rgba(245, 235, 206, 0.98);
-      font-family: serif;
-      font-style: bolder;
-      font-size: 120%;
+      color: rgb(245, 235, 206);
+      font-weight: bold;
 }
 
 .navbar-default .color-item>li>a:hover,
@@ -152,35 +141,38 @@ img.visit {
 
 /* ------ Degradado para el titulo de las paginas---- */
 
-.titulo_ppal{
+.titulo_ppal {
   background: -webkit-linear-gradient(rgba(222, 21, 21, 0.84),#565353);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: #9C2813;
-  font-family: serif;
+  /*font-family: serif;*/
   font-weight: 900;
   word-spacing: .2em;
   font-size: 350%;
   box-sizing: content-box;
 
 }
-.welcome-icon{
+
+.welcome-icon {
+    padding-left: 15px;
+    padding-top: 20px;
     font-size: 30px;
     display: inline-block;
 }
 
 /* ------- Menú de Visitantes --------- */
 
-.showme{
+.showme {
     display: none;
-    clear:both;
-
-}
-.showhim:hover .showme{
-    display : block;
+    clear: both;
 }
 
-.menu_inicial{
+.showhim:hover .showme {
+    display: block;
+}
+
+.menu_inicial {
     display:block;
     width:70%;
     color: white;
@@ -202,25 +194,30 @@ img.visit {
             transition:1.5s ;
 }
 
-.menu_inicial h1{
-    font-size:25px;
-    font-weight:550 !important;
+.menu_inicial h1 {
+    font-size: 25px;
+    font-weight: 500 !important;
     margin-bottom: 10px;
 }
 
-.menu_item{
-background-color: rgba(27, 2, 2, 0.84);
-}
-.menu_item:hover{
-opacity:0.6;
-background-color: #666;
+.menu_item {
+    background-color: rgba(27, 2, 2, 0.84);
 }
 
-.seccion_texto{
+.menu_item:hover {
+    opacity: 0.6;
+    background-color: #666;
+}
+
+.seccion_texto {
     padding: 5px;
     transition-duration: 2s;
     font-size: 18px;
     font-style: italic;
+}
+
+.container-form {
+    width: 40%;
 }
 
 .owners-responsive {
@@ -278,8 +275,3 @@ background-color: #666;
 }
 
 
-/* FORMULARIO DE CONTACTO */
-
-.contact-form label{
-
-}

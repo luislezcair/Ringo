@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from ringoserver.models import *
-from forms import ContactForm, VisitorForm
+from forms import ContactForm, VisitorForm, UserForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -135,14 +135,16 @@ class OwnersDevicesListView(ListView):
 
 
 class OwnerDetailView(DetailView):
-    model = Owner
-    context_object_name = 'owner'
+    model = User
+    template_name = 'ringoserver/owner_detail.html'
+    context_object_name = 'user'
 
 
 class OwnerEditView(UpdateView):
-    model = Owner
-    fields = ['auth_user']
-    template_name_suffix = '_update'
+    model = User
+    template_name = 'ringoserver/owner_update.html'
+    form_class = UserForm
+    success_url = '/webadmin/owners_devices'
 
 
 class OwnerDeleteView(DeleteView):
@@ -153,5 +155,6 @@ class OwnerDeleteView(DeleteView):
 class OwnerCreateView(CreateView):
     model = User
     template_name = 'ringoserver/owner_create_form.html'
-    fields = ('first_name', 'last_name', 'email', 'password',)
+    form_class = UserForm
+    success_url = '/webadmin/owners_devices'
 

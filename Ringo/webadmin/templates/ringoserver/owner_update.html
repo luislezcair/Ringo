@@ -3,15 +3,34 @@
 {% block title %}Edit owner{% endblock %}
 
 {% block page_header %}
-    <h1>Edit {{ owner.auth_user.first_name }}</h1>
+    <h1>Editing {{ user.first_name }}</h1>
 {% endblock %}
 
 {% block content %}
-    <p>editing</p>
-    <div class="col-sm-2 col-md-offset-5">
-            <a href="javascript:history.back()" class="btn btn-primary btn-sm clearfix" >Confirm</a>
-    </div>
-    <div class="col-sm-2">
-            <a href="javascript:history.back()" class="btn btn-primary btn-sm clearfix" >Cancel</a>
+    <div class="container-form">
+        <form action="{{ action }}" method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group {% if field.errors %}has-error{% endif %} ">
+                    <label for="{{ field.auto_id }}" class="control-label">{{ field.label }}</label>
+                    {{ field }}
+                    {{ field.errors }}
+                </div>
+            {% endfor %}
+
+            <button class="btn btn-success" type="submit">Update</button>
+            <a href="{% url 'webadmin:ownersdevices_list' %}" class="btn btn-primary">Cancel</a>
+        </form>
     </div>
 {% endblock %}
