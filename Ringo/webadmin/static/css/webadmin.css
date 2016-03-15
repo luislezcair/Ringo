@@ -6,12 +6,12 @@ html {
 body {
     padding-top: 70px;
     margin-bottom: 40px;
-    color: #181818;
-    background-color: rgba(246, 239, 183, 0.20);
+    color: white;
+    background-color: #333;
 }
 
 .navbar-default .navbar-brand {
-    color: rgb(245, 235, 206);
+    color: rgb(0, 189, 210);
     font-size: 140%;
     font-weight: bolder;
 }
@@ -22,7 +22,7 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 40px;
-  background-color: #181818;
+  background-color: #FFDF24;
 }
 
 .footer > .container {
@@ -32,17 +32,19 @@ body {
 
 .container .text-muted {
   margin: 10px 10px;
-  color: rgb(245, 235, 206);
+  color: grey;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: rgba(64, 25, 23, 0.67);
-    border-color: #6F0707;
+    color: #FFD900;
+    background-color: #565454;
+    border-color: transparent;
 }
 
 .btn-primary:hover {
     background-color: black;
+    color: #FFD900;
+    border-color: transparent;
 }
 
 .dropdown-menu > li > a > i {
@@ -80,20 +82,25 @@ img.visit {
 
 /*-----Fila seleccionada en las Tablas--------*/
 .table-hover > tbody > tr:hover {
-  background-color: #AAA;
+  background-color: #424242;
 
 }
 
 /* Redefino colores de la barra de navegación*/
 
 .navbar-style{
-    background-color: #181818;
+    background-color: #fff;
     -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
             box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
 }
 
+.navbar-footer{
+    background: rgb(0, 189, 210);
+    height: 15px;;
+}
+
 .navbar-default .active {
-  color: #fff;
+  color: black;
 }
 
 .navbar-default .active:after {
@@ -117,32 +124,35 @@ img.visit {
 }
 
 .navbar-default .menu-us>li>a {
-      color: #fff;
+      color: black;
 }
 
 .navbar-default .menu-us > li > a:hover {
-      color: rgba(245, 235, 206, 0.98);
+      color: black;
 }
 
 .navbar-default .color-item>li>a {
-      color: rgb(245, 235, 206);
+      color: black;
       font-weight: bold;
 }
 
 .navbar-default .color-item>li>a:hover,
 .navbar-default .color-item>li>a:focus {
-  color: #fff;
-  text-decoration: none;
+      color: black;
+      text-decoration: none;
+      background: rgba(207, 214, 249, 0.57);
+      border-bottom: 5px solid #FFD900;
+      padding-top: 10px;
 }
 
 
 /* ------ Degradado para el titulo de las paginas---- */
 
 .titulo_ppal {
-  background: -webkit-linear-gradient(rgba(222, 21, 21, 0.84),#565353);
+  background: -webkit-linear-gradient(white, #FFD900);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: #9C2813;
+  color: #FFD900;
   /*font-family: serif;*/
   font-weight: 900;
   word-spacing: .2em;
@@ -172,7 +182,7 @@ img.visit {
 .menu_inicial {
     display:block;
     width:70%;
-    color: white;
+    color: #EFDD75 ;
     position:relative;
     float:left;
     left:15%;
@@ -183,7 +193,7 @@ img.visit {
     padding-right:20px;
     cursor:pointer;
     border-bottom-width:5px;
-    border-bottom-color: #711414;
+    border-bottom-color: #0F93D2;
     border-bottom-style:solid;
     -webkit-transition:1.5s ;
        -moz-transition:1.5s ;
@@ -198,12 +208,13 @@ img.visit {
 }
 
 .menu_item {
-    background-color: rgba(27, 2, 2, 0.84);
+    background-color: #333;
 }
 
 .menu_item:hover {
-    opacity: 0.6;
-    background-color: #666;
+    opacity: 0.7;
+    background-color: rgba(123, 132, 132, 0.6);
+    color: white;
 }
 
 .seccion_texto {
@@ -241,6 +252,7 @@ img.visit {
 .default-form{
     font-size: 16px;
     font-style: normal;
+    font-size: 15px;
 }
 
 .default-form label{
@@ -251,24 +263,45 @@ img.visit {
 
 .default-form select{
     padding: 5px;
-    background-color:transparent;
+    background-color:#424242;
     max-height: 200px;
     overflow: auto;
-
+    border:none;
+    border-bottom: 1px solid #5b5b5b;
+    border-top: 1px solid #222222;
+    color: #eaeaea;
 }
 
 .default-form input{
-    background-color:transparent;
-    padding-left: 4px;
+    background-color:#424242;
+    padding: 4px;
+    border:none;
+    border-bottom: 1px solid #5b5b5b;
+    border-top: 1px solid #222222;
+    color: #eaeaea;
 }
 
 .default-form textarea{
-    background-color:transparent;
+    background-color:#424242;
     padding-left: 4px;
+    border:none;
+    border-bottom: 1px solid #5b5b5b;
+    border-top: 1px solid #222222;
+    color: #eaeaea;
 }
 
 .checked label{
     display:inline;
 }
 
+.h2, h2{
+    color: #FFD900;
+}
 
+body th{
+    color: #FFD900;
+}
+
+.btn-default{
+    background-color: rgba(255,255,255,0.95);
+}
