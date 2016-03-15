@@ -12,8 +12,9 @@ body {
 
 .navbar-default .navbar-brand {
     color: rgb(245, 235, 206);
+    font-size: 140%;
+    font-weight: bolder;
 }
-
 
 .footer {
   position: absolute;
@@ -79,10 +80,6 @@ img.visit {
 
 /*-----Fila seleccionada en las Tablas--------*/
 .table-hover > tbody > tr:hover {
- /*
-  background-color: #333;
-  color: #fff;
- */
   background-color: #AAA;
 
 }
