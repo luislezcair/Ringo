@@ -47,10 +47,10 @@
             <a href="{% url 'webadmin:ownersdevices_list' %}" class="btn btn-primary btn-sm">
                 <i class="glyphicon glyphicon-arrow-left"></i>
             </a>
-            <a href="{% url 'webadmin:owner_edit' owner.id %}" class="btn btn-primary btn-sm">
+            <a href="{% url 'webadmin:owner_edit' user.id %}" class="btn btn-primary btn-sm">
                 <i class="fa fa-pencil white"></i>
             </a>
-            <a href="{% url 'webadmin:delete_owner' owner.id %}" class="btn btn-primary btn-sm">
+            <a href="{% url 'webadmin:delete_owner' user.owner.id %}" class="btn btn-primary btn-sm">
                 <i class="fa fa-trash white"></i>
             </a>
         </div>
