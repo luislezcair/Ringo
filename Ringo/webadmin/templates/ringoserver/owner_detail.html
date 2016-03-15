@@ -44,7 +44,7 @@
         </div>
 
         <div class="text-center">
-            <a href="javascript:history.back(-1)" class="btn btn-primary btn-sm">
+            <a href="{% url 'webadmin:ownersdevices_list' %}" class="btn btn-primary btn-sm">
                 <i class="glyphicon glyphicon-arrow-left"></i>
             </a>
             <a href="{% url 'webadmin:owner_edit' owner.id %}" class="btn btn-primary btn-sm">

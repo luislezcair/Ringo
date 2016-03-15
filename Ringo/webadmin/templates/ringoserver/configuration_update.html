@@ -10,10 +10,12 @@
     <form class="default-form checked" action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <br>
-        <button class="btn btn-primary" type="submit">Update</button>
-        <a class="btn btn-primary" href="javascript:history.back(-1)" role="button">Cancel</a>
 
+        <br>
+
+        <button class="btn btn-primary" type="submit">Update</button>
+
+        <a class="btn btn-primary" href="{% url 'webadmin:index' %}" role="button">Cancel</a>
     </form>
 
     {% if messages %}

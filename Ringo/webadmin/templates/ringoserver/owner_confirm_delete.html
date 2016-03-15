@@ -7,15 +7,15 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post">{% csrf_token %}
+<form action="" method="post">{% csrf_token %}
     <p class="seccion_texto">Are you sure you want to delete "{{ owner.auth_user.get_full_name }}"?</p>
+
     <button class="btn btn-primary" type="submit" >
         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
     </button>
-    <a href="javascript:history.back(-1)">
-        <button class="btn btn-primary" type="button" >
+
+    <a href="{% url 'webadmin:ownersdevices_list' %}" class="btn btn-primary">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-        </button>
     </a>
-    </form>
+</form>
 {% endblock %}

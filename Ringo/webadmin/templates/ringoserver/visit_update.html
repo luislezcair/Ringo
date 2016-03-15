@@ -10,9 +10,11 @@
     <form action="" method="post" class="default-form text-center">
         {% csrf_token %}
         {{ form.as_p }}
+
         <button class="btn btn-primary" type="submit">Update</button>
+
         <a class="btn btn-primary" href="{% url 'webadmin:create_visitor' %}?next={% url 'webadmin:visit_update' visit.id %}" role="button">New visitor?</a>
-        <a class="btn btn-primary" href="javascript:history.back(-1)" role="button">Cancel</a>
+        <a class="btn btn-primary" href="{% url 'webadmin:visit_list' %}" role="button">Cancel</a>
     </form>
     <p></p>
 {% endblock %}

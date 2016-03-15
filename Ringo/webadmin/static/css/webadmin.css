@@ -213,7 +213,7 @@ img.visit {
     padding: 5px;
     transition-duration: 2s;
     font-size: 18px;
-    font-style: italic;
+/*     font-style: italic; */
 }
 
 .container-form {
@@ -249,7 +249,7 @@ img.visit {
 .default-form label{
     display:block;
     font-size: 110%;
-    font-style:italic;
+/*     font-style:italic; */
 }
 
 .default-form select{
