@@ -258,6 +258,7 @@ img.visit {
 .default-form label{
     display:block;
     font-size: 110%;
+/*     font-style:italic; */
 }
 
 .default-form select{

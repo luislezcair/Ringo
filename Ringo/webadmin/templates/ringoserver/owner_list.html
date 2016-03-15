@@ -23,17 +23,24 @@
                     {% else %}
                         <td>No devices</td>
                     {% endif %}
-                    {% if owner.auth_user.last_login %}
-                        <td>Last seen on <strong>{{ owner.auth_user.last_login | date:'DATETIME_FORMAT' }}</strong></td>
-                    {% else %}
-                        <td>Never seen around</td>
-                    {% endif %}
 
                     <td>
-                        <a href="{% url 'webadmin:owner_detail' owner.id %}" class="btn btn-default btn-sm">
+                        {% if request.user.id == owner.auth_user.id %}
+                            Last seen: <strong>online now!</strong>
+                        {% else %}
+                            {% if owner.auth_user.last_login %}
+                                Last seen on <strong>{{ owner.auth_user.last_login | date:'DATETIME_FORMAT' }}</strong>
+                            {% else %}
+                                Never seen around
+                            {% endif %}
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{% url 'webadmin:owner_detail' owner.auth_user.id %}" class="btn btn-default btn-sm">
                             <i class="fa fa-eye white"></i>
                         </a>
-                        <a href="{% url 'webadmin:owner_edit' owner.id %}" class="btn btn-default btn-sm">
+                        <a href="{% url 'webadmin:owner_edit' owner.auth_user.id %}" class="btn btn-default btn-sm">
                             <i class="fa fa-pencil white"></i>
                         </a>
                         <a href="{% url 'webadmin:delete_owner' owner.id %}" class="btn btn-default btn-sm">
@@ -46,12 +53,14 @@
             </tbody>
         </table>
     </div>
-    <div class="well clearfix" style="background-color: transparent; border-style:hidden;">
-        <a href="{% url 'webadmin:create_owner' %}" class="btn btn-primary pull-right clearfix">New owner?</a>
+
+    <div class="well clearfix" style="background-color: transparent; border-style: hidden">
+        <a href="{% url 'webadmin:create_owner' %}" class="btn btn-primary pull-right clearfix">New owner</a>
     </div>
+
     {% csrf_token %}
 
-    <div id="devices-view" class="owners-responsive" style="font-size: 16px;"></div>
+    <div id="devices-view" class="owners-responsive" style="font-size: 16px"></div>
 
     <script>
         $('#owner-table').find('tr').click(function() {
