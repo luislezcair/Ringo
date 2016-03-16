@@ -54,7 +54,7 @@
         </table>
     </div>
 
-    <div class="well clearfix" style="background-color: transparent; border-style: hidden">
+    <div class="well clearfix ringo-well">
         <a href="{% url 'webadmin:create_owner' %}" class="btn btn-primary pull-right clearfix">New owner</a>
     </div>
 
@@ -73,6 +73,10 @@
             $.post('', {id: id, csrfmiddlewaretoken: token}, function(data) {
                 devices.html(data.html);
                 devices.fadeIn();
+
+                $('html,body').animate({
+                    scrollTop: $("#devices-table").offset().top
+                }, 'slow');
             });
         });
     </script>

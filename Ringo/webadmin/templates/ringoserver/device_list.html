@@ -1,20 +1,25 @@
 <h3>Devices for {{ owner.auth_user.first_name }}</h3>
 
-<table class="table table-hover">
+<table class="table table-hover" id="devices-table">
     <tbody>
         {% if owner.device_set.count > 0 %}
             {% for device in owner.device_set.all %}
             <tr>
                 <td class="picture-td"><i class="fa fa-mobile-phone fa-3x"></i></td>
                 <td>{{ device.device_auth_user.first_name }}</td>
-                <td>Last connected: <strong>{{ device.device_auth_user.last_login | date:'DATETIME_FORMAT' }}</strong></td>
+
+                {% if device.auth_user.last_login %}
+                    <td>Last connected: <strong>{{ device.device_auth_user.last_login | date:'DATETIME_FORMAT' }}</strong></td>
+                {% else %}
+                    <td>Never seen around</td>
+                {% endif %}
                 <td>
-                    <a href="#" class="btn btn-default btn-sm">
-                        <i class="fa fa-pencil white"></i>
-                    </a>
-                    <a href="#" class="btn btn-default btn-sm">
-                        <i class="fa fa-trash white"></i>
-                    </a>
+                    <form action="{% url 'webadmin:delete_device' owner.id device.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-default btn-sm">
+                            <i class="fa fa-trash white"></i>
+                        </button>
+                    </form>
                     <input type="hidden" class="device-id" value="{{ device.id }}">
                 </td>
             </tr>
@@ -26,3 +31,8 @@
         {% endif %}
     </tbody>
 </table>
+
+<div class="well clearfix ringo-well">
+    <a href="{% url 'webadmin:create_device' owner.id %}" class="btn btn-primary pull-right clearfix">Add a Device</a>
+</div>
+

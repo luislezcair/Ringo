@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from ringoserver.models import *
-from forms import ContactForm, VisitorForm, UserForm
+from forms import ContactForm, VisitorForm, UserForm, DeviceForm
 from django.core.mail import send_mail
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -130,7 +130,7 @@ class OwnersDevicesListView(ListView):
     @staticmethod
     def post(request, *args, **kwargs):
         owner = Owner.objects.get(pk=request.POST['id'])
-        html = render_to_string('ringoserver/device_list.html', {'owner': owner})
+        html = render_to_string('ringoserver/device_list.html', {'owner': owner}, request=request)
         return JsonResponse({'html': html})
 
 
@@ -158,3 +158,23 @@ class OwnerCreateView(CreateView):
     form_class = UserForm
     success_url = '/webadmin/owners_devices'
 
+
+class DeviceCreateView(CreateView):
+    model = Device
+    form_class = DeviceForm
+    success_url = '/webadmin/owners_devices'
+
+    def get_context_data(self, **kwargs):
+        context = super(DeviceCreateView, self).get_context_data(**kwargs)
+        context['owner'] = Owner.objects.get(pk=self.kwargs['pk'])
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(DeviceCreateView, self).get_form_kwargs()
+        kwargs['owner'] = self.kwargs['pk']
+        return kwargs
+
+
+class DeviceDeleteView(DeleteView):
+    model = Device
+    success_url = '/webadmin/owners_devices'

@@ -17,12 +17,16 @@ urlpatterns = [
     url(r'^visitors/createnew/$', login_required(views.VisitorCreate.as_view()), name='create_visitor'),
     url(r'^visitors/delete/(?P<pk>[0-9]+)/$', login_required(views.VisitorDelete.as_view()), name='delete_visitor'),
 
-    # Owner & devices
+    # Owners
     url(r'^owners_devices/$', views.OwnersDevicesListView.as_view(), name='ownersdevices_list'),
     url(r'^owners_devices/create_owner$', views.OwnerCreateView.as_view(), name='create_owner'),
     url(r'^owners_devices/delete_owner/(?P<pk>[0-9]+)/$', views.OwnerDeleteView.as_view(), name='delete_owner'),
     url(r'^owners_devices/(?P<pk>[0-9]+)/$', views.OwnerDetailView.as_view(), name='owner_detail'),
     url(r'^owners_devices/(?P<pk>[0-9]+)/edit$', views.OwnerEditView.as_view(), name='owner_edit'),
+
+    # Devices
+    url(r'^owners_devices/(?P<pk>[0-9]+)/create_device$', views.DeviceCreateView.as_view(), name='create_device'),
+    url(r'^owners_devices/(?P<owner>[0-9]+)/delete_device/(?P<pk>[0-9]+)/$', views.DeviceDeleteView.as_view(), name='delete_device'),
 
     # Settings
     url(r'^settings/(?P<pk>[0-9]+)', login_required(views.ConfigurationUpdate.as_view()), name='configuration_update'),
