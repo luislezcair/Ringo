@@ -3,12 +3,12 @@
 {% block title %}Edit owner{% endblock %}
 
 {% block page_header %}
-    <h1>Editing {{ user.first_name }}</h1>
+    <h1 class="titulo_ppal">Editing {{ user.first_name }}</h1>
 {% endblock %}
 
 {% block content %}
     <div class="container-form">
-        <form action="{{ action }}" method="post">
+        <form class="default-form" action="{{ action }}" method="post">
             {% csrf_token %}
 
             {% if form.non_field_errors %}
@@ -29,7 +29,7 @@
                 </div>
             {% endfor %}
 
-            <button class="btn btn-success" type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
             <a href="{% url 'webadmin:ownersdevices_list' %}" class="btn btn-primary">Cancel</a>
         </form>
     </div>

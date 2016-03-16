@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
+<form class="default-form" method="POST">
     {% csrf_token %}
     <div class="seccion_texto">
     <p >Name: {{ form.name }}
@@ -20,6 +20,6 @@
 
     <button type="submit" class="btn btn-primary">Create</button>
 
-    <a href="{% url 'webadmin:visitor_list' %}" type="button" class="btn btn-primary">Cancel</a>
+    <a href="javascript:history.back(-1)" type="button" class="btn btn-primary">Cancel</a>
 </form>
 {% endblock content %}

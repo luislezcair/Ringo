@@ -22,7 +22,7 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 40px;
-  background-color: #FFDF24;
+  background-color: rgba(251, 222, 53, 0.92);
 }
 
 .footer > .container {
@@ -32,7 +32,7 @@ body {
 
 .container .text-muted {
   margin: 10px 10px;
-  color: grey;
+  color: #6B6969;
 }
 
 .btn-primary {
@@ -119,6 +119,7 @@ img.visit {
 
 /* Nav links */
 .menu-us {
+    padding-top: 5px;
     font-weight: bolder;
     font-size: large;
 }
@@ -156,7 +157,7 @@ img.visit {
   /*font-family: serif;*/
   font-weight: 900;
   word-spacing: .2em;
-  font-size: 350%;
+  font-size: 300%;
   box-sizing: content-box;
 
 }
@@ -182,7 +183,7 @@ img.visit {
 .menu_inicial {
     display:block;
     width:70%;
-    color: #EFDD75 ;
+    color: #FFE448 ;
     position:relative;
     float:left;
     left:15%;
@@ -290,11 +291,12 @@ img.visit {
     color: #eaeaea;
 }
 
+
 .checked label{
     display:inline;
 }
 
-.h2, h2{
+.h2, .h3,  h2, h3{
     color: #FFD900;
 }
 
@@ -310,3 +312,4 @@ body th{
     background-color: transparent;
     border-style: hidden;
 }
+

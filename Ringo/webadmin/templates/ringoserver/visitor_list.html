@@ -9,7 +9,7 @@
 
 {% block content %}
     <div>
-    <h1 class="text-center"><a class="btn btn-default" href="{% url 'webadmin:create_visitor' %}">New visitor?</a></h1>
+    <h1 class="text-center"><a class="btn btn-primary" href="{% url 'webadmin:create_visitor' %}">New visitor?</a></h1>
     {% if visitor_list %}
 
     {% for visitor in visitor_list %}
