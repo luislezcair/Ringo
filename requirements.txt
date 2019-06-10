@@ -1,4 +1,4 @@
-Django==1.11.19
+Django==1.11.21
 django-filter==0.12.0
 djangorestframework==3.9.1
 dnspython==1.12.0
